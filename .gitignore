@@ -1,6 +1,10 @@
+build
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+/laughing-thrift-duck/nbproject/private/
+/nbproject/private/
+/dist/
