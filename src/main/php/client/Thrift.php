@@ -2,6 +2,11 @@
 
 namespace SymfonyWorld;
 
+use \Thrift\Protocol\TBinaryProtocol;
+use \Thrift\Transport\TSocket;
+use \Thrift\Transport\TBufferedTransport;
+use \Thrift\Exception\TException;
+
 class Thrift {
 
 	protected $socket;
@@ -12,9 +17,9 @@ class Thrift {
 	protected $args_template = '\SymfonyWorld\MainService_%s_args';
 
 	public function __construct($host, $port) {
-		$this->socket = new \TSocket($host, $port);
-		$this->transport = new \TBufferedTransport($this->socket);
-		$this->protocol = new \TBinaryProtocol($this->transport);
+		$this->socket = new TSocket($host, $port);
+		$this->transport = new TBufferedTransport($this->socket, 1024, 1024);
+		$this->protocol = new TBinaryProtocol($this->transport);
 		$this->client = new MainServiceClient($this->protocol);
 		$this->transport->open();
 	}

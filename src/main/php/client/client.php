@@ -1,7 +1,6 @@
 <?php
 
-require_once('../requires.php');
-require_once('Thrift.php');
+require_once '../requires.php';
 
 use \SymfonyWorld\Thrift;
 

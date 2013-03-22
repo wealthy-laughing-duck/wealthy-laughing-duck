@@ -1,11 +1,13 @@
 <?php
 
-$GLOBALS['THRIFT_ROOT'] = __DIR__.'/thrift';
+$THRIFT_ROOT = __DIR__;
+require_once $THRIFT_ROOT . '/Thrift/ClassLoader/ThriftClassLoader.php';
+require_once $THRIFT_ROOT . '/client/Thrift.php';
 
-require_once $GLOBALS['THRIFT_ROOT'].'/Thrift.php';
-require_once $GLOBALS['THRIFT_ROOT'].'/protocol/TBinaryProtocol.php';
-require_once $GLOBALS['THRIFT_ROOT'].'/transport/TSocket.php';
-require_once $GLOBALS['THRIFT_ROOT'].'/transport/TBufferedTransport.php';
+use \Thrift\ClassLoader\ThriftClassLoader;
 
-require_once $GLOBALS['THRIFT_ROOT'].'/packages/service/MainService.php';
-require_once $GLOBALS['THRIFT_ROOT'].'/packages/service/service_types.php';
+$loader = new ThriftClassLoader();
+$loader->registerNamespace('Thrift', $THRIFT_ROOT);
+$loader->registerNamespace('SymfonyWorld', $THRIFT_ROOT . '/packages');
+$loader->register();
+$loader->loadClass('SymfonyWorld\MainService');
