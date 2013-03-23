@@ -59,12 +59,25 @@ public class IncomeDaoImpl implements IncomeDao {
     }
 
     @Override
-    public Income findByIncomeId(Long id) {
+    public Income findByIncomeId(long id) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
         Income song = (Income) session.get(Income.class, new Long(id));
         tx.commit();
         session.close();
         return song;
+    }
+
+    @Override
+    public List<Income> findByUserId(long id) {
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
+        Query query = session.createQuery(
+                "FROM Income WHERE created_by = :created_by");
+        query.setParameter("created_by", id);
+        List list = query.list();
+        tx.commit();
+        session.close();
+        return list;
     }
 }

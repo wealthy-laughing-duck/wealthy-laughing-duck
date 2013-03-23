@@ -34,17 +34,17 @@ public class FinanceService {
 
   public interface Iface {
 
-    public int add(int n1, int n2) throws org.apache.thrift.TException;
+    public List<TOutcome> getUserOutcomes(int user_id) throws org.apache.thrift.TException;
 
-    public int sub(int n1, int n2) throws org.apache.thrift.TException;
+    public List<TIncome> getUserIncomes(int user_id) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void add(int n1, int n2, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.add_call> resultHandler) throws org.apache.thrift.TException;
+    public void getUserOutcomes(int user_id, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getUserOutcomes_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void sub(int n1, int n2, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.sub_call> resultHandler) throws org.apache.thrift.TException;
+    public void getUserIncomes(int user_id, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getUserIncomes_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -68,52 +68,50 @@ public class FinanceService {
       super(iprot, oprot);
     }
 
-    public int add(int n1, int n2) throws org.apache.thrift.TException
+    public List<TOutcome> getUserOutcomes(int user_id) throws org.apache.thrift.TException
     {
-      send_add(n1, n2);
-      return recv_add();
+      send_getUserOutcomes(user_id);
+      return recv_getUserOutcomes();
     }
 
-    public void send_add(int n1, int n2) throws org.apache.thrift.TException
+    public void send_getUserOutcomes(int user_id) throws org.apache.thrift.TException
     {
-      add_args args = new add_args();
-      args.setN1(n1);
-      args.setN2(n2);
-      sendBase("add", args);
+      getUserOutcomes_args args = new getUserOutcomes_args();
+      args.setUser_id(user_id);
+      sendBase("getUserOutcomes", args);
     }
 
-    public int recv_add() throws org.apache.thrift.TException
+    public List<TOutcome> recv_getUserOutcomes() throws org.apache.thrift.TException
     {
-      add_result result = new add_result();
-      receiveBase(result, "add");
+      getUserOutcomes_result result = new getUserOutcomes_result();
+      receiveBase(result, "getUserOutcomes");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "add failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getUserOutcomes failed: unknown result");
     }
 
-    public int sub(int n1, int n2) throws org.apache.thrift.TException
+    public List<TIncome> getUserIncomes(int user_id) throws org.apache.thrift.TException
     {
-      send_sub(n1, n2);
-      return recv_sub();
+      send_getUserIncomes(user_id);
+      return recv_getUserIncomes();
     }
 
-    public void send_sub(int n1, int n2) throws org.apache.thrift.TException
+    public void send_getUserIncomes(int user_id) throws org.apache.thrift.TException
     {
-      sub_args args = new sub_args();
-      args.setN1(n1);
-      args.setN2(n2);
-      sendBase("sub", args);
+      getUserIncomes_args args = new getUserIncomes_args();
+      args.setUser_id(user_id);
+      sendBase("getUserIncomes", args);
     }
 
-    public int recv_sub() throws org.apache.thrift.TException
+    public List<TIncome> recv_getUserIncomes() throws org.apache.thrift.TException
     {
-      sub_result result = new sub_result();
-      receiveBase(result, "sub");
+      getUserIncomes_result result = new getUserIncomes_result();
+      receiveBase(result, "getUserIncomes");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "sub failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getUserIncomes failed: unknown result");
     }
 
   }
@@ -134,73 +132,67 @@ public class FinanceService {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void add(int n1, int n2, org.apache.thrift.async.AsyncMethodCallback<add_call> resultHandler) throws org.apache.thrift.TException {
+    public void getUserOutcomes(int user_id, org.apache.thrift.async.AsyncMethodCallback<getUserOutcomes_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      add_call method_call = new add_call(n1, n2, resultHandler, this, ___protocolFactory, ___transport);
+      getUserOutcomes_call method_call = new getUserOutcomes_call(user_id, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class add_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int n1;
-      private int n2;
-      public add_call(int n1, int n2, org.apache.thrift.async.AsyncMethodCallback<add_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+    public static class getUserOutcomes_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private int user_id;
+      public getUserOutcomes_call(int user_id, org.apache.thrift.async.AsyncMethodCallback<getUserOutcomes_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.n1 = n1;
-        this.n2 = n2;
+        this.user_id = user_id;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("add", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        add_args args = new add_args();
-        args.setN1(n1);
-        args.setN2(n2);
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getUserOutcomes", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getUserOutcomes_args args = new getUserOutcomes_args();
+        args.setUser_id(user_id);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public int getResult() throws org.apache.thrift.TException {
+      public List<TOutcome> getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_add();
+        return (new Client(prot)).recv_getUserOutcomes();
       }
     }
 
-    public void sub(int n1, int n2, org.apache.thrift.async.AsyncMethodCallback<sub_call> resultHandler) throws org.apache.thrift.TException {
+    public void getUserIncomes(int user_id, org.apache.thrift.async.AsyncMethodCallback<getUserIncomes_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      sub_call method_call = new sub_call(n1, n2, resultHandler, this, ___protocolFactory, ___transport);
+      getUserIncomes_call method_call = new getUserIncomes_call(user_id, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class sub_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int n1;
-      private int n2;
-      public sub_call(int n1, int n2, org.apache.thrift.async.AsyncMethodCallback<sub_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+    public static class getUserIncomes_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private int user_id;
+      public getUserIncomes_call(int user_id, org.apache.thrift.async.AsyncMethodCallback<getUserIncomes_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.n1 = n1;
-        this.n2 = n2;
+        this.user_id = user_id;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("sub", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        sub_args args = new sub_args();
-        args.setN1(n1);
-        args.setN2(n2);
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getUserIncomes", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getUserIncomes_args args = new getUserIncomes_args();
+        args.setUser_id(user_id);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public int getResult() throws org.apache.thrift.TException {
+      public List<TIncome> getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_sub();
+        return (new Client(prot)).recv_getUserIncomes();
       }
     }
 
@@ -217,74 +209,69 @@ public class FinanceService {
     }
 
     private static <I extends Iface> Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> getProcessMap(Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
-      processMap.put("add", new add());
-      processMap.put("sub", new sub());
+      processMap.put("getUserOutcomes", new getUserOutcomes());
+      processMap.put("getUserIncomes", new getUserIncomes());
       return processMap;
     }
 
-    public static class add<I extends Iface> extends org.apache.thrift.ProcessFunction<I, add_args> {
-      public add() {
-        super("add");
+    public static class getUserOutcomes<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getUserOutcomes_args> {
+      public getUserOutcomes() {
+        super("getUserOutcomes");
       }
 
-      public add_args getEmptyArgsInstance() {
-        return new add_args();
+      public getUserOutcomes_args getEmptyArgsInstance() {
+        return new getUserOutcomes_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public add_result getResult(I iface, add_args args) throws org.apache.thrift.TException {
-        add_result result = new add_result();
-        result.success = iface.add(args.n1, args.n2);
-        result.setSuccessIsSet(true);
+      public getUserOutcomes_result getResult(I iface, getUserOutcomes_args args) throws org.apache.thrift.TException {
+        getUserOutcomes_result result = new getUserOutcomes_result();
+        result.success = iface.getUserOutcomes(args.user_id);
         return result;
       }
     }
 
-    public static class sub<I extends Iface> extends org.apache.thrift.ProcessFunction<I, sub_args> {
-      public sub() {
-        super("sub");
+    public static class getUserIncomes<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getUserIncomes_args> {
+      public getUserIncomes() {
+        super("getUserIncomes");
       }
 
-      public sub_args getEmptyArgsInstance() {
-        return new sub_args();
+      public getUserIncomes_args getEmptyArgsInstance() {
+        return new getUserIncomes_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public sub_result getResult(I iface, sub_args args) throws org.apache.thrift.TException {
-        sub_result result = new sub_result();
-        result.success = iface.sub(args.n1, args.n2);
-        result.setSuccessIsSet(true);
+      public getUserIncomes_result getResult(I iface, getUserIncomes_args args) throws org.apache.thrift.TException {
+        getUserIncomes_result result = new getUserIncomes_result();
+        result.success = iface.getUserIncomes(args.user_id);
         return result;
       }
     }
 
   }
 
-  public static class add_args implements org.apache.thrift.TBase<add_args, add_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("add_args");
+  public static class getUserOutcomes_args implements org.apache.thrift.TBase<getUserOutcomes_args, getUserOutcomes_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getUserOutcomes_args");
 
-    private static final org.apache.thrift.protocol.TField N1_FIELD_DESC = new org.apache.thrift.protocol.TField("n1", org.apache.thrift.protocol.TType.I32, (short)1);
-    private static final org.apache.thrift.protocol.TField N2_FIELD_DESC = new org.apache.thrift.protocol.TField("n2", org.apache.thrift.protocol.TType.I32, (short)2);
+    private static final org.apache.thrift.protocol.TField USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("user_id", org.apache.thrift.protocol.TType.I32, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new add_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new add_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getUserOutcomes_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getUserOutcomes_argsTupleSchemeFactory());
     }
 
-    public int n1; // required
-    public int n2; // required
+    public int user_id; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      N1((short)1, "n1"),
-      N2((short)2, "n2");
+      USER_ID((short)1, "user_id");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -299,10 +286,8 @@ public class FinanceService {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // N1
-            return N1;
-          case 2: // N2
-            return N2;
+          case 1: // USER_ID
+            return USER_ID;
           default:
             return null;
         }
@@ -343,116 +328,76 @@ public class FinanceService {
     }
 
     // isset id assignments
-    private static final int __N1_ISSET_ID = 0;
-    private static final int __N2_ISSET_ID = 1;
+    private static final int __USER_ID_ISSET_ID = 0;
     private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.N1, new org.apache.thrift.meta_data.FieldMetaData("n1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "int")));
-      tmpMap.put(_Fields.N2, new org.apache.thrift.meta_data.FieldMetaData("n2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.USER_ID, new org.apache.thrift.meta_data.FieldMetaData("user_id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "int")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(add_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getUserOutcomes_args.class, metaDataMap);
     }
 
-    public add_args() {
+    public getUserOutcomes_args() {
     }
 
-    public add_args(
-      int n1,
-      int n2)
+    public getUserOutcomes_args(
+      int user_id)
     {
       this();
-      this.n1 = n1;
-      setN1IsSet(true);
-      this.n2 = n2;
-      setN2IsSet(true);
+      this.user_id = user_id;
+      setUser_idIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public add_args(add_args other) {
+    public getUserOutcomes_args(getUserOutcomes_args other) {
       __isset_bitfield = other.__isset_bitfield;
-      this.n1 = other.n1;
-      this.n2 = other.n2;
+      this.user_id = other.user_id;
     }
 
-    public add_args deepCopy() {
-      return new add_args(this);
+    public getUserOutcomes_args deepCopy() {
+      return new getUserOutcomes_args(this);
     }
 
     @Override
     public void clear() {
-      setN1IsSet(false);
-      this.n1 = 0;
-      setN2IsSet(false);
-      this.n2 = 0;
+      setUser_idIsSet(false);
+      this.user_id = 0;
     }
 
-    public int getN1() {
-      return this.n1;
+    public int getUser_id() {
+      return this.user_id;
     }
 
-    public add_args setN1(int n1) {
-      this.n1 = n1;
-      setN1IsSet(true);
+    public getUserOutcomes_args setUser_id(int user_id) {
+      this.user_id = user_id;
+      setUser_idIsSet(true);
       return this;
     }
 
-    public void unsetN1() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __N1_ISSET_ID);
+    public void unsetUser_id() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __USER_ID_ISSET_ID);
     }
 
-    /** Returns true if field n1 is set (has been assigned a value) and false otherwise */
-    public boolean isSetN1() {
-      return EncodingUtils.testBit(__isset_bitfield, __N1_ISSET_ID);
+    /** Returns true if field user_id is set (has been assigned a value) and false otherwise */
+    public boolean isSetUser_id() {
+      return EncodingUtils.testBit(__isset_bitfield, __USER_ID_ISSET_ID);
     }
 
-    public void setN1IsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __N1_ISSET_ID, value);
-    }
-
-    public int getN2() {
-      return this.n2;
-    }
-
-    public add_args setN2(int n2) {
-      this.n2 = n2;
-      setN2IsSet(true);
-      return this;
-    }
-
-    public void unsetN2() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __N2_ISSET_ID);
-    }
-
-    /** Returns true if field n2 is set (has been assigned a value) and false otherwise */
-    public boolean isSetN2() {
-      return EncodingUtils.testBit(__isset_bitfield, __N2_ISSET_ID);
-    }
-
-    public void setN2IsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __N2_ISSET_ID, value);
+    public void setUser_idIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __USER_ID_ISSET_ID, value);
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case N1:
+      case USER_ID:
         if (value == null) {
-          unsetN1();
+          unsetUser_id();
         } else {
-          setN1((Integer)value);
-        }
-        break;
-
-      case N2:
-        if (value == null) {
-          unsetN2();
-        } else {
-          setN2((Integer)value);
+          setUser_id((Integer)value);
         }
         break;
 
@@ -461,11 +406,8 @@ public class FinanceService {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case N1:
-        return Integer.valueOf(getN1());
-
-      case N2:
-        return Integer.valueOf(getN2());
+      case USER_ID:
+        return Integer.valueOf(getUser_id());
 
       }
       throw new IllegalStateException();
@@ -478,10 +420,8 @@ public class FinanceService {
       }
 
       switch (field) {
-      case N1:
-        return isSetN1();
-      case N2:
-        return isSetN2();
+      case USER_ID:
+        return isSetUser_id();
       }
       throw new IllegalStateException();
     }
@@ -490,30 +430,21 @@ public class FinanceService {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof add_args)
-        return this.equals((add_args)that);
+      if (that instanceof getUserOutcomes_args)
+        return this.equals((getUserOutcomes_args)that);
       return false;
     }
 
-    public boolean equals(add_args that) {
+    public boolean equals(getUserOutcomes_args that) {
       if (that == null)
         return false;
 
-      boolean this_present_n1 = true;
-      boolean that_present_n1 = true;
-      if (this_present_n1 || that_present_n1) {
-        if (!(this_present_n1 && that_present_n1))
+      boolean this_present_user_id = true;
+      boolean that_present_user_id = true;
+      if (this_present_user_id || that_present_user_id) {
+        if (!(this_present_user_id && that_present_user_id))
           return false;
-        if (this.n1 != that.n1)
-          return false;
-      }
-
-      boolean this_present_n2 = true;
-      boolean that_present_n2 = true;
-      if (this_present_n2 || that_present_n2) {
-        if (!(this_present_n2 && that_present_n2))
-          return false;
-        if (this.n2 != that.n2)
+        if (this.user_id != that.user_id)
           return false;
       }
 
@@ -525,30 +456,20 @@ public class FinanceService {
       return 0;
     }
 
-    public int compareTo(add_args other) {
+    public int compareTo(getUserOutcomes_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      add_args typedOther = (add_args)other;
+      getUserOutcomes_args typedOther = (getUserOutcomes_args)other;
 
-      lastComparison = Boolean.valueOf(isSetN1()).compareTo(typedOther.isSetN1());
+      lastComparison = Boolean.valueOf(isSetUser_id()).compareTo(typedOther.isSetUser_id());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetN1()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.n1, typedOther.n1);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = Boolean.valueOf(isSetN2()).compareTo(typedOther.isSetN2());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetN2()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.n2, typedOther.n2);
+      if (isSetUser_id()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.user_id, typedOther.user_id);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -570,15 +491,11 @@ public class FinanceService {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("add_args(");
+      StringBuilder sb = new StringBuilder("getUserOutcomes_args(");
       boolean first = true;
 
-      sb.append("n1:");
-      sb.append(this.n1);
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("n2:");
-      sb.append(this.n2);
+      sb.append("user_id:");
+      sb.append(this.user_id);
       first = false;
       sb.append(")");
       return sb.toString();
@@ -586,6 +503,7 @@ public class FinanceService {
 
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
+      // alas, we cannot check 'user_id' because it's a primitive and you chose the non-beans generator.
       // check for sub-struct validity
     }
 
@@ -607,15 +525,15 @@ public class FinanceService {
       }
     }
 
-    private static class add_argsStandardSchemeFactory implements SchemeFactory {
-      public add_argsStandardScheme getScheme() {
-        return new add_argsStandardScheme();
+    private static class getUserOutcomes_argsStandardSchemeFactory implements SchemeFactory {
+      public getUserOutcomes_argsStandardScheme getScheme() {
+        return new getUserOutcomes_argsStandardScheme();
       }
     }
 
-    private static class add_argsStandardScheme extends StandardScheme<add_args> {
+    private static class getUserOutcomes_argsStandardScheme extends StandardScheme<getUserOutcomes_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, add_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getUserOutcomes_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -625,18 +543,10 @@ public class FinanceService {
             break;
           }
           switch (schemeField.id) {
-            case 1: // N1
+            case 1: // USER_ID
               if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.n1 = iprot.readI32();
-                struct.setN1IsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 2: // N2
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.n2 = iprot.readI32();
-                struct.setN2IsSet(true);
+                struct.user_id = iprot.readI32();
+                struct.setUser_idIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -649,18 +559,18 @@ public class FinanceService {
         iprot.readStructEnd();
 
         // check for required fields of primitive type, which can't be checked in the validate method
+        if (!struct.isSetUser_id()) {
+          throw new org.apache.thrift.protocol.TProtocolException("Required field 'user_id' was not found in serialized data! Struct: " + toString());
+        }
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, add_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getUserOutcomes_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        oprot.writeFieldBegin(N1_FIELD_DESC);
-        oprot.writeI32(struct.n1);
-        oprot.writeFieldEnd();
-        oprot.writeFieldBegin(N2_FIELD_DESC);
-        oprot.writeI32(struct.n2);
+        oprot.writeFieldBegin(USER_ID_FIELD_DESC);
+        oprot.writeI32(struct.user_id);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -668,62 +578,42 @@ public class FinanceService {
 
     }
 
-    private static class add_argsTupleSchemeFactory implements SchemeFactory {
-      public add_argsTupleScheme getScheme() {
-        return new add_argsTupleScheme();
+    private static class getUserOutcomes_argsTupleSchemeFactory implements SchemeFactory {
+      public getUserOutcomes_argsTupleScheme getScheme() {
+        return new getUserOutcomes_argsTupleScheme();
       }
     }
 
-    private static class add_argsTupleScheme extends TupleScheme<add_args> {
+    private static class getUserOutcomes_argsTupleScheme extends TupleScheme<getUserOutcomes_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, add_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getUserOutcomes_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
-        BitSet optionals = new BitSet();
-        if (struct.isSetN1()) {
-          optionals.set(0);
-        }
-        if (struct.isSetN2()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
-        if (struct.isSetN1()) {
-          oprot.writeI32(struct.n1);
-        }
-        if (struct.isSetN2()) {
-          oprot.writeI32(struct.n2);
-        }
+        oprot.writeI32(struct.user_id);
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, add_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getUserOutcomes_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(2);
-        if (incoming.get(0)) {
-          struct.n1 = iprot.readI32();
-          struct.setN1IsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.n2 = iprot.readI32();
-          struct.setN2IsSet(true);
-        }
+        struct.user_id = iprot.readI32();
+        struct.setUser_idIsSet(true);
       }
     }
 
   }
 
-  public static class add_result implements org.apache.thrift.TBase<add_result, add_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("add_result");
+  public static class getUserOutcomes_result implements org.apache.thrift.TBase<getUserOutcomes_result, getUserOutcomes_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getUserOutcomes_result");
 
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.I32, (short)0);
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new add_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new add_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getUserOutcomes_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getUserOutcomes_resultTupleSchemeFactory());
     }
 
-    public int success; // required
+    public List<TOutcome> success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -784,67 +674,85 @@ public class FinanceService {
     }
 
     // isset id assignments
-    private static final int __SUCCESS_ISSET_ID = 0;
-    private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "int")));
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TOutcome.class))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(add_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getUserOutcomes_result.class, metaDataMap);
     }
 
-    public add_result() {
+    public getUserOutcomes_result() {
     }
 
-    public add_result(
-      int success)
+    public getUserOutcomes_result(
+      List<TOutcome> success)
     {
       this();
       this.success = success;
-      setSuccessIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public add_result(add_result other) {
-      __isset_bitfield = other.__isset_bitfield;
-      this.success = other.success;
+    public getUserOutcomes_result(getUserOutcomes_result other) {
+      if (other.isSetSuccess()) {
+        List<TOutcome> __this__success = new ArrayList<TOutcome>();
+        for (TOutcome other_element : other.success) {
+          __this__success.add(new TOutcome(other_element));
+        }
+        this.success = __this__success;
+      }
     }
 
-    public add_result deepCopy() {
-      return new add_result(this);
+    public getUserOutcomes_result deepCopy() {
+      return new getUserOutcomes_result(this);
     }
 
     @Override
     public void clear() {
-      setSuccessIsSet(false);
-      this.success = 0;
+      this.success = null;
     }
 
-    public int getSuccess() {
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public java.util.Iterator<TOutcome> getSuccessIterator() {
+      return (this.success == null) ? null : this.success.iterator();
+    }
+
+    public void addToSuccess(TOutcome elem) {
+      if (this.success == null) {
+        this.success = new ArrayList<TOutcome>();
+      }
+      this.success.add(elem);
+    }
+
+    public List<TOutcome> getSuccess() {
       return this.success;
     }
 
-    public add_result setSuccess(int success) {
+    public getUserOutcomes_result setSuccess(List<TOutcome> success) {
       this.success = success;
-      setSuccessIsSet(true);
       return this;
     }
 
     public void unsetSuccess() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+      this.success = null;
     }
 
     /** Returns true if field success is set (has been assigned a value) and false otherwise */
     public boolean isSetSuccess() {
-      return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+      return this.success != null;
     }
 
     public void setSuccessIsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
+      if (!value) {
+        this.success = null;
+      }
     }
 
     public void setFieldValue(_Fields field, Object value) {
@@ -853,7 +761,7 @@ public class FinanceService {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((Integer)value);
+          setSuccess((List<TOutcome>)value);
         }
         break;
 
@@ -863,7 +771,7 @@ public class FinanceService {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SUCCESS:
-        return Integer.valueOf(getSuccess());
+        return getSuccess();
 
       }
       throw new IllegalStateException();
@@ -886,21 +794,21 @@ public class FinanceService {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof add_result)
-        return this.equals((add_result)that);
+      if (that instanceof getUserOutcomes_result)
+        return this.equals((getUserOutcomes_result)that);
       return false;
     }
 
-    public boolean equals(add_result that) {
+    public boolean equals(getUserOutcomes_result that) {
       if (that == null)
         return false;
 
-      boolean this_present_success = true;
-      boolean that_present_success = true;
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
       if (this_present_success || that_present_success) {
         if (!(this_present_success && that_present_success))
           return false;
-        if (this.success != that.success)
+        if (!this.success.equals(that.success))
           return false;
       }
 
@@ -912,13 +820,13 @@ public class FinanceService {
       return 0;
     }
 
-    public int compareTo(add_result other) {
+    public int compareTo(getUserOutcomes_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      add_result typedOther = (add_result)other;
+      getUserOutcomes_result typedOther = (getUserOutcomes_result)other;
 
       lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
       if (lastComparison != 0) {
@@ -947,11 +855,15 @@ public class FinanceService {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("add_result(");
+      StringBuilder sb = new StringBuilder("getUserOutcomes_result(");
       boolean first = true;
 
       sb.append("success:");
-      sb.append(this.success);
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
       first = false;
       sb.append(")");
       return sb.toString();
@@ -972,23 +884,21 @@ public class FinanceService {
 
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
-        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
-        __isset_bitfield = 0;
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
       } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
 
-    private static class add_resultStandardSchemeFactory implements SchemeFactory {
-      public add_resultStandardScheme getScheme() {
-        return new add_resultStandardScheme();
+    private static class getUserOutcomes_resultStandardSchemeFactory implements SchemeFactory {
+      public getUserOutcomes_resultStandardScheme getScheme() {
+        return new getUserOutcomes_resultStandardScheme();
       }
     }
 
-    private static class add_resultStandardScheme extends StandardScheme<add_result> {
+    private static class getUserOutcomes_resultStandardScheme extends StandardScheme<getUserOutcomes_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, add_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getUserOutcomes_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -999,8 +909,19 @@ public class FinanceService {
           }
           switch (schemeField.id) {
             case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.success = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                {
+                  org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
+                  struct.success = new ArrayList<TOutcome>(_list0.size);
+                  for (int _i1 = 0; _i1 < _list0.size; ++_i1)
+                  {
+                    TOutcome _elem2; // required
+                    _elem2 = new TOutcome();
+                    _elem2.read(iprot);
+                    struct.success.add(_elem2);
+                  }
+                  iprot.readListEnd();
+                }
                 struct.setSuccessIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -1017,13 +938,20 @@ public class FinanceService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, add_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getUserOutcomes_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.isSetSuccess()) {
+        if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          oprot.writeI32(struct.success);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
+            for (TOutcome _iter3 : struct.success)
+            {
+              _iter3.write(oprot);
+            }
+            oprot.writeListEnd();
+          }
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -1032,16 +960,16 @@ public class FinanceService {
 
     }
 
-    private static class add_resultTupleSchemeFactory implements SchemeFactory {
-      public add_resultTupleScheme getScheme() {
-        return new add_resultTupleScheme();
+    private static class getUserOutcomes_resultTupleSchemeFactory implements SchemeFactory {
+      public getUserOutcomes_resultTupleScheme getScheme() {
+        return new getUserOutcomes_resultTupleScheme();
       }
     }
 
-    private static class add_resultTupleScheme extends TupleScheme<add_result> {
+    private static class getUserOutcomes_resultTupleScheme extends TupleScheme<getUserOutcomes_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, add_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getUserOutcomes_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -1049,16 +977,32 @@ public class FinanceService {
         }
         oprot.writeBitSet(optionals, 1);
         if (struct.isSetSuccess()) {
-          oprot.writeI32(struct.success);
+          {
+            oprot.writeI32(struct.success.size());
+            for (TOutcome _iter4 : struct.success)
+            {
+              _iter4.write(oprot);
+            }
+          }
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, add_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getUserOutcomes_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.success = iprot.readI32();
+          {
+            org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<TOutcome>(_list5.size);
+            for (int _i6 = 0; _i6 < _list5.size; ++_i6)
+            {
+              TOutcome _elem7; // required
+              _elem7 = new TOutcome();
+              _elem7.read(iprot);
+              struct.success.add(_elem7);
+            }
+          }
           struct.setSuccessIsSet(true);
         }
       }
@@ -1066,25 +1010,22 @@ public class FinanceService {
 
   }
 
-  public static class sub_args implements org.apache.thrift.TBase<sub_args, sub_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("sub_args");
+  public static class getUserIncomes_args implements org.apache.thrift.TBase<getUserIncomes_args, getUserIncomes_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getUserIncomes_args");
 
-    private static final org.apache.thrift.protocol.TField N1_FIELD_DESC = new org.apache.thrift.protocol.TField("n1", org.apache.thrift.protocol.TType.I32, (short)1);
-    private static final org.apache.thrift.protocol.TField N2_FIELD_DESC = new org.apache.thrift.protocol.TField("n2", org.apache.thrift.protocol.TType.I32, (short)2);
+    private static final org.apache.thrift.protocol.TField USER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("user_id", org.apache.thrift.protocol.TType.I32, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new sub_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new sub_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getUserIncomes_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getUserIncomes_argsTupleSchemeFactory());
     }
 
-    public int n1; // required
-    public int n2; // required
+    public int user_id; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      N1((short)1, "n1"),
-      N2((short)2, "n2");
+      USER_ID((short)1, "user_id");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -1099,10 +1040,8 @@ public class FinanceService {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // N1
-            return N1;
-          case 2: // N2
-            return N2;
+          case 1: // USER_ID
+            return USER_ID;
           default:
             return null;
         }
@@ -1143,116 +1082,76 @@ public class FinanceService {
     }
 
     // isset id assignments
-    private static final int __N1_ISSET_ID = 0;
-    private static final int __N2_ISSET_ID = 1;
+    private static final int __USER_ID_ISSET_ID = 0;
     private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.N1, new org.apache.thrift.meta_data.FieldMetaData("n1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "int")));
-      tmpMap.put(_Fields.N2, new org.apache.thrift.meta_data.FieldMetaData("n2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.USER_ID, new org.apache.thrift.meta_data.FieldMetaData("user_id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "int")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(sub_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getUserIncomes_args.class, metaDataMap);
     }
 
-    public sub_args() {
+    public getUserIncomes_args() {
     }
 
-    public sub_args(
-      int n1,
-      int n2)
+    public getUserIncomes_args(
+      int user_id)
     {
       this();
-      this.n1 = n1;
-      setN1IsSet(true);
-      this.n2 = n2;
-      setN2IsSet(true);
+      this.user_id = user_id;
+      setUser_idIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public sub_args(sub_args other) {
+    public getUserIncomes_args(getUserIncomes_args other) {
       __isset_bitfield = other.__isset_bitfield;
-      this.n1 = other.n1;
-      this.n2 = other.n2;
+      this.user_id = other.user_id;
     }
 
-    public sub_args deepCopy() {
-      return new sub_args(this);
+    public getUserIncomes_args deepCopy() {
+      return new getUserIncomes_args(this);
     }
 
     @Override
     public void clear() {
-      setN1IsSet(false);
-      this.n1 = 0;
-      setN2IsSet(false);
-      this.n2 = 0;
+      setUser_idIsSet(false);
+      this.user_id = 0;
     }
 
-    public int getN1() {
-      return this.n1;
+    public int getUser_id() {
+      return this.user_id;
     }
 
-    public sub_args setN1(int n1) {
-      this.n1 = n1;
-      setN1IsSet(true);
+    public getUserIncomes_args setUser_id(int user_id) {
+      this.user_id = user_id;
+      setUser_idIsSet(true);
       return this;
     }
 
-    public void unsetN1() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __N1_ISSET_ID);
+    public void unsetUser_id() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __USER_ID_ISSET_ID);
     }
 
-    /** Returns true if field n1 is set (has been assigned a value) and false otherwise */
-    public boolean isSetN1() {
-      return EncodingUtils.testBit(__isset_bitfield, __N1_ISSET_ID);
+    /** Returns true if field user_id is set (has been assigned a value) and false otherwise */
+    public boolean isSetUser_id() {
+      return EncodingUtils.testBit(__isset_bitfield, __USER_ID_ISSET_ID);
     }
 
-    public void setN1IsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __N1_ISSET_ID, value);
-    }
-
-    public int getN2() {
-      return this.n2;
-    }
-
-    public sub_args setN2(int n2) {
-      this.n2 = n2;
-      setN2IsSet(true);
-      return this;
-    }
-
-    public void unsetN2() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __N2_ISSET_ID);
-    }
-
-    /** Returns true if field n2 is set (has been assigned a value) and false otherwise */
-    public boolean isSetN2() {
-      return EncodingUtils.testBit(__isset_bitfield, __N2_ISSET_ID);
-    }
-
-    public void setN2IsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __N2_ISSET_ID, value);
+    public void setUser_idIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __USER_ID_ISSET_ID, value);
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case N1:
+      case USER_ID:
         if (value == null) {
-          unsetN1();
+          unsetUser_id();
         } else {
-          setN1((Integer)value);
-        }
-        break;
-
-      case N2:
-        if (value == null) {
-          unsetN2();
-        } else {
-          setN2((Integer)value);
+          setUser_id((Integer)value);
         }
         break;
 
@@ -1261,11 +1160,8 @@ public class FinanceService {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case N1:
-        return Integer.valueOf(getN1());
-
-      case N2:
-        return Integer.valueOf(getN2());
+      case USER_ID:
+        return Integer.valueOf(getUser_id());
 
       }
       throw new IllegalStateException();
@@ -1278,10 +1174,8 @@ public class FinanceService {
       }
 
       switch (field) {
-      case N1:
-        return isSetN1();
-      case N2:
-        return isSetN2();
+      case USER_ID:
+        return isSetUser_id();
       }
       throw new IllegalStateException();
     }
@@ -1290,30 +1184,21 @@ public class FinanceService {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof sub_args)
-        return this.equals((sub_args)that);
+      if (that instanceof getUserIncomes_args)
+        return this.equals((getUserIncomes_args)that);
       return false;
     }
 
-    public boolean equals(sub_args that) {
+    public boolean equals(getUserIncomes_args that) {
       if (that == null)
         return false;
 
-      boolean this_present_n1 = true;
-      boolean that_present_n1 = true;
-      if (this_present_n1 || that_present_n1) {
-        if (!(this_present_n1 && that_present_n1))
+      boolean this_present_user_id = true;
+      boolean that_present_user_id = true;
+      if (this_present_user_id || that_present_user_id) {
+        if (!(this_present_user_id && that_present_user_id))
           return false;
-        if (this.n1 != that.n1)
-          return false;
-      }
-
-      boolean this_present_n2 = true;
-      boolean that_present_n2 = true;
-      if (this_present_n2 || that_present_n2) {
-        if (!(this_present_n2 && that_present_n2))
-          return false;
-        if (this.n2 != that.n2)
+        if (this.user_id != that.user_id)
           return false;
       }
 
@@ -1325,30 +1210,20 @@ public class FinanceService {
       return 0;
     }
 
-    public int compareTo(sub_args other) {
+    public int compareTo(getUserIncomes_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      sub_args typedOther = (sub_args)other;
+      getUserIncomes_args typedOther = (getUserIncomes_args)other;
 
-      lastComparison = Boolean.valueOf(isSetN1()).compareTo(typedOther.isSetN1());
+      lastComparison = Boolean.valueOf(isSetUser_id()).compareTo(typedOther.isSetUser_id());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetN1()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.n1, typedOther.n1);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = Boolean.valueOf(isSetN2()).compareTo(typedOther.isSetN2());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetN2()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.n2, typedOther.n2);
+      if (isSetUser_id()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.user_id, typedOther.user_id);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -1370,15 +1245,11 @@ public class FinanceService {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("sub_args(");
+      StringBuilder sb = new StringBuilder("getUserIncomes_args(");
       boolean first = true;
 
-      sb.append("n1:");
-      sb.append(this.n1);
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("n2:");
-      sb.append(this.n2);
+      sb.append("user_id:");
+      sb.append(this.user_id);
       first = false;
       sb.append(")");
       return sb.toString();
@@ -1386,6 +1257,7 @@ public class FinanceService {
 
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
+      // alas, we cannot check 'user_id' because it's a primitive and you chose the non-beans generator.
       // check for sub-struct validity
     }
 
@@ -1407,15 +1279,15 @@ public class FinanceService {
       }
     }
 
-    private static class sub_argsStandardSchemeFactory implements SchemeFactory {
-      public sub_argsStandardScheme getScheme() {
-        return new sub_argsStandardScheme();
+    private static class getUserIncomes_argsStandardSchemeFactory implements SchemeFactory {
+      public getUserIncomes_argsStandardScheme getScheme() {
+        return new getUserIncomes_argsStandardScheme();
       }
     }
 
-    private static class sub_argsStandardScheme extends StandardScheme<sub_args> {
+    private static class getUserIncomes_argsStandardScheme extends StandardScheme<getUserIncomes_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, sub_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getUserIncomes_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -1425,18 +1297,10 @@ public class FinanceService {
             break;
           }
           switch (schemeField.id) {
-            case 1: // N1
+            case 1: // USER_ID
               if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.n1 = iprot.readI32();
-                struct.setN1IsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 2: // N2
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.n2 = iprot.readI32();
-                struct.setN2IsSet(true);
+                struct.user_id = iprot.readI32();
+                struct.setUser_idIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -1449,18 +1313,18 @@ public class FinanceService {
         iprot.readStructEnd();
 
         // check for required fields of primitive type, which can't be checked in the validate method
+        if (!struct.isSetUser_id()) {
+          throw new org.apache.thrift.protocol.TProtocolException("Required field 'user_id' was not found in serialized data! Struct: " + toString());
+        }
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, sub_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getUserIncomes_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        oprot.writeFieldBegin(N1_FIELD_DESC);
-        oprot.writeI32(struct.n1);
-        oprot.writeFieldEnd();
-        oprot.writeFieldBegin(N2_FIELD_DESC);
-        oprot.writeI32(struct.n2);
+        oprot.writeFieldBegin(USER_ID_FIELD_DESC);
+        oprot.writeI32(struct.user_id);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -1468,62 +1332,42 @@ public class FinanceService {
 
     }
 
-    private static class sub_argsTupleSchemeFactory implements SchemeFactory {
-      public sub_argsTupleScheme getScheme() {
-        return new sub_argsTupleScheme();
+    private static class getUserIncomes_argsTupleSchemeFactory implements SchemeFactory {
+      public getUserIncomes_argsTupleScheme getScheme() {
+        return new getUserIncomes_argsTupleScheme();
       }
     }
 
-    private static class sub_argsTupleScheme extends TupleScheme<sub_args> {
+    private static class getUserIncomes_argsTupleScheme extends TupleScheme<getUserIncomes_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, sub_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getUserIncomes_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
-        BitSet optionals = new BitSet();
-        if (struct.isSetN1()) {
-          optionals.set(0);
-        }
-        if (struct.isSetN2()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
-        if (struct.isSetN1()) {
-          oprot.writeI32(struct.n1);
-        }
-        if (struct.isSetN2()) {
-          oprot.writeI32(struct.n2);
-        }
+        oprot.writeI32(struct.user_id);
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, sub_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getUserIncomes_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(2);
-        if (incoming.get(0)) {
-          struct.n1 = iprot.readI32();
-          struct.setN1IsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.n2 = iprot.readI32();
-          struct.setN2IsSet(true);
-        }
+        struct.user_id = iprot.readI32();
+        struct.setUser_idIsSet(true);
       }
     }
 
   }
 
-  public static class sub_result implements org.apache.thrift.TBase<sub_result, sub_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("sub_result");
+  public static class getUserIncomes_result implements org.apache.thrift.TBase<getUserIncomes_result, getUserIncomes_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getUserIncomes_result");
 
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.I32, (short)0);
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new sub_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new sub_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getUserIncomes_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getUserIncomes_resultTupleSchemeFactory());
     }
 
-    public int success; // required
+    public List<TIncome> success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -1584,67 +1428,85 @@ public class FinanceService {
     }
 
     // isset id assignments
-    private static final int __SUCCESS_ISSET_ID = 0;
-    private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "int")));
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TIncome.class))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(sub_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getUserIncomes_result.class, metaDataMap);
     }
 
-    public sub_result() {
+    public getUserIncomes_result() {
     }
 
-    public sub_result(
-      int success)
+    public getUserIncomes_result(
+      List<TIncome> success)
     {
       this();
       this.success = success;
-      setSuccessIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public sub_result(sub_result other) {
-      __isset_bitfield = other.__isset_bitfield;
-      this.success = other.success;
+    public getUserIncomes_result(getUserIncomes_result other) {
+      if (other.isSetSuccess()) {
+        List<TIncome> __this__success = new ArrayList<TIncome>();
+        for (TIncome other_element : other.success) {
+          __this__success.add(new TIncome(other_element));
+        }
+        this.success = __this__success;
+      }
     }
 
-    public sub_result deepCopy() {
-      return new sub_result(this);
+    public getUserIncomes_result deepCopy() {
+      return new getUserIncomes_result(this);
     }
 
     @Override
     public void clear() {
-      setSuccessIsSet(false);
-      this.success = 0;
+      this.success = null;
     }
 
-    public int getSuccess() {
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public java.util.Iterator<TIncome> getSuccessIterator() {
+      return (this.success == null) ? null : this.success.iterator();
+    }
+
+    public void addToSuccess(TIncome elem) {
+      if (this.success == null) {
+        this.success = new ArrayList<TIncome>();
+      }
+      this.success.add(elem);
+    }
+
+    public List<TIncome> getSuccess() {
       return this.success;
     }
 
-    public sub_result setSuccess(int success) {
+    public getUserIncomes_result setSuccess(List<TIncome> success) {
       this.success = success;
-      setSuccessIsSet(true);
       return this;
     }
 
     public void unsetSuccess() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+      this.success = null;
     }
 
     /** Returns true if field success is set (has been assigned a value) and false otherwise */
     public boolean isSetSuccess() {
-      return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+      return this.success != null;
     }
 
     public void setSuccessIsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
+      if (!value) {
+        this.success = null;
+      }
     }
 
     public void setFieldValue(_Fields field, Object value) {
@@ -1653,7 +1515,7 @@ public class FinanceService {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((Integer)value);
+          setSuccess((List<TIncome>)value);
         }
         break;
 
@@ -1663,7 +1525,7 @@ public class FinanceService {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SUCCESS:
-        return Integer.valueOf(getSuccess());
+        return getSuccess();
 
       }
       throw new IllegalStateException();
@@ -1686,21 +1548,21 @@ public class FinanceService {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof sub_result)
-        return this.equals((sub_result)that);
+      if (that instanceof getUserIncomes_result)
+        return this.equals((getUserIncomes_result)that);
       return false;
     }
 
-    public boolean equals(sub_result that) {
+    public boolean equals(getUserIncomes_result that) {
       if (that == null)
         return false;
 
-      boolean this_present_success = true;
-      boolean that_present_success = true;
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
       if (this_present_success || that_present_success) {
         if (!(this_present_success && that_present_success))
           return false;
-        if (this.success != that.success)
+        if (!this.success.equals(that.success))
           return false;
       }
 
@@ -1712,13 +1574,13 @@ public class FinanceService {
       return 0;
     }
 
-    public int compareTo(sub_result other) {
+    public int compareTo(getUserIncomes_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      sub_result typedOther = (sub_result)other;
+      getUserIncomes_result typedOther = (getUserIncomes_result)other;
 
       lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
       if (lastComparison != 0) {
@@ -1747,11 +1609,15 @@ public class FinanceService {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("sub_result(");
+      StringBuilder sb = new StringBuilder("getUserIncomes_result(");
       boolean first = true;
 
       sb.append("success:");
-      sb.append(this.success);
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
       first = false;
       sb.append(")");
       return sb.toString();
@@ -1772,23 +1638,21 @@ public class FinanceService {
 
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
-        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
-        __isset_bitfield = 0;
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
       } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
 
-    private static class sub_resultStandardSchemeFactory implements SchemeFactory {
-      public sub_resultStandardScheme getScheme() {
-        return new sub_resultStandardScheme();
+    private static class getUserIncomes_resultStandardSchemeFactory implements SchemeFactory {
+      public getUserIncomes_resultStandardScheme getScheme() {
+        return new getUserIncomes_resultStandardScheme();
       }
     }
 
-    private static class sub_resultStandardScheme extends StandardScheme<sub_result> {
+    private static class getUserIncomes_resultStandardScheme extends StandardScheme<getUserIncomes_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, sub_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getUserIncomes_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -1799,8 +1663,19 @@ public class FinanceService {
           }
           switch (schemeField.id) {
             case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.success = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                {
+                  org.apache.thrift.protocol.TList _list8 = iprot.readListBegin();
+                  struct.success = new ArrayList<TIncome>(_list8.size);
+                  for (int _i9 = 0; _i9 < _list8.size; ++_i9)
+                  {
+                    TIncome _elem10; // required
+                    _elem10 = new TIncome();
+                    _elem10.read(iprot);
+                    struct.success.add(_elem10);
+                  }
+                  iprot.readListEnd();
+                }
                 struct.setSuccessIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -1817,13 +1692,20 @@ public class FinanceService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, sub_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getUserIncomes_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.isSetSuccess()) {
+        if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          oprot.writeI32(struct.success);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
+            for (TIncome _iter11 : struct.success)
+            {
+              _iter11.write(oprot);
+            }
+            oprot.writeListEnd();
+          }
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -1832,16 +1714,16 @@ public class FinanceService {
 
     }
 
-    private static class sub_resultTupleSchemeFactory implements SchemeFactory {
-      public sub_resultTupleScheme getScheme() {
-        return new sub_resultTupleScheme();
+    private static class getUserIncomes_resultTupleSchemeFactory implements SchemeFactory {
+      public getUserIncomes_resultTupleScheme getScheme() {
+        return new getUserIncomes_resultTupleScheme();
       }
     }
 
-    private static class sub_resultTupleScheme extends TupleScheme<sub_result> {
+    private static class getUserIncomes_resultTupleScheme extends TupleScheme<getUserIncomes_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, sub_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getUserIncomes_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -1849,16 +1731,32 @@ public class FinanceService {
         }
         oprot.writeBitSet(optionals, 1);
         if (struct.isSetSuccess()) {
-          oprot.writeI32(struct.success);
+          {
+            oprot.writeI32(struct.success.size());
+            for (TIncome _iter12 : struct.success)
+            {
+              _iter12.write(oprot);
+            }
+          }
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, sub_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getUserIncomes_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.success = iprot.readI32();
+          {
+            org.apache.thrift.protocol.TList _list13 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<TIncome>(_list13.size);
+            for (int _i14 = 0; _i14 < _list13.size; ++_i14)
+            {
+              TIncome _elem15; // required
+              _elem15 = new TIncome();
+              _elem15.read(iprot);
+              struct.success.add(_elem15);
+            }
+          }
           struct.setSuccessIsSet(true);
         }
       }

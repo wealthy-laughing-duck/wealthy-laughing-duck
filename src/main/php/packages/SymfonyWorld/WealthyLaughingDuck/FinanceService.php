@@ -16,8 +16,8 @@ use Thrift\Exception\TApplicationException;
 
 
 interface FinanceServiceIf {
-  public function add($n1, $n2);
-  public function sub($n1, $n2);
+  public function getUserOutcomes($user_id);
+  public function getUserIncomes($user_id);
 }
 
 class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceServiceIf {
@@ -31,35 +31,34 @@ class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceS
     $this->output_ = $output ? $output : $input;
   }
 
-  public function add($n1, $n2)
+  public function getUserOutcomes($user_id)
   {
-    $this->send_add($n1, $n2);
-    return $this->recv_add();
+    $this->send_getUserOutcomes($user_id);
+    return $this->recv_getUserOutcomes();
   }
 
-  public function send_add($n1, $n2)
+  public function send_getUserOutcomes($user_id)
   {
-    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_add_args();
-    $args->n1 = $n1;
-    $args->n2 = $n2;
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getUserOutcomes_args();
+    $args->user_id = $user_id;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
-      thrift_protocol_write_binary($this->output_, 'add', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+      thrift_protocol_write_binary($this->output_, 'getUserOutcomes', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
     }
     else
     {
-      $this->output_->writeMessageBegin('add', TMessageType::CALL, $this->seqid_);
+      $this->output_->writeMessageBegin('getUserOutcomes', TMessageType::CALL, $this->seqid_);
       $args->write($this->output_);
       $this->output_->writeMessageEnd();
       $this->output_->getTransport()->flush();
     }
   }
 
-  public function recv_add()
+  public function recv_getUserOutcomes()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_add_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_getUserOutcomes_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -73,45 +72,44 @@ class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceS
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_add_result();
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getUserOutcomes_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
     if ($result->success !== null) {
       return $result->success;
     }
-    throw new \Exception("add failed: unknown result");
+    throw new \Exception("getUserOutcomes failed: unknown result");
   }
 
-  public function sub($n1, $n2)
+  public function getUserIncomes($user_id)
   {
-    $this->send_sub($n1, $n2);
-    return $this->recv_sub();
+    $this->send_getUserIncomes($user_id);
+    return $this->recv_getUserIncomes();
   }
 
-  public function send_sub($n1, $n2)
+  public function send_getUserIncomes($user_id)
   {
-    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_sub_args();
-    $args->n1 = $n1;
-    $args->n2 = $n2;
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getUserIncomes_args();
+    $args->user_id = $user_id;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
-      thrift_protocol_write_binary($this->output_, 'sub', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+      thrift_protocol_write_binary($this->output_, 'getUserIncomes', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
     }
     else
     {
-      $this->output_->writeMessageBegin('sub', TMessageType::CALL, $this->seqid_);
+      $this->output_->writeMessageBegin('getUserIncomes', TMessageType::CALL, $this->seqid_);
       $args->write($this->output_);
       $this->output_->writeMessageEnd();
       $this->output_->getTransport()->flush();
     }
   }
 
-  public function recv_sub()
+  public function recv_getUserIncomes()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_sub_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_getUserIncomes_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -125,35 +123,30 @@ class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceS
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_sub_result();
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getUserIncomes_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
     if ($result->success !== null) {
       return $result->success;
     }
-    throw new \Exception("sub failed: unknown result");
+    throw new \Exception("getUserIncomes failed: unknown result");
   }
 
 }
 
 // HELPER FUNCTIONS AND STRUCTURES
 
-class FinanceService_add_args extends TBase {
+class FinanceService_getUserOutcomes_args extends TBase {
   static $_TSPEC;
 
-  public $n1 = null;
-  public $n2 = null;
+  public $user_id = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'n1',
-          'type' => TType::I32,
-          ),
-        2 => array(
-          'var' => 'n2',
+          'var' => 'user_id',
           'type' => TType::I32,
           ),
         );
@@ -164,19 +157,19 @@ class FinanceService_add_args extends TBase {
   }
 
   public function getName() {
-    return 'FinanceService_add_args';
+    return 'FinanceService_getUserOutcomes_args';
   }
 
   public function read($input)
   {
-    return $this->_read('FinanceService_add_args', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_getUserOutcomes_args', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('FinanceService_add_args', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_getUserOutcomes_args', self::$_TSPEC, $output);
   }
 }
 
-class FinanceService_add_result extends TBase {
+class FinanceService_getUserOutcomes_result extends TBase {
   static $_TSPEC;
 
   public $success = null;
@@ -186,7 +179,12 @@ class FinanceService_add_result extends TBase {
       self::$_TSPEC = array(
         0 => array(
           'var' => 'success',
-          'type' => TType::I32,
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\SymfonyWorld\WealthyLaughingDuck\TOutcome',
+            ),
           ),
         );
     }
@@ -196,33 +194,28 @@ class FinanceService_add_result extends TBase {
   }
 
   public function getName() {
-    return 'FinanceService_add_result';
+    return 'FinanceService_getUserOutcomes_result';
   }
 
   public function read($input)
   {
-    return $this->_read('FinanceService_add_result', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_getUserOutcomes_result', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('FinanceService_add_result', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_getUserOutcomes_result', self::$_TSPEC, $output);
   }
 }
 
-class FinanceService_sub_args extends TBase {
+class FinanceService_getUserIncomes_args extends TBase {
   static $_TSPEC;
 
-  public $n1 = null;
-  public $n2 = null;
+  public $user_id = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'n1',
-          'type' => TType::I32,
-          ),
-        2 => array(
-          'var' => 'n2',
+          'var' => 'user_id',
           'type' => TType::I32,
           ),
         );
@@ -233,19 +226,19 @@ class FinanceService_sub_args extends TBase {
   }
 
   public function getName() {
-    return 'FinanceService_sub_args';
+    return 'FinanceService_getUserIncomes_args';
   }
 
   public function read($input)
   {
-    return $this->_read('FinanceService_sub_args', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_getUserIncomes_args', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('FinanceService_sub_args', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_getUserIncomes_args', self::$_TSPEC, $output);
   }
 }
 
-class FinanceService_sub_result extends TBase {
+class FinanceService_getUserIncomes_result extends TBase {
   static $_TSPEC;
 
   public $success = null;
@@ -255,7 +248,12 @@ class FinanceService_sub_result extends TBase {
       self::$_TSPEC = array(
         0 => array(
           'var' => 'success',
-          'type' => TType::I32,
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\SymfonyWorld\WealthyLaughingDuck\TIncome',
+            ),
           ),
         );
     }
@@ -265,15 +263,15 @@ class FinanceService_sub_result extends TBase {
   }
 
   public function getName() {
-    return 'FinanceService_sub_result';
+    return 'FinanceService_getUserIncomes_result';
   }
 
   public function read($input)
   {
-    return $this->_read('FinanceService_sub_result', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_getUserIncomes_result', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('FinanceService_sub_result', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_getUserIncomes_result', self::$_TSPEC, $output);
   }
 }
 

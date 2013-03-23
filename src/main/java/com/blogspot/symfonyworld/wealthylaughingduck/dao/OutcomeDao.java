@@ -14,5 +14,7 @@ public interface OutcomeDao {
 
     List findAllOutcomes();
 
-    Outcome findByOutcomeId(Long id);
+    Outcome findByOutcomeId(long id);
+
+    List<Outcome> findByUserId(long id);
 }

@@ -59,12 +59,25 @@ public class OutcomeDaoImpl implements OutcomeDao {
     }
 
     @Override
-    public Outcome findByOutcomeId(Long id) {
+    public Outcome findByOutcomeId(long id) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
         Outcome song = (Outcome) session.get(Outcome.class, new Long(id));
         tx.commit();
         session.close();
         return song;
+    }
+
+    @Override
+    public List<Outcome> findByUserId(long id) {
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
+        Query query = session.createQuery(
+                "FROM Outcome WHERE created_by = :created_by");
+        query.setParameter("created_by", id);
+        List list = query.list();
+        tx.commit();
+        session.close();
+        return list;
     }
 }

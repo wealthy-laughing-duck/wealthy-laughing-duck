@@ -16,4 +16,98 @@ use Thrift\Protocol\TProtocol;
 use Thrift\Exception\TApplicationException;
 
 
+class TOutcome extends TBase {
+  static $_TSPEC;
+
+  public $amount = null;
+  public $user = null;
+  public $category = null;
+  public $comment = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'amount',
+          'type' => TType::DOUBLE,
+          ),
+        2 => array(
+          'var' => 'user',
+          'type' => TType::STRING,
+          ),
+        3 => array(
+          'var' => 'category',
+          'type' => TType::STRING,
+          ),
+        4 => array(
+          'var' => 'comment',
+          'type' => TType::STRING,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'TOutcome';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('TOutcome', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('TOutcome', self::$_TSPEC, $output);
+  }
+}
+
+class TIncome extends TBase {
+  static $_TSPEC;
+
+  public $amount = null;
+  public $user = null;
+  public $category = null;
+  public $comment = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'amount',
+          'type' => TType::DOUBLE,
+          ),
+        2 => array(
+          'var' => 'user',
+          'type' => TType::STRING,
+          ),
+        3 => array(
+          'var' => 'category',
+          'type' => TType::STRING,
+          ),
+        4 => array(
+          'var' => 'comment',
+          'type' => TType::STRING,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'TIncome';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('TIncome', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('TIncome', self::$_TSPEC, $output);
+  }
+}
+
 

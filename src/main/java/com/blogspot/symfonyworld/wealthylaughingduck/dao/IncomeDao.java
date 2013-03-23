@@ -14,5 +14,7 @@ public interface IncomeDao {
 
     List findAllIncomes();
 
-    Income findByIncomeId(Long id);
+    Income findByIncomeId(long id);
+
+    List<Income> findByUserId(long id);
 }
