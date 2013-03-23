@@ -7,7 +7,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
-import com.blogspot.symfonyworld.wealthylaughingduck.thrift.server.MainService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.MainService;
 
 public class MyClient {
 

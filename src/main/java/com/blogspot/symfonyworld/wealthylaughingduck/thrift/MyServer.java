@@ -15,7 +15,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.blogspot.symfonyworld.wealthylaughingduck.thrift.server.MainService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.MainService;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.IncomeDaoImpl;

@@ -1,4 +1,4 @@
-namespace java com.blogspot.symfonyworld.wealthylaughingduck.thrift.server
+namespace java com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated
 namespace php SymfonyWorld.WealthyLaughingDuck
 
 typedef i32 int
