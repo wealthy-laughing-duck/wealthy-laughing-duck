@@ -3,6 +3,8 @@ The wealthy laughing duck
 
 Example apache thrift system. Check [documentation](doc/index.md).
 
+![wealthy laughing duck logo](doc/wealthy-laughing-duck-logo.png "wealthy laughing duck logo")
+
 Dependencies
 ============
 
