@@ -15,7 +15,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.MainService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.IncomeDaoImpl;
@@ -23,7 +23,7 @@ import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDaoImpl;
 
 public class MyServer {
 
-    public static void StartsimpleServer(MainService.Processor<MainServiceHandler> processor) {
+    public static void StartsimpleServer(FinanceService.Processor<FinanceServiceHandler> processor) {
         try {
             TServerTransport serverTransport = new TServerSocket(9090);
             TServer server = new TSimpleServer(
@@ -62,6 +62,6 @@ public class MyServer {
 
     public static void main(String[] args) {
         testDatabase();
-        StartsimpleServer(new MainService.Processor<MainServiceHandler>(new MainServiceHandler()));
+        StartsimpleServer(new FinanceService.Processor<FinanceServiceHandler>(new FinanceServiceHandler()));
     }
 }

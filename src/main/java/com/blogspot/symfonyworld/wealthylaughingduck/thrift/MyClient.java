@@ -7,7 +7,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
-import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.MainService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
 
 public class MyClient {
 
@@ -20,7 +20,7 @@ public class MyClient {
 			transport.open();
 
 			TProtocol protocol = new TBinaryProtocol(transport);
-			MainService.Client client = new MainService.Client(protocol);
+			FinanceService.Client client = new FinanceService.Client(protocol);
 
 			System.out.println(client.add(100, 200));
 			System.out.println(client.sub(634, 541));

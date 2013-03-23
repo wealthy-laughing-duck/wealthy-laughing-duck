@@ -2,9 +2,9 @@ package com.blogspot.symfonyworld.wealthylaughingduck.thrift;
 
 import org.apache.thrift.TException;
 
-import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.MainService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
 
-public class MainServiceHandler implements MainService.Iface {
+public class FinanceServiceHandler implements FinanceService.Iface {
 
 	@Override
 	public int add(int n1, int n2) throws TException {
