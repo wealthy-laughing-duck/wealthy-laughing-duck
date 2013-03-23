@@ -1,6 +1,6 @@
 <?php
 
-require_once '../requires.php';
+require_once dirname(__FILE__) . '/../requires.php';
 
 use \SymfonyWorld\Thrift;
 
