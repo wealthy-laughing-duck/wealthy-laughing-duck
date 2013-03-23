@@ -22,6 +22,7 @@
       3CWSrOVLweG0
    </property>
 
+   <mapping class="com.blogspot.symfonyworld.model.Income" />
    <mapping class="com.blogspot.symfonyworld.model.Outcome" />
 
 </session-factory>

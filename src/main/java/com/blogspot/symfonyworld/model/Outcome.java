@@ -12,16 +12,13 @@ import javax.persistence.Table;
 public class Outcome {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-
     @Column(name = "category_id")
     private long categoryId;
-
     @Column(name = "comment")
     private String comment;
-
     @Column(name = "cash_total")
     private float cashTotal;
 
@@ -85,7 +82,8 @@ public class Outcome {
      * @return outcome string representation
      */
     public String toString() {
-        String comment = getComment().length() > 0 ? " (" + getComment() + ")" : "";
-        return getTotalCash() + "zł" + comment;
+        String comment = getComment();
+        return getTotalCash() + "zł"
+                + ((comment != null && !comment.isEmpty()) ? " (" + comment + ")" : "");
     }
 }

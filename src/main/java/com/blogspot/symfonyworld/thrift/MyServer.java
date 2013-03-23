@@ -16,7 +16,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.blogspot.symfonyworld.thrift.server.MainService;
+import com.blogspot.symfonyworld.model.Income;
 import com.blogspot.symfonyworld.model.Outcome;
+import com.blogspot.symfonyworld.dao.IncomeDaoImpl;
+import com.blogspot.symfonyworld.dao.OutcomeDaoImpl;
 
 public class MyServer {
 
@@ -39,21 +42,21 @@ public class MyServer {
 
     public static void testDatabase() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            List outcomes = session.createQuery("from Outcome").list();
-            for (Iterator iterator = outcomes.iterator(); iterator.hasNext();) {
-                Outcome outcome = (Outcome) iterator.next();
-                System.out.println(outcome.getTotalCash());
-            }
-            transaction.commit();
-        } catch (HibernateException e) {
-            transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
+
+        OutcomeDaoImpl out_dao = new OutcomeDaoImpl();
+        out_dao.setSessionFactory(sessionFactory);
+        List<Outcome> outcomes = out_dao.findAllOutcomes();
+        for (Iterator iterator = outcomes.iterator(); iterator.hasNext();) {
+            Outcome outcome = (Outcome) iterator.next();
+            System.out.println(outcome);
+        }
+
+        IncomeDaoImpl in_dao = new IncomeDaoImpl();
+        in_dao.setSessionFactory(sessionFactory);
+        List<Outcome> incomes = in_dao.findAllIncomes();
+        for (Iterator iterator = incomes.iterator(); iterator.hasNext();) {
+            Income income = (Income) iterator.next();
+            System.out.println(income);
         }
     }
 
