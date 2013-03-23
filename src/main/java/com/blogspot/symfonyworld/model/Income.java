@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "outcome")
-public class Outcome {
+@Table(name = "income")
+public class Income {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -19,11 +19,11 @@ public class Outcome {
     @Column(name = "category_id")
     private long categoryId;
 
-    @Column(name = "comment")
-    private String comment;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "cash_total")
-    private float cashTotal;
+    @Column(name = "amount")
+    private float amount;
 
     /**
      * @return the id
@@ -54,38 +54,38 @@ public class Outcome {
     }
 
     /**
-     * @return the comment
+     * @return the description
      */
-    public String getComment() {
-        return comment;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * @param comment the comment to set
+     * @param description the description to set
      */
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
-     * @return the totalCash
+     * @return the amount
      */
-    public float getTotalCash() {
-        return cashTotal;
+    public float getAmount() {
+        return amount;
     }
 
     /**
-     * @param cashTotal the cashTotal to set
+     * @param amount the amount to set
      */
-    public void setTotalCash(float totalCash) {
-        this.cashTotal = totalCash;
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 
     /**
      * @return outcome string representation
      */
     public String toString() {
-        String comment = getComment().length() > 0 ? " (" + getComment() + ")" : "";
-        return getTotalCash() + "zł" + comment;
+        String description = getDescription().length() > 0 ? " (" + getDescription() + ")" : "";
+        return getAmount() + "zł" + description;
     }
 }
