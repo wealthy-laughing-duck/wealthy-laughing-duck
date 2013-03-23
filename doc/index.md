@@ -1,6 +1,6 @@
-The laughing duck documentation
-===============================
+The wealthy laughing duck documentation
+=======================================
 
 This page will hold system documentation.
 
-![laughing duck logo](laughing-duck-logo.png "laughing duck logo")
+![wealthy laughing duck logo](wealthy-laughing-duck-logo.png "wealthy laughing duck logo")
