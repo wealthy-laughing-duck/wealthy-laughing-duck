@@ -1,4 +1,4 @@
-package com.blogspot.symfonyworld.thrift;
+package com.blogspot.symfonyworld.wealthylaughingduck.thrift;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

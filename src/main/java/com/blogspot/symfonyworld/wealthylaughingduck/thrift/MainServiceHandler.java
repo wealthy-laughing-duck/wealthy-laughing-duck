@@ -1,8 +1,8 @@
-package com.blogspot.symfonyworld.thrift;
+package com.blogspot.symfonyworld.wealthylaughingduck.thrift;
 
 import org.apache.thrift.TException;
 
-import com.blogspot.symfonyworld.thrift.server.MainService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.server.MainService;
 
 public class MainServiceHandler implements MainService.Iface {
 

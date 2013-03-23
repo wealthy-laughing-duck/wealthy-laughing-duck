@@ -1,8 +1,8 @@
-package com.blogspot.symfonyworld.dao;
+package com.blogspot.symfonyworld.wealthylaughingduck.dao;
 
 import java.util.List;
 
-import com.blogspot.symfonyworld.model.Income;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 
 public interface IncomeDao {
 

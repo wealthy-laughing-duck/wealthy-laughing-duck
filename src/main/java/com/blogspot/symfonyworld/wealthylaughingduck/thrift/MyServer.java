@@ -1,4 +1,4 @@
-package com.blogspot.symfonyworld.thrift;
+package com.blogspot.symfonyworld.wealthylaughingduck.thrift;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,11 +15,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.blogspot.symfonyworld.thrift.server.MainService;
-import com.blogspot.symfonyworld.model.Income;
-import com.blogspot.symfonyworld.model.Outcome;
-import com.blogspot.symfonyworld.dao.IncomeDaoImpl;
-import com.blogspot.symfonyworld.dao.OutcomeDaoImpl;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.server.MainService;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.IncomeDaoImpl;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDaoImpl;
 
 public class MyServer {
 

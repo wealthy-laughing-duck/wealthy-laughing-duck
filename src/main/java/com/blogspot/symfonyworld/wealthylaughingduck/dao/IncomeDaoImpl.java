@@ -1,4 +1,4 @@
-package com.blogspot.symfonyworld.dao;
+package com.blogspot.symfonyworld.wealthylaughingduck.dao;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import com.blogspot.symfonyworld.model.Outcome;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 
-public class OutcomeDaoImpl implements OutcomeDao {
+public class IncomeDaoImpl implements IncomeDao {
 
     private SessionFactory sessionFactory;
 
@@ -22,47 +22,47 @@ public class OutcomeDaoImpl implements OutcomeDao {
     }
 
     @Override
-    public void save(Outcome outcome) {
+    public void save(Income income) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        session.save(outcome);
+        session.save(income);
         tx.commit();
         session.close();
     }
 
     @Override
-    public void update(Outcome outcome) {
+    public void update(Income income) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        session.save(outcome);
+        session.save(income);
         tx.commit();
         session.close();
     }
 
     @Override
-    public void delete(Outcome outcome) {
+    public void delete(Income income) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        session.delete(outcome);
+        session.delete(income);
         tx.commit();
         session.close();
     }
 
     @Override
-    public List findAllOutcomes() {
+    public List findAllIncomes() {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        List list = session.createQuery("FROM Outcome").list();
+        List list = session.createQuery("FROM Income").list();
         tx.commit();
         session.close();
         return list;
     }
 
     @Override
-    public Outcome findByOutcomeId(Long id) {
+    public Income findByIncomeId(Long id) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        Outcome song = (Outcome) session.get(Outcome.class, new Long(id));
+        Income song = (Income) session.get(Income.class, new Long(id));
         tx.commit();
         session.close();
         return song;

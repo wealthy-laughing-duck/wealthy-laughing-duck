@@ -1,4 +1,4 @@
-package com.blogspot.symfonyworld.model;
+package com.blogspot.symfonyworld.wealthylaughingduck.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

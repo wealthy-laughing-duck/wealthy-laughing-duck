@@ -22,9 +22,9 @@
       3CWSrOVLweG0
    </property>
 
-   <mapping class="com.blogspot.symfonyworld.model.User" />
-   <mapping class="com.blogspot.symfonyworld.model.Income" />
-   <mapping class="com.blogspot.symfonyworld.model.Outcome" />
+   <mapping class="com.blogspot.symfonyworld.wealthylaughingduck.model.User" />
+   <mapping class="com.blogspot.symfonyworld.wealthylaughingduck.model.Income" />
+   <mapping class="com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome" />
 
 </session-factory>
 </hibernate-configuration>

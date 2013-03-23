@@ -1,4 +1,4 @@
-package com.blogspot.symfonyworld.thrift;
+package com.blogspot.symfonyworld.wealthylaughingduck.thrift;
 
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
@@ -7,7 +7,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
-import com.blogspot.symfonyworld.thrift.server.MainService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.server.MainService;
 
 public class MyClient {
 
