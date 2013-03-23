@@ -25,7 +25,7 @@ public class Outcome {
     private String comment;
 
     @Column(name = "cash_total")
-    private float cashTotal;
+    private float amount;
 
     @ManyToOne
     @JoinColumn(name="created_by")
@@ -74,17 +74,17 @@ public class Outcome {
     }
 
     /**
-     * @return the totalCash
+     * @return the amount
      */
-    public float getTotalCash() {
-        return cashTotal;
+    public float getAmount() {
+        return amount;
     }
 
     /**
-     * @param cashTotal the cashTotal to set
+     * @param amount the amount to set
      */
-    public void setTotalCash(float totalCash) {
-        this.cashTotal = totalCash;
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 
     /**
@@ -92,7 +92,7 @@ public class Outcome {
      */
     public String toString() {
         String comment = getComment();
-        return getTotalCash() + "zł"
+        return getAmount() + "zł"
                 + ((comment != null && !comment.isEmpty()) ? " (" + comment + ")" : "")
                 + " by " + getUser().getName();
     }

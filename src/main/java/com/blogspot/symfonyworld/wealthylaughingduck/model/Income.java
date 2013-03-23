@@ -22,7 +22,7 @@ public class Income {
     private long categoryId;
 
     @Column(name = "description")
-    private String description;
+    private String comment;
 
     @Column(name = "amount")
     private float amount;
@@ -60,17 +60,17 @@ public class Income {
     }
 
     /**
-     * @return the description
+     * @return the comment
      */
-    public String getDescription() {
-        return description;
+    public String getComment() {
+        return comment;
     }
 
     /**
-     * @param description the description to set
+     * @param comment the comment to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     /**
@@ -91,9 +91,9 @@ public class Income {
      * @return outcome string representation
      */
     public String toString() {
-        String description = getDescription();
+        String comment = getComment();
         return getAmount() + "zł"
-                + ((description != null && !description.isEmpty()) ? " (" + description + ")" : "")
+                + ((comment != null && !comment.isEmpty()) ? " (" + comment + ")" : "")
                 + " by " + getUser().getName();
     }
 
