@@ -7,7 +7,7 @@ use \Thrift\Transport\TSocket;
 use \Thrift\Transport\TBufferedTransport;
 use \Thrift\Exception\TException;
 
-use \SymfonyWorld\WealthyLaughingDuck\MainServiceClient;
+use \SymfonyWorld\WealthyLaughingDuck\FinanceServiceClient;
 
 class Thrift {
 
@@ -16,13 +16,13 @@ class Thrift {
 	protected $protocol;
 	protected $client;
 	
-	protected $args_template = '\SymfonyWorld\MainService_%s_args';
+	protected $args_template = '\SymfonyWorld\FinanceService_%s_args';
 
 	public function __construct($host, $port) {
 		$this->socket = new TSocket($host, $port);
 		$this->transport = new TBufferedTransport($this->socket, 1024, 1024);
 		$this->protocol = new TBinaryProtocol($this->transport);
-		$this->client = new MainServiceClient($this->protocol);
+		$this->client = new FinanceServiceClient($this->protocol);
 		$this->transport->open();
 	}
 

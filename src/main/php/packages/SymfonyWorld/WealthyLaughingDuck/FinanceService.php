@@ -15,12 +15,12 @@ use Thrift\Protocol\TProtocol;
 use Thrift\Exception\TApplicationException;
 
 
-interface MainServiceIf {
+interface FinanceServiceIf {
   public function add($n1, $n2);
   public function sub($n1, $n2);
 }
 
-class MainServiceClient implements \SymfonyWorld\WealthyLaughingDuck\MainServiceIf {
+class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceServiceIf {
   protected $input_ = null;
   protected $output_ = null;
 
@@ -39,7 +39,7 @@ class MainServiceClient implements \SymfonyWorld\WealthyLaughingDuck\MainService
 
   public function send_add($n1, $n2)
   {
-    $args = new \SymfonyWorld\WealthyLaughingDuck\MainService_add_args();
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_add_args();
     $args->n1 = $n1;
     $args->n2 = $n2;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
@@ -59,7 +59,7 @@ class MainServiceClient implements \SymfonyWorld\WealthyLaughingDuck\MainService
   public function recv_add()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\MainService_add_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_add_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -73,7 +73,7 @@ class MainServiceClient implements \SymfonyWorld\WealthyLaughingDuck\MainService
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \SymfonyWorld\WealthyLaughingDuck\MainService_add_result();
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_add_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
@@ -91,7 +91,7 @@ class MainServiceClient implements \SymfonyWorld\WealthyLaughingDuck\MainService
 
   public function send_sub($n1, $n2)
   {
-    $args = new \SymfonyWorld\WealthyLaughingDuck\MainService_sub_args();
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_sub_args();
     $args->n1 = $n1;
     $args->n2 = $n2;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
@@ -111,7 +111,7 @@ class MainServiceClient implements \SymfonyWorld\WealthyLaughingDuck\MainService
   public function recv_sub()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\MainService_sub_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_sub_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -125,7 +125,7 @@ class MainServiceClient implements \SymfonyWorld\WealthyLaughingDuck\MainService
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \SymfonyWorld\WealthyLaughingDuck\MainService_sub_result();
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_sub_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
@@ -139,7 +139,7 @@ class MainServiceClient implements \SymfonyWorld\WealthyLaughingDuck\MainService
 
 // HELPER FUNCTIONS AND STRUCTURES
 
-class MainService_add_args extends TBase {
+class FinanceService_add_args extends TBase {
   static $_TSPEC;
 
   public $n1 = null;
@@ -164,19 +164,19 @@ class MainService_add_args extends TBase {
   }
 
   public function getName() {
-    return 'MainService_add_args';
+    return 'FinanceService_add_args';
   }
 
   public function read($input)
   {
-    return $this->_read('MainService_add_args', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_add_args', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('MainService_add_args', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_add_args', self::$_TSPEC, $output);
   }
 }
 
-class MainService_add_result extends TBase {
+class FinanceService_add_result extends TBase {
   static $_TSPEC;
 
   public $success = null;
@@ -196,19 +196,19 @@ class MainService_add_result extends TBase {
   }
 
   public function getName() {
-    return 'MainService_add_result';
+    return 'FinanceService_add_result';
   }
 
   public function read($input)
   {
-    return $this->_read('MainService_add_result', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_add_result', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('MainService_add_result', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_add_result', self::$_TSPEC, $output);
   }
 }
 
-class MainService_sub_args extends TBase {
+class FinanceService_sub_args extends TBase {
   static $_TSPEC;
 
   public $n1 = null;
@@ -233,19 +233,19 @@ class MainService_sub_args extends TBase {
   }
 
   public function getName() {
-    return 'MainService_sub_args';
+    return 'FinanceService_sub_args';
   }
 
   public function read($input)
   {
-    return $this->_read('MainService_sub_args', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_sub_args', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('MainService_sub_args', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_sub_args', self::$_TSPEC, $output);
   }
 }
 
-class MainService_sub_result extends TBase {
+class FinanceService_sub_result extends TBase {
   static $_TSPEC;
 
   public $success = null;
@@ -265,15 +265,15 @@ class MainService_sub_result extends TBase {
   }
 
   public function getName() {
-    return 'MainService_sub_result';
+    return 'FinanceService_sub_result';
   }
 
   public function read($input)
   {
-    return $this->_read('MainService_sub_result', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_sub_result', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('MainService_sub_result', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_sub_result', self::$_TSPEC, $output);
   }
 }
 

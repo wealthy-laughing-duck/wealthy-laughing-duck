@@ -10,4 +10,4 @@ $loader = new ThriftClassLoader();
 $loader->registerNamespace('Thrift', $THRIFT_ROOT);
 $loader->registerNamespace('SymfonyWorld', $THRIFT_ROOT . '/packages');
 $loader->register();
-$loader->loadClass('SymfonyWorld\WealthyLaughingDuck\MainService');
+$loader->loadClass('SymfonyWorld\WealthyLaughingDuck\FinanceService');
