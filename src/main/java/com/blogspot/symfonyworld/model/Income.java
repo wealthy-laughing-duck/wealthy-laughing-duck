@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +26,10 @@ public class Income {
 
     @Column(name = "amount")
     private float amount;
+
+    @ManyToOne
+    @JoinColumn(name="created_by")
+    private User user;
 
     /**
      * @return the id
@@ -85,7 +91,23 @@ public class Income {
      * @return outcome string representation
      */
     public String toString() {
-        String description = getDescription().length() > 0 ? " (" + getDescription() + ")" : "";
-        return getAmount() + "zł" + description;
+        String description = getDescription();
+        return getAmount() + "zł"
+                + ((description != null && !description.isEmpty()) ? " (" + description + ")" : "")
+                + " by " + getUser().getName();
+    }
+
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 }

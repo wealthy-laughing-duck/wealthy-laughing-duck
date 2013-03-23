@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,12 +17,19 @@ public class Outcome {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
+
     @Column(name = "category_id")
     private long categoryId;
+
     @Column(name = "comment")
     private String comment;
+
     @Column(name = "cash_total")
     private float cashTotal;
+
+    @ManyToOne
+    @JoinColumn(name="created_by")
+    private User user;
 
     /**
      * @return the id
@@ -84,6 +93,21 @@ public class Outcome {
     public String toString() {
         String comment = getComment();
         return getTotalCash() + "zł"
-                + ((comment != null && !comment.isEmpty()) ? " (" + comment + ")" : "");
+                + ((comment != null && !comment.isEmpty()) ? " (" + comment + ")" : "")
+                + " by " + getUser().getName();
+    }
+
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 }
