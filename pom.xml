@@ -32,5 +32,11 @@
             <type>jar</type>
             <version>1.7.3</version>
         </dependency>
+        <dependency>
+            <artifactId>hibernate-core</artifactId>
+            <groupId>org.hibernate</groupId>
+            <type>jar</type>
+            <version>4.1.10.Final</version>
+        </dependency>
     </dependencies>
 </project>
