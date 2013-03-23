@@ -11,3 +11,4 @@ $loader->registerNamespace('Thrift', $THRIFT_ROOT);
 $loader->registerNamespace('SymfonyWorld', $THRIFT_ROOT . '/packages');
 $loader->register();
 $loader->loadClass('SymfonyWorld\WealthyLaughingDuck\FinanceService');
+$loader->loadClass('SymfonyWorld\WealthyLaughingDuck\Types');

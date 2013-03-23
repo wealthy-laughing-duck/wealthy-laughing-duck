@@ -36,6 +36,7 @@ public class FinanceServiceHandler implements FinanceService.Iface {
         for (Iterator iterator = outcomes.iterator(); iterator.hasNext();) {
             Outcome outcome = (Outcome) iterator.next();
             TOutcome t_outcome = new TOutcome(outcome.getTotalCash(), outcome.getUser().getName(), String.valueOf(outcome.getCategoryId()));
+            t_outcome.setComment(outcome.getComment());
             result.add(t_outcome);
         }
         System.out.println("> results: " + result.size());
@@ -51,9 +52,10 @@ public class FinanceServiceHandler implements FinanceService.Iface {
         System.out.println("> found: " + outcomes.size());
         List<TIncome> result = new ArrayList<TIncome>();
         for (Iterator iterator = outcomes.iterator(); iterator.hasNext();) {
-            Income outcome = (Income) iterator.next();
-            TIncome t_outcome = new TIncome(outcome.getAmount(), outcome.getUser().getName(), String.valueOf(outcome.getCategoryId()));
-            result.add(t_outcome);
+            Income income = (Income) iterator.next();
+            TIncome t_income = new TIncome(income.getAmount(), income.getUser().getName(), String.valueOf(income.getCategoryId()));
+            t_income.setComment(income.getDescription());
+            result.add(t_income);
         }
         System.out.println("> results: " + result.size());
         return result;

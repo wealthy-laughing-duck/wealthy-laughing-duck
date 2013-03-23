@@ -28,6 +28,7 @@ public class MyServer {
     }
 
     public static void main(String[] args) {
-        StartsimpleServer(new FinanceService.Processor<FinanceServiceHandler>(new FinanceServiceHandler()));
+        StartsimpleServer(new FinanceService.Processor<FinanceServiceHandler>(
+                new FinanceServiceHandler()));
     }
 }
