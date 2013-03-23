@@ -1,5 +1,5 @@
 namespace java com.blogspot.symfonyworld.thrift.server
-namespace php SymfonyWorld
+namespace php SymfonyWorld.WealthyLaughingDuck
 
 typedef i32 int
 

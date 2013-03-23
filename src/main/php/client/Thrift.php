@@ -7,6 +7,8 @@ use \Thrift\Transport\TSocket;
 use \Thrift\Transport\TBufferedTransport;
 use \Thrift\Exception\TException;
 
+use \SymfonyWorld\WealthyLaughingDuck\MainServiceClient;
+
 class Thrift {
 
 	protected $socket;
