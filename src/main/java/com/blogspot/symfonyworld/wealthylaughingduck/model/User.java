@@ -16,6 +16,9 @@ public class User {
     @Column(name = "id")
     private long id;
 
+    @Column(name = "username")
+    private String userName;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -37,6 +40,20 @@ public class User {
      */
     public void setId(long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the userName
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     * @param userName the userName to set
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
