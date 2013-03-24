@@ -1,5 +1,7 @@
 package com.blogspot.symfonyworld.wealthylaughingduck.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "outcome")
@@ -30,6 +34,10 @@ public class Outcome {
     @ManyToOne
     @JoinColumn(name="created_by")
     private User user;
+
+    @Column(name = "created_at", columnDefinition="datetime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
     /**
      * @return the id
@@ -109,5 +117,19 @@ public class Outcome {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * @return the createdAt
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @param createdAt the createdAt to set
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

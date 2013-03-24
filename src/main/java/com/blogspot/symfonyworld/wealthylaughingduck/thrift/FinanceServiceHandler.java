@@ -16,7 +16,6 @@ import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.IncomeDaoImpl;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDaoImpl;
-import java.text.DecimalFormat;
 
 public class FinanceServiceHandler implements FinanceService.Iface {
 
@@ -41,6 +40,7 @@ public class FinanceServiceHandler implements FinanceService.Iface {
                     String.valueOf(outcome.getCategoryId()));
             t_outcome.setComment(outcome.getComment());
             result.add(t_outcome);
+            System.out.println(outcome.getCreatedAt());
         }
         System.out.println("> results: " + result.size());
         return result;
@@ -62,6 +62,7 @@ public class FinanceServiceHandler implements FinanceService.Iface {
                     String.valueOf(income.getCategoryId()));
             t_income.setComment(income.getComment());
             result.add(t_income);
+            System.out.println(income.getCreatedAt());
         }
         System.out.println("> results: " + result.size());
         return result;

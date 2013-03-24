@@ -1,11 +1,15 @@
 package com.blogspot.symfonyworld.wealthylaughingduck.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "sf_guard_user")
@@ -27,6 +31,10 @@ public class User {
 
     @Column(name = "email_address")
     private String emailAddress;
+
+    @Column(name = "created_at", columnDefinition="datetime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
     /**
      * @return the id
@@ -103,5 +111,19 @@ public class User {
      */
     public String getName() {
         return getFirstName() + " " + getLastName();
+    }
+
+    /**
+     * @return the createdAt
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @param createdAt the createdAt to set
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

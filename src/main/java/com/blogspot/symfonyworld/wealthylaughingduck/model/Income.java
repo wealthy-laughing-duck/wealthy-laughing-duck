@@ -1,5 +1,7 @@
 package com.blogspot.symfonyworld.wealthylaughingduck.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "income")
@@ -30,6 +34,10 @@ public class Income {
     @ManyToOne
     @JoinColumn(name="created_by")
     private User user;
+
+    @Column(name = "created_at", columnDefinition="datetime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
     /**
      * @return the id
@@ -88,13 +96,14 @@ public class Income {
     }
 
     /**
-     * @return outcome string representation
+     * @return income string representation
      */
     public String toString() {
         String comment = getComment();
         return getAmount() + "zł"
                 + ((comment != null && !comment.isEmpty()) ? " (" + comment + ")" : "")
-                + " by " + getUser().getName();
+                + " by " + getUser().getName()
+                + " on " + getCreatedAt();
     }
 
     /**
@@ -109,5 +118,20 @@ public class Income {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * @return the createdAt
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @param createdAt the createdAt to set
+     */
+    public void setCreatedAt(Date createdAt) {
+        System.out.println(createdAt);
+        this.createdAt = createdAt;
     }
 }
