@@ -17,8 +17,25 @@ struct TIncome {
    4: optional string comment,
 }
 
+struct TUser {
+   1: required string username,
+   2: required string fullname,
+}
+
+struct TDate {
+   1: required int year,
+   2: required int month,
+   3: required int day,
+}
+
+struct TPeriod {
+   1: required TDate from,
+   2: required TDate to,
+}
+
 service FinanceService {
   list<TOutcome> getUserOutcomes(1:required int user_id),
-  list<TIncome> getUserIncomes(1:required int user_id)
+  list<TIncome> getUserIncomes(1:required int user_id),
+  list<TUser> getAllUsers()
 }
 

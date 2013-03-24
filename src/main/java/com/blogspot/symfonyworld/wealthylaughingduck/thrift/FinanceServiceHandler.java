@@ -12,10 +12,13 @@ import org.hibernate.cfg.Configuration;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TIncome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TOutcome;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TUser;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.User;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.IncomeDaoImpl;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDaoImpl;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.UserDaoImpl;
 
 public class FinanceServiceHandler implements FinanceService.Iface {
 
@@ -63,6 +66,24 @@ public class FinanceServiceHandler implements FinanceService.Iface {
             t_income.setComment(income.getComment());
             result.add(t_income);
             System.out.println(income.getCreatedAt());
+        }
+        System.out.println("> results: " + result.size());
+        return result;
+    }
+
+    @Override
+    public List<TUser> getAllUsers() throws TException {
+        System.out.println(">>> getUserIncomes");
+        UserDaoImpl dao = new UserDaoImpl();
+        dao.setSessionFactory(sessionFactory);
+        List<User> users = dao.findAllUsers();
+        System.out.println("> found: " + users.size());
+        List<TUser> result = new ArrayList<TUser>();
+        for (Iterator iterator = users.iterator(); iterator.hasNext();) {
+            User user = (User) iterator.next();
+            TUser t_user = new TUser(user.getUserName(), user.getName());
+            result.add(t_user);
+            System.out.println(user.getCreatedAt());
         }
         System.out.println("> results: " + result.size());
         return result;

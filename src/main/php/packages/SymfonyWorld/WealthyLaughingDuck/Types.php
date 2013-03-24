@@ -110,4 +110,122 @@ class TIncome extends TBase {
   }
 }
 
+class TUser extends TBase {
+  static $_TSPEC;
+
+  public $username = null;
+  public $fullname = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'username',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'fullname',
+          'type' => TType::STRING,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'TUser';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('TUser', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('TUser', self::$_TSPEC, $output);
+  }
+}
+
+class TDate extends TBase {
+  static $_TSPEC;
+
+  public $year = null;
+  public $month = null;
+  public $day = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'year',
+          'type' => TType::I32,
+          ),
+        2 => array(
+          'var' => 'month',
+          'type' => TType::I32,
+          ),
+        3 => array(
+          'var' => 'day',
+          'type' => TType::I32,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'TDate';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('TDate', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('TDate', self::$_TSPEC, $output);
+  }
+}
+
+class TPeriod extends TBase {
+  static $_TSPEC;
+
+  public $from = null;
+  public $to = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'from',
+          'type' => TType::STRUCT,
+          'class' => '\SymfonyWorld\WealthyLaughingDuck\TDate',
+          ),
+        2 => array(
+          'var' => 'to',
+          'type' => TType::STRUCT,
+          'class' => '\SymfonyWorld\WealthyLaughingDuck\TDate',
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'TPeriod';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('TPeriod', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('TPeriod', self::$_TSPEC, $output);
+  }
+}
+
 

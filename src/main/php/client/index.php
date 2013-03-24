@@ -109,8 +109,19 @@
         $('#outcomes').dataTable({
           "bServerSide": true,
           'sPaginationType': 'bootstrap',
-          "sAjaxSource": 'json.php'
+          "sAjaxSource": 'json.php?type=outcomes'
         });
+        
+        $("a#users").click(function() {
+          $.ajax({
+            type: "GET",
+            url: "json.php",
+            data: { type: "users" }
+          }).done(function( response ) {
+            alert( response );
+          });
+        });
+
       });
     </script>
     <style>
@@ -150,6 +161,8 @@ table.dataTable th:active {
     </style>
   </head>
 <body id="dt_example">
+    <a id="users" class="btn">show users</a>
+  
     <div class="container">
       <h1>Outcomes</h1>
 

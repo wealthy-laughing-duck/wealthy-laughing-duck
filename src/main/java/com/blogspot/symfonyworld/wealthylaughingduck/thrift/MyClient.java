@@ -13,6 +13,7 @@ import org.apache.thrift.transport.TTransportException;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TIncome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TOutcome;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TUser;
 
 public class MyClient {
 
@@ -53,11 +54,22 @@ public class MyClient {
         System.out.println("Total results: " + list.size());
     }
 
+    public void processGetAllUsers() throws TException {
+        List<TUser> list = client.getAllUsers();
+        System.out.println("Thrift has returned following result:");
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            TUser t_user = (TUser) it.next();
+            System.out.println(t_user.getUsername() + " - " + t_user.getFullname());
+        }
+        System.out.println("Total results: " + list.size());
+    }
+
     public static void main(String[] args) {
         try {
             MyClient myClient = new MyClient();
             myClient.processGetUserOutcomes();
             myClient.processGetUserIncomes();
+            myClient.processGetAllUsers();
             myClient.close();
         } catch (TTransportException e) {
             e.printStackTrace();
