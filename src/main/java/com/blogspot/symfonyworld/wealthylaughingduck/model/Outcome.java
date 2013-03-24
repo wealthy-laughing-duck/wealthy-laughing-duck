@@ -22,8 +22,9 @@ public class Outcome {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "category_id")
-    private long categoryId;
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
 
     @Column(name = "comment")
     private String comment;
@@ -54,17 +55,17 @@ public class Outcome {
     }
 
     /**
-     * @return the categoryId
+     * @return the category
      */
-    public long getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
     /**
-     * @param categoryId the categoryId to set
+     * @param category the category to set
      */
-    public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     /**

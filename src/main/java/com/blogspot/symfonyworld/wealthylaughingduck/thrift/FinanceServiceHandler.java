@@ -37,7 +37,7 @@ public class FinanceServiceHandler implements FinanceService.Iface {
             TOutcome t_outcome = new TOutcome(
                     (double)(Math.round(outcome.getAmount() * 100 )) / 100,
                     outcome.getUser().getName(),
-                    String.valueOf(outcome.getCategoryId()));
+                    String.valueOf(outcome.getCategory().getName()));
             t_outcome.setComment(outcome.getComment());
             result.add(t_outcome);
             System.out.println(outcome.getCreatedAt());
@@ -59,7 +59,7 @@ public class FinanceServiceHandler implements FinanceService.Iface {
             TIncome t_income = new TIncome(
                     (double)(Math.round(income.getAmount() * 100 )) / 100,
                     income.getUser().getName(),
-                    String.valueOf(income.getCategoryId()));
+                    String.valueOf(income.getCategory().getName()));
             t_income.setComment(income.getComment());
             result.add(t_income);
             System.out.println(income.getCreatedAt());
