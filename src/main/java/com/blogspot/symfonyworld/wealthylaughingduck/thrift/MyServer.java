@@ -6,7 +6,19 @@ import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TServer.Args;
 import org.apache.thrift.server.TSimpleServer;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
+import com.blogspot.symfonyworld.wealthylaughingduck.bo.DataProvider;
+import com.blogspot.symfonyworld.wealthylaughingduck.bo.RealDataProvider;
+import com.blogspot.symfonyworld.wealthylaughingduck.bo.FakeDataProvider;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.IncomeDao;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.IncomeDaoImpl;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDao;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDaoImpl;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.UserDao;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.UserDaoImpl;
 
 public class MyServer {
 
@@ -28,7 +40,22 @@ public class MyServer {
     }
 
     public static void main(String[] args) {
+        // construct session factory
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+
+				// construct data access objects
+        OutcomeDao outcomeDao = new OutcomeDaoImpl();
+        outcomeDao.setSessionFactory(sessionFactory);
+        IncomeDao incomeDao = new IncomeDaoImpl();
+        incomeDao.setSessionFactory(sessionFactory);
+        UserDao userDao = new UserDaoImpl();
+        userDao.setSessionFactory(sessionFactory);
+
+        // construct data provider and set daos
+        DataProvider dataProvider = new FakeDataProvider();
+        dataProvider.setDaos(outcomeDao, incomeDao, userDao);
+
         StartsimpleServer(new FinanceService.Processor<FinanceServiceHandler>(
-                new FinanceServiceHandler()));
+                new FinanceServiceHandler(dataProvider)));
     }
 }

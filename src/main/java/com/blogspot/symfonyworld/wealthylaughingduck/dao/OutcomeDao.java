@@ -4,17 +4,17 @@ import java.util.List;
 
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome;
 
-public interface OutcomeDao {
+public interface OutcomeDao extends Dao {
 
-    void save(Outcome outcome);
+    public void save(Outcome outcome);
 
-    void update(Outcome outcome);
+    public void update(Outcome outcome);
 
-    void delete(Outcome outcome);
+    public void delete(Outcome outcome);
 
-    List findAllOutcomes();
+    public List findAllOutcomes();
 
-    Outcome findByOutcomeId(long id);
+    public Outcome findByOutcomeId(long id);
 
-    List<Outcome> findByUserId(long id);
+    public List<Outcome> findByUserId(long id);
 }

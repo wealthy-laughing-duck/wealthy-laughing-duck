@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.blogspot.symfonyworld.wealthylaughingduck.model.User;
 
-public interface UserDao {
+public interface UserDao extends Dao {
 
-    void save(User user);
+    public void save(User user);
 
-    void update(User user);
+    public void update(User user);
 
-    void delete(User user);
+    public void delete(User user);
 
-    List findAllUsers();
+    public List findAllUsers();
 }

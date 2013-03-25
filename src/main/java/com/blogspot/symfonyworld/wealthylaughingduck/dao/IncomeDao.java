@@ -4,17 +4,17 @@ import java.util.List;
 
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 
-public interface IncomeDao {
+public interface IncomeDao extends Dao {
 
-    void save(Income income);
+    public void save(Income income);
 
-    void update(Income income);
+    public void update(Income income);
 
-    void delete(Income income);
+    public void delete(Income income);
 
-    List findAllIncomes();
+    public List findAllIncomes();
 
-    Income findByIncomeId(long id);
+    public Income findByIncomeId(long id);
 
-    List<Income> findByUserId(long id);
+    public List<Income> findByUserId(long id);
 }
