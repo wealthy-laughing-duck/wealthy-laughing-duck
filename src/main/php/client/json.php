@@ -24,7 +24,7 @@ if ($request['type'] == 'outcomes')
 }
 elseif ($request['type'] == 'users')
 {
-  $result = $client->getClient()->getAllUsers();
+  $result['users'] = $client->getClient()->getAllUsers();
 }
 
 echo json_encode($result);

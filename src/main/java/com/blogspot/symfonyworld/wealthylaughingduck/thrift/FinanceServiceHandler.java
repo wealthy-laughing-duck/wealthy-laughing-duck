@@ -14,12 +14,13 @@ import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.User;
 import com.blogspot.symfonyworld.wealthylaughingduck.bo.DataProvider;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TCategory;
 
 public class FinanceServiceHandler implements FinanceService.Iface {
 
-		private DataProvider dataProvider;
+    private DataProvider dataProvider;
 
-		public FinanceServiceHandler(DataProvider dataProvider) {
+    public FinanceServiceHandler(DataProvider dataProvider) {
         this.dataProvider = dataProvider;
     }
 
@@ -32,7 +33,7 @@ public class FinanceServiceHandler implements FinanceService.Iface {
         for (Iterator iterator = outcomes.iterator(); iterator.hasNext();) {
             Outcome outcome = (Outcome) iterator.next();
             TOutcome t_outcome = new TOutcome(
-                    (double)(Math.round(outcome.getAmount() * 100 )) / 100,
+                    (double) (Math.round(outcome.getAmount() * 100)) / 100,
                     outcome.getUser().getName(),
                     String.valueOf(outcome.getCategory().getName()));
             t_outcome.setComment(outcome.getComment());
@@ -52,7 +53,7 @@ public class FinanceServiceHandler implements FinanceService.Iface {
         for (Iterator iterator = incomes.iterator(); iterator.hasNext();) {
             Income income = (Income) iterator.next();
             TIncome t_income = new TIncome(
-                    (double)(Math.round(income.getAmount() * 100 )) / 100,
+                    (double) (Math.round(income.getAmount() * 100)) / 100,
                     income.getUser().getName(),
                     String.valueOf(income.getCategory().getName()));
             t_income.setComment(income.getComment());
@@ -65,7 +66,7 @@ public class FinanceServiceHandler implements FinanceService.Iface {
 
     @Override
     public List<TUser> getAllUsers() throws TException {
-        System.out.println(">>> getUserIncomes");
+        System.out.println(">>> getAllUsers");
         List<User> users = this.dataProvider.getAllUsers();
         System.out.println("> found: " + users.size());
         List<TUser> result = new ArrayList<>();
@@ -77,5 +78,15 @@ public class FinanceServiceHandler implements FinanceService.Iface {
         }
         System.out.println("> results: " + result.size());
         return result;
+    }
+
+    @Override
+    public List<TCategory> getIncomeCategoryTree() throws TException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<TCategory> getOutcomeCategoryTree() throws TException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

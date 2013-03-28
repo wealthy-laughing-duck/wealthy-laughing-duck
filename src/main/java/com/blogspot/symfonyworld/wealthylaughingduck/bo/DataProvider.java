@@ -11,21 +11,21 @@ import com.blogspot.symfonyworld.wealthylaughingduck.dao.UserDao;
 
 public abstract class DataProvider {
 
-  protected OutcomeDao outcomeDao;
+    protected OutcomeDao outcomeDao;
 
-  protected IncomeDao incomeDao;
+    protected IncomeDao incomeDao;
 
-	protected UserDao userDao;
+    protected UserDao userDao;
 
-  public void setDaos(OutcomeDao outcomeDao, IncomeDao incomeDao, UserDao userDao) {
-    this.outcomeDao = outcomeDao;
-    this.incomeDao = incomeDao;
-    this.userDao = userDao;
-  }
+    public void setDaos(OutcomeDao outcomeDao, IncomeDao incomeDao, UserDao userDao) {
+        this.outcomeDao = outcomeDao;
+        this.incomeDao = incomeDao;
+        this.userDao = userDao;
+    }
 
-	public abstract List<Outcome> getOutcomesByUserId(int userId);
+    public abstract List<Outcome> getOutcomesByUserId(int userId);
 
-	public abstract List<Income> getIncomesByUserId(int userId);
+    public abstract List<Income> getIncomesByUserId(int userId);
 
-	public abstract List<User> getAllUsers();
+    public abstract List<User> getAllUsers();
 }

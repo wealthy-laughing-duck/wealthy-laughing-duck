@@ -34,10 +34,23 @@ public class FinanceService {
 
   public interface Iface {
 
+    /**
+     * Returns all outcomes for a given user
+     * 
+     * @param user_id
+     */
     public List<TOutcome> getUserOutcomes(int user_id) throws org.apache.thrift.TException;
 
+    /**
+     * Returns all incomes for a given user
+     * 
+     * @param user_id
+     */
     public List<TIncome> getUserIncomes(int user_id) throws org.apache.thrift.TException;
 
+    /**
+     * Returns list of all users
+     */
     public List<TUser> getAllUsers() throws org.apache.thrift.TException;
 
   }

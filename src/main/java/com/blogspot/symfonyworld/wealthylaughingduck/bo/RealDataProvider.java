@@ -11,19 +11,18 @@ import com.blogspot.symfonyworld.wealthylaughingduck.dao.UserDao;
 
 public class RealDataProvider extends DataProvider {
 
-  @Override
-  public List<Outcome> getOutcomesByUserId(int userId) {
-    return this.outcomeDao.findByUserId(userId);
-  }
+    @Override
+    public List<Outcome> getOutcomesByUserId(int userId) {
+        return this.outcomeDao.findByUserId(userId);
+    }
 
-  @Override
-  public List<Income> getIncomesByUserId(int userId) {
-    return this.incomeDao.findByUserId(userId);
-  }
+    @Override
+    public List<Income> getIncomesByUserId(int userId) {
+        return this.incomeDao.findByUserId(userId);
+    }
 
-  @Override
-  public List<User> getAllUsers() {
-    return this.userDao.findAllUsers();
-  }
-	
+    @Override
+    public List<User> getAllUsers() {
+        return this.userDao.findAllUsers();
+    }
 }

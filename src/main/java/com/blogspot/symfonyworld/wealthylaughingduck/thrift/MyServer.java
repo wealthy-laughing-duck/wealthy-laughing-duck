@@ -43,7 +43,7 @@ public class MyServer {
         // construct session factory
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-				// construct data access objects
+        // construct data access objects
         OutcomeDao outcomeDao = new OutcomeDaoImpl();
         outcomeDao.setSessionFactory(sessionFactory);
         IncomeDao incomeDao = new IncomeDaoImpl();
@@ -52,7 +52,7 @@ public class MyServer {
         userDao.setSessionFactory(sessionFactory);
 
         // construct data provider and set daos
-        DataProvider dataProvider = new FakeDataProvider();
+        DataProvider dataProvider = new RealDataProvider();
         dataProvider.setDaos(outcomeDao, incomeDao, userDao);
 
         StartsimpleServer(new FinanceService.Processor<FinanceServiceHandler>(
