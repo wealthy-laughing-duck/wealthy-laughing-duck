@@ -34,6 +34,12 @@
             <version>1.7.3</version>
         </dependency>
         <dependency>
+            <artifactId>slf4j-simple</artifactId>
+            <groupId>org.slf4j</groupId>
+            <type>jar</type>
+            <version>1.7.3</version>
+        </dependency>
+        <dependency>
             <artifactId>hibernate-core</artifactId>
             <groupId>org.hibernate</groupId>
             <type>jar</type>
