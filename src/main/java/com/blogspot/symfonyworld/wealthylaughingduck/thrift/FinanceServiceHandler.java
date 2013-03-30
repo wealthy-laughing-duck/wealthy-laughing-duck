@@ -50,8 +50,6 @@ public class FinanceServiceHandler implements FinanceService.Iface {
         }
         logger.info("returned {} results", result.size());
         logger.info("END getUserOutcomes");
-        Marker confidentialMarker = MarkerFactory.getMarker("CONFIDENTIAL");
-        logger.info(confidentialMarker, "C'est confidentiel !");
         return result;
     }
 
