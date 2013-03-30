@@ -2,10 +2,11 @@
     <p>
         Choose from the following users:
     <ul>
-        {{#users}}
-        <input type="checkbox" name="user" value="{{ username }}" />{{ fullname }}
-        {{^last}}<br />{{/last}}
-        {{/users}}
+    {{#users}}
+        <label class="checkbox">
+            <input type="checkbox" name="user" value="{{ username }}" /> {{ fullname }}
+        </label>
+    {{/users}}
     </ul>
 </p>
 </script>
