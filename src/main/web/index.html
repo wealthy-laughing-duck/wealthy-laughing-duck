@@ -52,26 +52,6 @@
             </div>
         </div>
 
-    <script id="chooseUsersTemplate" type="text/html">
-        <p>
-            Choose from the following users:
-            <ul>
-            {{#users}}
-                <input type="checkbox" name="user" value="{{ username }}" />{{ fullname }}
-                {{^last}}<br />{{/last}}
-            {{/users}}
-            </ul>
-        </p>
-    </script>
-
-        <script id="errorTemplate" type="text/html">
-            <p class="text-error">
-                <strong>Following {{ type }} error occured</strong>: {{ message }}
-            </p>
-        </script>
-
-<!--=========================================================================-->
-
     <div id="outcomeFormDialog"  class="modal hide fade" role="dialog">
         <form class="form-horizontal well" data-async data-target="#outcomeFormDialog" method="POST">
             <div class="modal-header">

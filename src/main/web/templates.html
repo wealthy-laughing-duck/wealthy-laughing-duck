@@ -1,0 +1,17 @@
+<script id="chooseUsersTemplate" type="text/html">
+    <p>
+        Choose from the following users:
+    <ul>
+        {{#users}}
+        <input type="checkbox" name="user" value="{{ username }}" />{{ fullname }}
+        {{^last}}<br />{{/last}}
+        {{/users}}
+    </ul>
+</p>
+</script>
+
+<script id="errorTemplate" type="text/html">
+    <p class="text-error">
+        <strong>Following {{ type }} error occured</strong>: {{ message }}
+    </p>
+</script>

@@ -107,6 +107,16 @@ var OutcomeCategoryControl = {
 
 $(document).ready( function() {
 
+    $.ajax({
+        type: "GET",
+        dataType: 'text',
+        async: false,
+        url: "templates.html"
+    }).done(function(response) {
+        $("body").append(response);
+        ich.grabTemplates();
+    });
+
     $('.dropdown-toggle').dropdown();
 
     $('#outcomes').dataTable({
