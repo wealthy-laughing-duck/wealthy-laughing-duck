@@ -9,6 +9,7 @@ import com.blogspot.symfonyworld.wealthylaughingduck.model.User;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.IncomeDao;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDao;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.UserDao;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.Category;
 
 public class FakeDataProvider extends DataProvider {
 
@@ -36,6 +37,20 @@ public class FakeDataProvider extends DataProvider {
         u1.setLastName("Doe");
         u1.setUserName("jd");
         result.add(u1);
+        return result;
+    }
+
+    @Override
+    public List<Category> getIncomeCategoryTree() {
+        List <Category> result = new ArrayList<>();
+//        throw new UnsupportedOperationException("Not supported yet.");
+        return result;
+    }
+
+    @Override
+    public List<Category> getOutcomeCategoryTree() {
+        List <Category> result = new ArrayList<>();
+//        throw new UnsupportedOperationException("Not supported yet.");
         return result;
     }
 }

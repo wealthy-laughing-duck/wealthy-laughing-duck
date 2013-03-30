@@ -147,6 +147,48 @@ class TUser extends TBase {
   }
 }
 
+class TCategory extends TBase {
+  static $_TSPEC;
+
+  public $id = null;
+  public $name = null;
+  public $parent_id = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'id',
+          'type' => TType::I32,
+          ),
+        2 => array(
+          'var' => 'name',
+          'type' => TType::STRING,
+          ),
+        3 => array(
+          'var' => 'parent_id',
+          'type' => TType::I32,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'TCategory';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('TCategory', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('TCategory', self::$_TSPEC, $output);
+  }
+}
+
 class TDate extends TBase {
   static $_TSPEC;
 
@@ -225,6 +267,49 @@ class TPeriod extends TBase {
   }
   public function write($output) {
     return $this->_write('TPeriod', self::$_TSPEC, $output);
+  }
+}
+
+class TCriteria extends TBase {
+  static $_TSPEC;
+
+  public $period = null;
+  public $users = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'period',
+          'type' => TType::STRUCT,
+          'class' => '\SymfonyWorld\WealthyLaughingDuck\TPeriod',
+          ),
+        2 => array(
+          'var' => 'users',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\SymfonyWorld\WealthyLaughingDuck\TUser',
+            ),
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'TCriteria';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('TCriteria', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('TCriteria', self::$_TSPEC, $output);
   }
 }
 

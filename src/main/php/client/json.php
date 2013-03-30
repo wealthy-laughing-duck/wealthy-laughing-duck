@@ -24,7 +24,15 @@ if ($request['type'] == 'outcomes')
 }
 elseif ($request['type'] == 'users')
 {
-  $result['users'] = $client->getClient()->getAllUsers();
+  $result = $client->getClient()->getAllUsers();
+}
+elseif ($request['type'] == 'incomeCategories')
+{
+  $result = $client->getClient()->getIncomeCategoryTree();
+}
+elseif ($request['type'] == 'outcomeCategories')
+{
+  $result = $client->getClient()->getOutcomeCategoryTree();
 }
 
 echo json_encode($result);

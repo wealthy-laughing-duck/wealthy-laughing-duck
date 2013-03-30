@@ -2,19 +2,15 @@ package com.blogspot.symfonyworld.wealthylaughingduck.dao;
 
 import java.util.List;
 
-import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.Category;
 
-public interface IncomeDao extends Dao {
+public interface CategoryDao extends Dao {
 
-    public void save(Income income);
+    public void save(Category category);
 
-    public void update(Income income);
+    public void update(Category category);
 
-    public void delete(Income income);
+    public void delete(Category category);
 
-    public List findAllIncomes();
-
-    public Income findByIncomeId(long id);
-
-    public List<Income> findByUserId(long id);
+    public List<Category> findAllByType(String type);
 }

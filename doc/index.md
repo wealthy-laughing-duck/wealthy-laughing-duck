@@ -10,7 +10,6 @@ There are two main components in the system: frontend and backend.
 
 ![main diagram](diagram_main.png "main diagram")
 
-
 Backend
 -------
 

@@ -37,7 +37,7 @@ public class Category {
 
     @Column(name = "created_at", columnDefinition="datetime")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_at;
+    private Date createdAt;
 
     /**
      * @return the id
@@ -75,17 +75,17 @@ public class Category {
     }
 
     /**
-     * @return the created_at
+     * @return the createdAt
      */
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     /**
-     * @param created_at the created_at to set
+     * @param createdAt the createdAt to set
      */
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     /**

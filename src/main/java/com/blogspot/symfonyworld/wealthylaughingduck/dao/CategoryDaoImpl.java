@@ -7,9 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.Category;
 
-public class IncomeDaoImpl implements IncomeDao {
+public class CategoryDaoImpl implements CategoryDao {
 
     private SessionFactory sessionFactory;
 
@@ -22,59 +22,39 @@ public class IncomeDaoImpl implements IncomeDao {
     }
 
     @Override
-    public void save(Income income) {
+    public void save(Category category) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        session.save(income);
+        session.save(category);
         tx.commit();
         session.close();
     }
 
     @Override
-    public void update(Income income) {
+    public void update(Category category) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        session.save(income);
+        session.save(category);
         tx.commit();
         session.close();
     }
 
     @Override
-    public void delete(Income income) {
+    public void delete(Category category) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        session.delete(income);
+        session.delete(category);
         tx.commit();
         session.close();
     }
 
     @Override
-    public List findAllIncomes() {
-        session = sessionFactory.openSession();
-        tx = session.beginTransaction();
-        List list = session.createQuery("FROM Income").list();
-        tx.commit();
-        session.close();
-        return list;
-    }
-
-    @Override
-    public Income findByIncomeId(long id) {
-        session = sessionFactory.openSession();
-        tx = session.beginTransaction();
-        Income song = (Income) session.get(Income.class, new Long(id));
-        tx.commit();
-        session.close();
-        return song;
-    }
-
-    @Override
-    public List<Income> findByUserId(long id) {
+    public List<Category> findAllByType(String type) {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
         Query query = session.createQuery(
-                "FROM Income WHERE created_by = :created_by");
-        query.setParameter("created_by", id);
+                "FROM Category WHERE type = :type");
+        query.setParameter("type", type);
         List list = query.list();
         tx.commit();
         session.close();

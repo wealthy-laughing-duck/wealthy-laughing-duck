@@ -11,6 +11,7 @@ import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TCategory;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TIncome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TOutcome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TUser;
@@ -32,7 +33,7 @@ public class MyClient {
         transport.close();
     }
 
-    public void processGetUserOutcomes() throws TException {
+    protected void processGetUserOutcomes() throws TException {
         List<TOutcome> list = client.getUserOutcomes(1);
         System.out.println("Thrift has returned following result:");
         for (Iterator it = list.iterator(); it.hasNext();) {
@@ -43,7 +44,7 @@ public class MyClient {
         System.out.println("Total results: " + list.size());
     }
 
-    public void processGetUserIncomes() throws TException {
+    protected void processGetUserIncomes() throws TException {
         List<TIncome> list = client.getUserIncomes(1);
         System.out.println("Thrift has returned following result:");
         for (Iterator it = list.iterator(); it.hasNext();) {
@@ -54,12 +55,31 @@ public class MyClient {
         System.out.println("Total results: " + list.size());
     }
 
-    public void processGetAllUsers() throws TException {
+    protected void processGetAllUsers() throws TException {
         List<TUser> list = client.getAllUsers();
         System.out.println("Thrift has returned following result:");
         for (Iterator it = list.iterator(); it.hasNext();) {
             TUser t_user = (TUser) it.next();
             System.out.println(t_user.getUsername() + " - " + t_user.getFullname());
+        }
+        System.out.println("Total results: " + list.size());
+    }
+
+    protected void processGetIncomeCategoryTree() throws TException {
+        List<TCategory> list = client.getIncomeCategoryTree();
+        processGetCategoryTree(list);
+    }
+
+    protected void processGetOutcomeCategoryTree() throws TException {
+        List<TCategory> list = client.getOutcomeCategoryTree();
+        processGetCategoryTree(list);
+    }
+
+    private  void processGetCategoryTree(List<TCategory> list) throws TException {
+        System.out.println("Thrift has returned following result:");
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            TCategory t_category = (TCategory) it.next();
+            System.out.println(t_category.getId() + " - " + t_category.getName());
         }
         System.out.println("Total results: " + list.size());
     }
@@ -70,6 +90,8 @@ public class MyClient {
             myClient.processGetUserOutcomes();
             myClient.processGetUserIncomes();
             myClient.processGetAllUsers();
+            myClient.processGetOutcomeCategoryTree();
+            myClient.processGetIncomeCategoryTree();
             myClient.close();
         } catch (TTransportException e) {
             e.printStackTrace();

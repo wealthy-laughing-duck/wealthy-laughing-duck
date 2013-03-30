@@ -19,6 +19,8 @@ interface FinanceServiceIf {
   public function getUserOutcomes($user_id);
   public function getUserIncomes($user_id);
   public function getAllUsers();
+  public function getIncomeCategoryTree();
+  public function getOutcomeCategoryTree();
 }
 
 class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceServiceIf {
@@ -182,6 +184,106 @@ class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceS
       return $result->success;
     }
     throw new \Exception("getAllUsers failed: unknown result");
+  }
+
+  public function getIncomeCategoryTree()
+  {
+    $this->send_getIncomeCategoryTree();
+    return $this->recv_getIncomeCategoryTree();
+  }
+
+  public function send_getIncomeCategoryTree()
+  {
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getIncomeCategoryTree_args();
+    $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'getIncomeCategoryTree', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('getIncomeCategoryTree', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_getIncomeCategoryTree()
+  {
+    $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_getIncomeCategoryTree_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getIncomeCategoryTree_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    throw new \Exception("getIncomeCategoryTree failed: unknown result");
+  }
+
+  public function getOutcomeCategoryTree()
+  {
+    $this->send_getOutcomeCategoryTree();
+    return $this->recv_getOutcomeCategoryTree();
+  }
+
+  public function send_getOutcomeCategoryTree()
+  {
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getOutcomeCategoryTree_args();
+    $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'getOutcomeCategoryTree', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('getOutcomeCategoryTree', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_getOutcomeCategoryTree()
+  {
+    $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_getOutcomeCategoryTree_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getOutcomeCategoryTree_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    throw new \Exception("getOutcomeCategoryTree failed: unknown result");
   }
 
 }
@@ -384,6 +486,128 @@ class FinanceService_getAllUsers_result extends TBase {
   }
   public function write($output) {
     return $this->_write('FinanceService_getAllUsers_result', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_getIncomeCategoryTree_args extends TBase {
+  static $_TSPEC;
+
+
+  public function __construct() {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        );
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_getIncomeCategoryTree_args';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_getIncomeCategoryTree_args', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_getIncomeCategoryTree_args', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_getIncomeCategoryTree_result extends TBase {
+  static $_TSPEC;
+
+  public $success = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        0 => array(
+          'var' => 'success',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\SymfonyWorld\WealthyLaughingDuck\TCategory',
+            ),
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_getIncomeCategoryTree_result';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_getIncomeCategoryTree_result', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_getIncomeCategoryTree_result', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_getOutcomeCategoryTree_args extends TBase {
+  static $_TSPEC;
+
+
+  public function __construct() {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        );
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_getOutcomeCategoryTree_args';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_getOutcomeCategoryTree_args', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_getOutcomeCategoryTree_args', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_getOutcomeCategoryTree_result extends TBase {
+  static $_TSPEC;
+
+  public $success = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        0 => array(
+          'var' => 'success',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\SymfonyWorld\WealthyLaughingDuck\TCategory',
+            ),
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_getOutcomeCategoryTree_result';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_getOutcomeCategoryTree_result', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_getOutcomeCategoryTree_result', self::$_TSPEC, $output);
   }
 }
 

@@ -20,3 +20,8 @@ frontend
 --------
 
  * [PHP5](http://php.net/)
+ * [bootstrap](http://twitter.github.com/bootstrap/)
+ * [icanhaz.js](http://icanhazjs.com/)
+ * [jQuery](http://jquery.com/)
+ * jQuery plugins:
+   * [jstree](http://www.jstree.com/)

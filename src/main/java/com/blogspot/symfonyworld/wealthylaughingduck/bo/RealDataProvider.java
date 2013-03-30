@@ -8,6 +8,7 @@ import com.blogspot.symfonyworld.wealthylaughingduck.model.User;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.IncomeDao;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDao;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.UserDao;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.Category;
 
 public class RealDataProvider extends DataProvider {
 
@@ -24,5 +25,15 @@ public class RealDataProvider extends DataProvider {
     @Override
     public List<User> getAllUsers() {
         return this.userDao.findAllUsers();
+    }
+
+    @Override
+    public List<Category> getIncomeCategoryTree() {
+        return this.categoryDao.findAllByType("IncomeCategory");
+    }
+
+    @Override
+    public List<Category> getOutcomeCategoryTree() {
+        return this.categoryDao.findAllByType("OutcomeCategory");
     }
 }

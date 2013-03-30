@@ -22,6 +22,14 @@ struct TUser {
     2: required string fullname,
 }
 
+struct TCategory {
+    1: required int id,
+    2: required string name,
+    3: optional int parent_id
+}
+
+typedef list<TCategory> TCategoryPlainTree
+
 struct TDate {
     1: required int year,
     2: required int month,
@@ -31,6 +39,11 @@ struct TDate {
 struct TPeriod {
     1: required TDate from,
     2: required TDate to,
+}
+
+struct TCriteria {
+    1: required TPeriod period,
+    2: required list<TUser> users
 }
 
 service FinanceService {
@@ -50,4 +63,13 @@ service FinanceService {
    */
   list<TUser> getAllUsers()
 
+  /**
+   * Returns income category tree
+   */
+  TCategoryPlainTree getIncomeCategoryTree()
+
+  /**
+   * Returns outcome category tree
+   */
+  TCategoryPlainTree getOutcomeCategoryTree()
 }

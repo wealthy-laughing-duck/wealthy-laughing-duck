@@ -19,6 +19,8 @@ import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDao;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.OutcomeDaoImpl;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.UserDao;
 import com.blogspot.symfonyworld.wealthylaughingduck.dao.UserDaoImpl;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.CategoryDao;
+import com.blogspot.symfonyworld.wealthylaughingduck.dao.CategoryDaoImpl;
 
 public class MyServer {
 
@@ -50,12 +52,14 @@ public class MyServer {
         incomeDao.setSessionFactory(sessionFactory);
         UserDao userDao = new UserDaoImpl();
         userDao.setSessionFactory(sessionFactory);
+        CategoryDao categoryDao = new CategoryDaoImpl();
+        categoryDao.setSessionFactory(sessionFactory);
 
         // construct data provider and set daos
         DataProvider dataProvider = new RealDataProvider();
-        dataProvider.setDaos(outcomeDao, incomeDao, userDao);
+        dataProvider.setDaos(outcomeDao, incomeDao, userDao, categoryDao);
 
-        StartsimpleServer(new FinanceService.Processor<FinanceServiceHandler>(
+        StartsimpleServer(new FinanceService.Processor<>(
                 new FinanceServiceHandler(dataProvider)));
     }
 }
