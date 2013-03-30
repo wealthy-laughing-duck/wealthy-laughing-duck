@@ -1,4 +1,24 @@
-<script id="chooseUsersTemplate" type="text/html">
+<script id="CategorySelectTemplate" type="text/html">
+    <label>Category</label>
+    <select>
+        <option>choose category</option>
+        {{#categories}}
+        <option value="{{ id }}">{{ name }}</option>
+        {{/categories}}
+    </select>
+</script>
+
+<script id="UserSelectTemplate" type="text/html">
+    <label>User</label>
+    <select>
+        <option>choose user</option>
+        {{#users}}
+        <option value="{{ username }}">{{ fullname }}</option>
+        {{/users}}
+    </select>
+</script>
+
+<script id="UserCheckboxTemplate" type="text/html">
     <p>
         Choose from the following users:
     <ul>
@@ -27,24 +47,11 @@
             <fieldset>
                 <label>Amount</label>
                 <div class="input-append">
-                    <input id="appendedInput" type="text" />
+                    <input type="text" placeholder="00.01" />
                     <span class="add-on">{{ currency }}</span>
                 </div>
-
-                <label>User</label>
-                <select>
-                    <option>choose user</option>
-                    <option value="1">user1</option>
-                    <option value="2">user2</option>
-                </select>
-
-                <label>Category</label>
-                <select>
-                    <option>choose category</option>
-                    <option value="1">cat1</option>
-                    <option value="2">cat2</option>
-                </select>
-
+                {{>UserSelectTemplate}}
+                {{>CategorySelectTemplate}}
                 <label>Comment</label>
                 <input type="text" placeholder="Comment here..." />
             </fieldset>

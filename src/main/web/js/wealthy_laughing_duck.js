@@ -13,7 +13,9 @@ var WealthyLaughingDuckControl = {
     initTemplates: function() {
         // add outcome form: render
         $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
-            'currency': 'zł'
+            'currency': 'zł',
+            'users': UsersControl.getData(),
+            'categories': OutcomeCategoryControl.getData()
         }));
 
         // outcomes: datatable
@@ -164,10 +166,10 @@ $(document).ready( function() {
 //    })
 
     $('#chooseUsersDialog').on('show', function () {
-        $('#chooseUsersDialog .modal-body').html(ich.chooseUsersTemplate(
-            {'users': UsersControl.getData()}
-        ));
-    })
+        $('#chooseUsersDialog .modal-body').html(ich.UserCheckboxTemplate({
+            'users': UsersControl.getData()
+        }));
+    });
 
     $('#chooseCategoriesDialog').on('show', function () {
         income = WealthyLaughingDuckControl.parseListIntoForest(
