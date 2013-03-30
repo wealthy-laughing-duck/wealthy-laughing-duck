@@ -1,5 +1,36 @@
 var WealthyLaughingDuckControl = {
-    parseListIntoForest: function (categories) {
+    fetchTemplates: function() {
+        $.ajax({
+            type: "GET",
+            dataType: 'text',
+            async: false,
+            url: "templates.html"
+        }).done(function(response) {
+            $("body").append(response);
+            ich.grabTemplates();
+        });
+    },
+    initTemplates: function() {
+        // add outcome form: render
+        $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
+            'currency': 'zł'
+        }));
+
+        // outcomes: datatable
+        $('#outcomes').dataTable({
+            "bServerSide": true,
+            'sPaginationType': 'bootstrap',
+            "sAjaxSource": '../php/client/json.php?type=outcomes'
+        });
+
+        // bootstrap menu: dropdown
+        $('.dropdown-toggle').dropdown();
+    },
+    init: function() {
+        this.fetchTemplates();
+        this.initTemplates();
+    },
+    parseListIntoForest: function(categories) {
         if (categories == null)
             return null;
 
@@ -107,23 +138,7 @@ var OutcomeCategoryControl = {
 
 $(document).ready( function() {
 
-    $.ajax({
-        type: "GET",
-        dataType: 'text',
-        async: false,
-        url: "templates.html"
-    }).done(function(response) {
-        $("body").append(response);
-        ich.grabTemplates();
-    });
-
-    $('.dropdown-toggle').dropdown();
-
-    $('#outcomes').dataTable({
-        "bServerSide": true,
-        'sPaginationType': 'bootstrap',
-        "sAjaxSource": '../php/client/json.php?type=outcomes'
-    });
+    WealthyLaughingDuckControl.init();
 
 //    $("#choose-users-dialog").dialog({
 //        autoOpen: false,
