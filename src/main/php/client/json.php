@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/../requires.php';
 
 use \SymfonyWorld\Thrift;
 
-$request = $_GET;
+$request = count($_POST) ? $_POST : $_GET;
 $client = new Thrift("localhost", 9090);
 
 if ($request['type'] == 'outcomes')

@@ -180,6 +180,24 @@ $(document).ready( function() {
                 "plugins" : [ "themes", "json_data" ]
             });
         }
-    })
+    });
+    
+    $('form[data-async]').live('submit', function(event) {
+        console.log('submitted');
+//        var $form = $(this);
+//        var $target = $($form.attr('data-target'));
+// 
+//        $.ajax({
+//            type: $form.attr('method'),
+//            url: "../php/client/json.php",
+//            data: $form.serialize(),
+// 
+//            success: function(data, status) {
+//                $target.html(data);
+//            }
+//        });
+ 
+        event.preventDefault();
+    });
 
 });
