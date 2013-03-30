@@ -28,15 +28,15 @@
                             <li class="dropdown">
                                 <a class="dropdown-toggle" id="drop1" role="button" data-toggle="dropdown" href="#">Enter <b class="caret"></b></a>
                                 <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                                    <li role="presentation"><a role="menuitem" href="#">Income</a></li>
-                                    <li role="presentation"><a role="menuitem" href="#">Outcome</a></li>
+                                    <li role="presentation"><a role="menuitem" data-toggle="modal" href="#incomeFormDialog">Income</a></li>
+                                    <li role="presentation"><a role="menuitem" data-toggle="modal" href="#outcomeFormDialog">Outcome</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" id="drop2" role="button" data-toggle="dropdown" href="#">Display <b class="caret"></b></a>
                                 <ul id="menu2" class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                                    <li role="presentation"><a role="menuitem" href="#">Monthly balance</a></li>
-                                    <li role="presentation"><a role="menuitem" href="#">Category total</a></li>
+                                    <li role="presentation"><a role="menuitem" data-toggle="modal" href="#monthlyBalanceDialog">Monthly balance</a></li>
+                                    <li role="presentation"><a role="menuitem" data-toggle="modal" href="#categoryTotalDialog">Category total</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -69,6 +69,67 @@
             <strong>Following {{ type }} error occured</strong>: {{ message }}
         </p>
     </script>
+
+<!--=========================================================================-->
+
+    <div id="outcomeFormDialog"  class="modal hide fade" role="dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 id="myModalLabel">Add outcome</h3>
+        </div>
+        <div class="modal-body">
+            <p>there will be form here</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal">Close</button>
+            <button class="btn btn-primary">Save outcome</button>
+        </div>
+    </div>
+
+    <div id="incomeFormDialog"  class="modal hide fade" role="dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 id="myModalLabel">Add income</h3>
+        </div>
+        <div class="modal-body">
+            <p>there will be form here</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal">Close</button>
+            <button class="btn btn-primary">Save income</button>
+        </div>
+    </div>
+
+<!--=========================================================================-->
+
+    <div id="monthlyBalanceDialog"  class="modal hide fade" role="dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 id="myModalLabel">Monthly balance</h3>
+        </div>
+        <div class="modal-body">
+            <p>there will be monthly balance here</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+
+    <div id="categoryTotalDialog"  class="modal hide fade" role="dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 id="myModalLabel">Category total</h3>
+        </div>
+        <div class="modal-body">
+            <p>there will be category total here</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+
+
+<!--=========================================================================-->
 
     <div id="chooseUsersDialog"  class="modal hide fade" role="dialog">
         <div class="modal-header">
@@ -108,6 +169,8 @@
             <button class="btn btn-primary">Save changes</button>
         </div>
     </div>
+
+<!--=========================================================================-->
 
     <div class="container">
         <h1>Outcomes</h1>
