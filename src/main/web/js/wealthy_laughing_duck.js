@@ -1,5 +1,8 @@
 var WealthyLaughingDuckControl = {
     parseListIntoForest: function (categories) {
+        if (categories == null)
+            return null;
+
         var itemsByID = [];
 
         categories.forEach(function(item) {
@@ -142,25 +145,41 @@ $(document).ready( function() {
     })
 
     $('#chooseCategoriesDialog').on('show', function () {
-        $("#incomeCategoryTree").jstree({ 
-            "json_data" : {
-                "data" : WealthyLaughingDuckControl.parseListIntoForest(
-                    IncomeCategoryControl.getData()
-                ),
-                "progressive_render" : true
-            },
-            "plugins" : [ "themes", "json_data" ]
-        });
+        income = WealthyLaughingDuckControl.parseListIntoForest(
+            IncomeCategoryControl.getData());
 
-        $("#outcomeCategoryTree").jstree({ 
-            "json_data" : {
-                "data" : WealthyLaughingDuckControl.parseListIntoForest(
-                    OutcomeCategoryControl.getData()
-                ),
-                "progressive_render" : true
-            },
-            "plugins" : [ "themes", "json_data" ]
-        });
+        if (income == null) {
+            $("#incomeCategoryTree").html(ich.errorTemplate({
+                'type': 'AJAX',
+                'message': 'could not load income category data'
+            }));
+        } else {
+            $("#incomeCategoryTree").jstree({ 
+                "json_data" : {
+                    "data" : income,
+                    "progressive_render" : true
+                },
+                "plugins" : [ "themes", "json_data" ]
+            });
+        }
+
+        outcome = WealthyLaughingDuckControl.parseListIntoForest(
+            OutcomeCategoryControl.getData());
+
+        if (income == null) {
+            $("#outcomeCategoryTree").html(ich.errorTemplate({
+                'type': 'AJAX',
+                'message': 'could not load outcome category data'
+            }));
+        } else {
+            $("#outcomeCategoryTree").jstree({ 
+                "json_data" : {
+                    "data" : outcome,
+                    "progressive_render" : true
+                },
+                "plugins" : [ "themes", "json_data" ]
+            });
+        }
     })
 
 });
