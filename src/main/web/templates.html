@@ -1,7 +1,6 @@
 <script id="CategorySelectTemplate" type="text/html">
-    <label>Category</label>
-    <select>
-        <option>choose category</option>
+    <select id="category_id" name="category_id" class="required">
+        <option value="">choose category</option>
         {{#categories}}
         <option value="{{ id }}">{{ name }}</option>
         {{/categories}}
@@ -9,9 +8,8 @@
 </script>
 
 <script id="UserSelectTemplate" type="text/html">
-    <label>User</label>
-    <select>
-        <option>choose user</option>
+    <select id="username" name="username" class="required">
+        <option value="">choose user</option>
         {{#users}}
         <option value="{{ username }}">{{ fullname }}</option>
         {{/users}}
@@ -45,15 +43,36 @@
         </div>
         <div class="modal-body">
             <fieldset>
-                <label>Amount</label>
-                <div class="input-append">
-                    <input type="text" placeholder="00.01" />
-                    <span class="add-on">{{ currency }}</span>
+                <input name="type" type="hidden" value="add_outcome" />
+
+                <div class="control-group">
+                    <label class="control-label" for="amount">Amount</label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on">{{ currency }}</span>
+                            <input type="text" name="amount" class="required" placeholder="00.01" />
+                        </div>
+                    </div>
                 </div>
-                {{>UserSelectTemplate}}
-                {{>CategorySelectTemplate}}
-                <label>Comment</label>
-                <input type="text" placeholder="Comment here..." />
+
+                <div class="control-group">
+                    <label class="control-label" for="username">User</label>
+                    <div class="controls">
+                        {{>UserSelectTemplate}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="category_id">Category</label>
+                    <div class="controls">
+                        {{>CategorySelectTemplate}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="comment">Comment</label>
+                    <div class="controls">
+                        <input type="text" name="comment" class="input-xlarge" placeholder="Comment here..." />
+                    </div>
+                </div>
             </fieldset>
         </div>
         <div class="modal-footer">

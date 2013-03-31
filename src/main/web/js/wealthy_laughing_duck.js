@@ -1,4 +1,12 @@
+jQuery.validator.addMethod("money", function(value, element) {
+    return this.optional(element) || /^(\d{1,3})(\.\d{1,2})?$/.test(value);
+}, "Must be proper currency format 0.99");
+
 var WealthyLaughingDuckControl = {
+    currency: 'zł',
+    getCurrency: function() {
+        return this.currency;
+    },
     fetchTemplates: function() {
         $.ajax({
             type: "GET",
@@ -13,7 +21,7 @@ var WealthyLaughingDuckControl = {
     initTemplates: function() {
         // add outcome form: render
         $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
-            'currency': 'zł',
+            'currency': this.getCurrency(),
             'users': UsersControl.getData(),
             'categories': OutcomeCategoryControl.getData()
         }));
@@ -27,6 +35,11 @@ var WealthyLaughingDuckControl = {
 
         // bootstrap menu: dropdown
         $('.dropdown-toggle').dropdown();
+
+        // popover-ize all info buttons
+        $('a.btn-info').popover({
+            'placement': 'bottom'
+        });
     },
     init: function() {
         this.fetchTemplates();
@@ -208,22 +221,43 @@ $(document).ready( function() {
             });
         }
     });
-    
-    $('form[data-async]').live('submit', function(event) {
-        console.log('submitted');
-//        var $form = $(this);
-//        var $target = $($form.attr('data-target'));
-// 
-//        $.ajax({
-//            type: $form.attr('method'),
-//            url: "../php/client/json.php",
-//            data: $form.serialize(),
-// 
-//            success: function(data, status) {
-//                $target.html(data);
-//            }
-//        });
- 
+
+    $('#outcomeFormDialog form').validate(
+    {
+        rules: {
+            amount: {
+                money: true
+            },
+            comment: {
+                required: false
+            }
+        },
+        highlight: function(element) {
+            $(element).closest('.control-group')
+            .removeClass('success').addClass('error');
+        },
+        success: function(element) {
+            element
+            .addClass('valid').closest('.control-group')
+            .removeClass('error').addClass('success');
+            $(this).modal('hide');
+        }
+    });
+
+    $('#outcomeFormDialog form').on( "submit", function( event ) {
+        var form = $(this);
+        // form validates
+        if (form.validate().checkForm()) {
+            $.ajax({
+                type: form.attr('method'),
+                url: "../php/client/json.php",
+                data: form.serialize(),
+                success: function(data, status) {
+                    $('#outcomeFormDialog').modal('hide');
+                    bootbox.alert("Outcome has been successfully added.");
+                }
+            });
+        }
         event.preventDefault();
     });
 
