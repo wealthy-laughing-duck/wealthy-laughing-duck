@@ -19,6 +19,9 @@ var WealthyLaughingDuckControl = {
         });
     },
     initTemplates: function() {
+        // init main container body
+        $(this.getMainContainerSelector()).html(ich.homepageTemplate({}));
+
         // add outcome form: render
         $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
             'currency': this.getCurrency(),
@@ -33,13 +36,6 @@ var WealthyLaughingDuckControl = {
             'categories': IncomeCategoryControl.getData()
         }));
 
-        // outcomes: datatable
-        $('#outcomes').dataTable({
-            "bServerSide": true,
-            'sPaginationType': 'bootstrap',
-            "sAjaxSource": '../php/client/json.php?type=outcomes'
-        });
-
         // bootstrap menu: dropdown
         $('.dropdown-toggle').dropdown();
 
@@ -48,9 +44,29 @@ var WealthyLaughingDuckControl = {
             'placement': 'bottom'
         });
     },
+    getMainContainerSelector: function () {
+        return '.container#main';
+    },
+    bindMenuOptions: function () {
+        $('#menu_outcome_list').bind('click', $.proxy(function(){
+            // inject template
+            $(this.getMainContainerSelector()).html(ich.outcomeListTemplate({}));
+            // load datatable
+            $('#outcomes').dataTable({
+                "bServerSide": true,
+                'sPaginationType': 'bootstrap',
+                "sAjaxSource": '../php/client/json.php?type=outcomes'
+            });
+        }, WealthyLaughingDuckControl));
+
+        $('#menu_homepage').bind('click', $.proxy(function(){
+            $(this.getMainContainerSelector()).html(ich.homepageTemplate({}));
+        }, WealthyLaughingDuckControl));
+    },
     init: function() {
         this.fetchTemplates();
         this.initTemplates();
+        this.bindMenuOptions();
     },
     parseListIntoForest: function(categories) {
         if (categories == null)
@@ -158,7 +174,11 @@ var OutcomeCategoryControl = {
     }
 };
 
+//var NavigatorControl = {}
+
 $(document).ready( function() {
+
+    
 
     WealthyLaughingDuckControl.init();
 

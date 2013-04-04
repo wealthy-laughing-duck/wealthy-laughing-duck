@@ -24,7 +24,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="#">wealthy laughing duck</a>
+                    <a class="brand" id="menu_homepage" href="#">wealthy laughing duck</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="dropdown">
@@ -39,6 +39,8 @@
                                 <ul id="menu2" class="dropdown-menu" role="menu" aria-labelledby="drop2">
                                     <li role="presentation"><a role="menuitem" data-toggle="modal" href="#monthlyBalanceDialog">Monthly balance</a></li>
                                     <li role="presentation"><a role="menuitem" data-toggle="modal" href="#categoryTotalDialog">Category total</a></li>
+                                    <li role="presentation"><a role="menuitem" id="menu_outcome_list">Outcome list</a></li>
+                                    <li role="presentation"><a role="menuitem" id="menu_income_list">Income list</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -132,21 +134,6 @@
 
         <!--=========================================================================-->
 
-        <div class="container">
-            <h1>Outcomes</h1>
-
-            <table class="table table-striped" id="outcomes">
-                <thead>
-                    <tr>
-                        <th>Amount</th>
-                        <th>User</th>
-                        <th>Category</th>
-                        <th>Comment</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+        <div class="container" id="main"></div>
     </body>
 </html>
