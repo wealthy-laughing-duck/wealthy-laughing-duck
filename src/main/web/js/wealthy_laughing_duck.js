@@ -7,7 +7,7 @@ var WealthyLaughingDuckControl = {
     getCurrency: function() {
         return this.currency;
     },
-    templates: ['containers', 'forms', 'filters', 'misc'],
+    templates: ['containers', 'forms', 'filters', 'modals', 'misc'],
     fetchTemplate: function(template) {
         $.ajax({
             type: 'GET',
@@ -27,7 +27,10 @@ var WealthyLaughingDuckControl = {
     },
     initTemplates: function() {
         // init main container body
-        $(this.getMainContainerSelector()).html(ich.homepageTemplate({}));
+        $(this.getMainContainerSelector()).html(ich.homepageTemplate());
+
+        // append modal containers
+        $('body').append(ich.modalsContainerTemplate());
 
         // add outcome form: render
         $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
@@ -42,6 +45,18 @@ var WealthyLaughingDuckControl = {
             'users': UsersControl.getData(),
             'categories': IncomeCategoryControl.getData()
         }));
+
+        // choose users: render
+        $("#chooseUsersDialog").html(ich.chooseUsersTemplate());
+
+        // choose categories: render
+        $("#chooseCategoriesDialog").html(ich.chooseCategoriesTemplate());
+
+        // monthly balance: render
+        $("#monthlyBalanceDialog").html(ich.monthlyBalanceTemplate());
+
+        // category total: render
+        $("#categoryTotalDialog").html(ich.categoryTotalTemplate());
 
         // bootstrap menu: dropdown
         $('.dropdown-toggle').dropdown();
@@ -181,11 +196,7 @@ var OutcomeCategoryControl = {
     }
 };
 
-//var NavigatorControl = {}
-
 $(document).ready( function() {
-
-    
 
     WealthyLaughingDuckControl.init();
 
