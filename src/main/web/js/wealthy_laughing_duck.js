@@ -7,16 +7,23 @@ var WealthyLaughingDuckControl = {
     getCurrency: function() {
         return this.currency;
     },
-    fetchTemplates: function() {
+    templates: ['containers', 'forms', 'filters', 'misc'],
+    fetchTemplate: function(template) {
         $.ajax({
-            type: "GET",
+            type: 'GET',
             dataType: 'text',
             async: false,
-            url: "templates/templates.ich"
+            url: 'templates/' + template + '.ich'
         }).done(function(response) {
-            $("body").append(response);
+            $('body').append(response);
             ich.grabTemplates();
         });
+    },
+    fetchAllTemplates: function() {
+        var index;
+        for (index = 0; index < this.templates.length; ++index) {
+            this.fetchTemplate(this.templates[index]);
+        }
     },
     initTemplates: function() {
         // init main container body
@@ -64,7 +71,7 @@ var WealthyLaughingDuckControl = {
         }, WealthyLaughingDuckControl));
     },
     init: function() {
-        this.fetchTemplates();
+        this.fetchAllTemplates();
         this.initTemplates();
         this.bindMenuOptions();
     },

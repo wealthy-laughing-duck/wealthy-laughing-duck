@@ -1,0 +1,30 @@
+<script id="CategorySelectTemplate" type="text/html">
+    <select id="category_id" name="category_id" class="required">
+        <option value="">choose category</option>
+        {{#categories}}
+        <option value="{{ id }}">{{ name }}</option>
+        {{/categories}}
+    </select>
+</script>
+
+<script id="UserSelectTemplate" type="text/html">
+    <select id="username" name="username" class="required">
+        <option value="">choose user</option>
+        {{#users}}
+        <option value="{{ username }}">{{ fullname }}</option>
+        {{/users}}
+    </select>
+</script>
+
+<script id="UserCheckboxTemplate" type="text/html">
+    <p>
+        Choose from the following users:
+    <ul>
+    {{#users}}
+        <label class="checkbox">
+            <input type="checkbox" name="user" value="{{ username }}" /> {{ fullname }}
+        </label>
+    {{/users}}
+    </ul>
+</p>
+</script>
