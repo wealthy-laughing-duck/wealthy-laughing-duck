@@ -12,7 +12,7 @@ var WealthyLaughingDuckControl = {
             type: "GET",
             dataType: 'text',
             async: false,
-            url: "templates.html"
+            url: "templates/templates.ich"
         }).done(function(response) {
             $("body").append(response);
             ich.grabTemplates();
