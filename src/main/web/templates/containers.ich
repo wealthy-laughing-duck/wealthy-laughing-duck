@@ -24,3 +24,10 @@
         </tbody>
     </table>
 </script>
+
+<script id="incomeListTemplate" type="text/html">
+    <h1>Incomes</h1>
+    <p>
+        Coming soon...
+    </p>
+</script>

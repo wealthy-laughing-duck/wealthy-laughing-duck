@@ -3,16 +3,16 @@ jQuery.validator.addMethod("money", function(value, element) {
 }, "Must be proper currency format 0.99");
 
 var TemplateEngine = {
+    path: 'templates/',
     templates: ['containers', 'forms', 'filters', 'modals', 'misc'],
     fetchTemplate: function(template) {
         $.ajax({
             type: 'GET',
             dataType: 'text',
             async: false,
-            url: 'templates/' + template + '.ich'
+            url: this.path + template + '.ich'
         }).done(function(response) {
             $('body').append(response);
-            ich.grabTemplates();
         });
     },
     fetchAllTemplates: function() {
@@ -20,6 +20,7 @@ var TemplateEngine = {
         for (index = 0; index < this.templates.length; ++index) {
             this.fetchTemplate(this.templates[index]);
         }
+        ich.grabTemplates();
     }
 }
 
@@ -201,9 +202,7 @@ var TemplateManager = {
     },
     bindMenuOptions: function () {
         $('#menu_outcome_list').bind('click', $.proxy(function(){
-            // inject template
-            $(this.getMainContainerSelector()).html(ich.outcomeListTemplate({}));
-            // load datatable
+            this.renderMainContainerTemplate('outcomeListTemplate');
             $('#outcomes').dataTable({
                 "bServerSide": true,
                 'sPaginationType': 'bootstrap',
@@ -211,9 +210,19 @@ var TemplateManager = {
             });
         }, TemplateManager));
 
-        $('#menu_homepage').bind('click', $.proxy(function(){
-            $(this.getMainContainerSelector()).html(ich.homepageTemplate({}));
+        $('#menu_income_list').bind('click', $.proxy(function(){
+            this.renderMainContainerTemplate('incomeListTemplate');
         }, TemplateManager));
+
+        $('#menu_homepage').bind('click', $.proxy(function(){
+            this.renderMainContainerTemplate('homepageTemplate');
+        }, TemplateManager));
+    },
+    renderMainContainerTemplate: function (template, options) {
+        if(typeof(options)==='undefined') options = {};
+        var code = "var html = ich." + template + "(options)";
+        eval(code);
+        $(this.getMainContainerSelector()).html(html);
     }
 }
 
