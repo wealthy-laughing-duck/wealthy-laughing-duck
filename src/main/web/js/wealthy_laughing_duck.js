@@ -2,11 +2,7 @@ jQuery.validator.addMethod("money", function(value, element) {
     return this.optional(element) || /^(\d{1,3})(\.\d{1,2})?$/.test(value);
 }, "Must be proper currency format 0.99");
 
-var WealthyLaughingDuckControl = {
-    currency: 'zł',
-    getCurrency: function() {
-        return this.currency;
-    },
+var TemplateEngine = {
     templates: ['containers', 'forms', 'filters', 'modals', 'misc'],
     fetchTemplate: function(template) {
         $.ajax({
@@ -24,8 +20,145 @@ var WealthyLaughingDuckControl = {
         for (index = 0; index < this.templates.length; ++index) {
             this.fetchTemplate(this.templates[index]);
         }
+    }
+}
+
+var TemplateManager = {
+    initAllTemplates: function() {
+        this.initOtherTemplates();
+        this.initChooseUsersDialog();
+        this.initChooseCategoriesDialog();
+        this.initIncomeFormDialog();
+        this.initOutcomeFormDialog();
+        this.bindMenuOptions();
     },
-    initTemplates: function() {
+    getMainContainerSelector: function () {
+        return '.container#main';
+    },
+    initChooseUsersDialog: function() {
+        $('#chooseUsersDialog').on('show', function () {
+            $('#chooseUsersDialog .modal-body').html(ich.UserCheckboxTemplate({
+                'users': UsersControl.getData()
+            }));
+        });
+    },
+    initChooseCategoriesDialog: function() {
+        $('#chooseCategoriesDialog').on('show', function () {
+            income = WealthyLaughingDuckControl.parseListIntoForest(
+                IncomeCategoryControl.getData());
+
+            if (income == null) {
+                $("#incomeCategoryTree").html(ich.errorTemplate({
+                    'type': 'AJAX',
+                    'message': 'could not load income category data'
+                }));
+            } else {
+                $("#incomeCategoryTree").jstree({
+                    "json_data" : {
+                        "data" : income,
+                        "progressive_render" : true
+                    },
+                    "plugins" : [ "themes", "json_data" ]
+                });
+            }
+
+            outcome = WealthyLaughingDuckControl.parseListIntoForest(
+                OutcomeCategoryControl.getData());
+
+            if (income == null) {
+                $("#outcomeCategoryTree").html(ich.errorTemplate({
+                    'type': 'AJAX',
+                    'message': 'could not load outcome category data'
+                }));
+            } else {
+                $("#outcomeCategoryTree").jstree({
+                    "json_data" : {
+                        "data" : outcome,
+                        "progressive_render" : true
+                    },
+                    "plugins" : [ "themes", "json_data" ]
+                });
+            }
+        });
+    },
+    initIncomeFormDialog: function() {
+        $('#incomeFormDialog form').validate(
+        {
+            rules: {
+                amount: {
+                    money: true
+                },
+                comment: {
+                    required: false
+                }
+            },
+            highlight: function(element) {
+                $(element).closest('.control-group')
+                .removeClass('success').addClass('error');
+            },
+            success: function(element) {
+                element
+                .addClass('valid').closest('.control-group')
+                .removeClass('error').addClass('success');
+            }
+        });
+
+        $('#incomeFormDialog form').on( "submit", function( event ) {
+            var form = $(this);
+            // form validates
+            if (form.validate().checkForm()) {
+                $.ajax({
+                    type: form.attr('method'),
+                    url: "../php/client/json.php",
+                    data: form.serialize(),
+                    success: function(data, status) {
+                        $('#incomeFormDialog').modal('hide');
+                        bootbox.alert("Income has been successfully added.");
+                    }
+                });
+            }
+            event.preventDefault();
+        });
+    },
+    initOutcomeFormDialog: function() {
+        $('#outcomeFormDialog form').validate({
+            rules: {
+                amount: {
+                    money: true
+                },
+                comment: {
+                    required: false
+                }
+            },
+            highlight: function(element) {
+                $(element).closest('.control-group')
+                .removeClass('success').addClass('error');
+            },
+            success: function(element) {
+                element
+                .addClass('valid').closest('.control-group')
+                .removeClass('error').addClass('success');
+            }
+        });
+
+        $('#outcomeFormDialog form').on( "submit", function( event ) {
+            var form = $(this);
+            // form validates
+            if (form.validate().checkForm()) {
+                $.ajax({
+                    type: form.attr('method'),
+                    url: "../php/client/json.php",
+                    data: form.serialize(),
+                    success: function(data, status) {
+                        $('#outcomeFormDialog').modal('hide');
+                        bootbox.alert("Outcome has been successfully added.");
+                    }
+                });
+            }
+            event.preventDefault();
+        });
+    },
+    initOtherTemplates: function() {
         // init main container body
         $(this.getMainContainerSelector()).html(ich.homepageTemplate());
 
@@ -34,14 +167,14 @@ var WealthyLaughingDuckControl = {
 
         // add outcome form: render
         $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
-            'currency': this.getCurrency(),
+            'currency': WealthyLaughingDuckControl.getCurrency(),
             'users': UsersControl.getData(),
             'categories': OutcomeCategoryControl.getData()
         }));
 
         // add income form: render
         $("#incomeFormDialog").html(ich.incomeFormTemplate({
-            'currency': this.getCurrency(),
+            'currency': WealthyLaughingDuckControl.getCurrency(),
             'users': UsersControl.getData(),
             'categories': IncomeCategoryControl.getData()
         }));
@@ -66,9 +199,6 @@ var WealthyLaughingDuckControl = {
             'placement': 'bottom'
         });
     },
-    getMainContainerSelector: function () {
-        return '.container#main';
-    },
     bindMenuOptions: function () {
         $('#menu_outcome_list').bind('click', $.proxy(function(){
             // inject template
@@ -79,16 +209,18 @@ var WealthyLaughingDuckControl = {
                 'sPaginationType': 'bootstrap',
                 "sAjaxSource": '../php/client/json.php?type=outcomes'
             });
-        }, WealthyLaughingDuckControl));
+        }, TemplateManager));
 
         $('#menu_homepage').bind('click', $.proxy(function(){
             $(this.getMainContainerSelector()).html(ich.homepageTemplate({}));
-        }, WealthyLaughingDuckControl));
-    },
-    init: function() {
-        this.fetchAllTemplates();
-        this.initTemplates();
-        this.bindMenuOptions();
+        }, TemplateManager));
+    }
+}
+
+var WealthyLaughingDuckControl = {
+    currency: 'zł',
+    getCurrency: function() {
+        return this.currency;
     },
     parseListIntoForest: function(categories) {
         if (categories == null)
@@ -198,11 +330,9 @@ var OutcomeCategoryControl = {
 
 $(document).ready( function() {
 
-    WealthyLaughingDuckControl.init();
+    TemplateEngine.fetchAllTemplates();
+    TemplateManager.initAllTemplates();
 
-//    $("#choose-users-dialog").dialog({
-//        autoOpen: false,
-//        modal: true,
 //        buttons: {
 //            Apply: function() {
 //                WealthyLaughingDuckControl.setUsers(
@@ -210,137 +340,11 @@ $(document).ready( function() {
 //                        return this.value;
 //                    })
 //                );
-//                console.log(WealthyLaughingDuckControl);
 //                $( this ).dialog( "close" );
 //            },
 //            Cancel: function() {
 //                $( this ).dialog( "close" );
 //            }
-//        },
-//        close: function() {
-//            var element = $('#choose-users-dialog');
-//            element.html("");
 //        }
-//    })
-
-    $('#chooseUsersDialog').on('show', function () {
-        $('#chooseUsersDialog .modal-body').html(ich.UserCheckboxTemplate({
-            'users': UsersControl.getData()
-        }));
-    });
-
-    $('#chooseCategoriesDialog').on('show', function () {
-        income = WealthyLaughingDuckControl.parseListIntoForest(
-            IncomeCategoryControl.getData());
-
-        if (income == null) {
-            $("#incomeCategoryTree").html(ich.errorTemplate({
-                'type': 'AJAX',
-                'message': 'could not load income category data'
-            }));
-        } else {
-            $("#incomeCategoryTree").jstree({ 
-                "json_data" : {
-                    "data" : income,
-                    "progressive_render" : true
-                },
-                "plugins" : [ "themes", "json_data" ]
-            });
-        }
-
-        outcome = WealthyLaughingDuckControl.parseListIntoForest(
-            OutcomeCategoryControl.getData());
-
-        if (income == null) {
-            $("#outcomeCategoryTree").html(ich.errorTemplate({
-                'type': 'AJAX',
-                'message': 'could not load outcome category data'
-            }));
-        } else {
-            $("#outcomeCategoryTree").jstree({ 
-                "json_data" : {
-                    "data" : outcome,
-                    "progressive_render" : true
-                },
-                "plugins" : [ "themes", "json_data" ]
-            });
-        }
-    });
-
-    $('#outcomeFormDialog form').validate(
-    {
-        rules: {
-            amount: {
-                money: true
-            },
-            comment: {
-                required: false
-            }
-        },
-        highlight: function(element) {
-            $(element).closest('.control-group')
-            .removeClass('success').addClass('error');
-        },
-        success: function(element) {
-            element
-            .addClass('valid').closest('.control-group')
-            .removeClass('error').addClass('success');
-        }
-    });
-
-    $('#outcomeFormDialog form').on( "submit", function( event ) {
-        var form = $(this);
-        // form validates
-        if (form.validate().checkForm()) {
-            $.ajax({
-                type: form.attr('method'),
-                url: "../php/client/json.php",
-                data: form.serialize(),
-                success: function(data, status) {
-                    $('#outcomeFormDialog').modal('hide');
-                    bootbox.alert("Outcome has been successfully added.");
-                }
-            });
-        }
-        event.preventDefault();
-    });
-
-    $('#incomeFormDialog form').validate(
-    {
-        rules: {
-            amount: {
-                money: true
-            },
-            comment: {
-                required: false
-            }
-        },
-        highlight: function(element) {
-            $(element).closest('.control-group')
-            .removeClass('success').addClass('error');
-        },
-        success: function(element) {
-            element
-            .addClass('valid').closest('.control-group')
-            .removeClass('error').addClass('success');
-        }
-    });
-
-    $('#incomeFormDialog form').on( "submit", function( event ) {
-        var form = $(this);
-        // form validates
-        if (form.validate().checkForm()) {
-            $.ajax({
-                type: form.attr('method'),
-                url: "../php/client/json.php",
-                data: form.serialize(),
-                success: function(data, status) {
-                    $('#incomeFormDialog').modal('hide');
-                    bootbox.alert("Income has been successfully added.");
-                }
-            });
-        }
-        event.preventDefault();
-    });
 
 });
