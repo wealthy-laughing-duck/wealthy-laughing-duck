@@ -52,7 +52,7 @@ var TemplateManager = {
     },
     initChooseCategoriesDialog: function() {
         $('#chooseCategoriesDialog').on('show', function () {
-            income = WealthyLaughingDuckControl.parseListIntoForest(
+            income = WealthyLaughingDuckControl.parseListIntoTree(
                 IncomeCategoryControl.getData());
 
             if (income == null) {
@@ -67,13 +67,17 @@ var TemplateManager = {
                         "progressive_render" : true
                     },
                     "plugins" : [ "themes", "json_data" ]
+                })
+                .bind("open_node.jstree close_node.jstree", function (event, data) {
+                    var state = event.type == "open_node" ? "open" : "closed";
+                    IncomeCategoryControl.setState(data.rslt.obj.attr("id"), state)
                 });
             }
 
-            outcome = WealthyLaughingDuckControl.parseListIntoForest(
+            outcome = WealthyLaughingDuckControl.parseListIntoTree(
                 OutcomeCategoryControl.getData());
 
-            if (income == null) {
+            if (outcome == null) {
                 $("#outcomeCategoryTree").html(ich.errorTemplate({
                     'type': 'AJAX',
                     'message': 'could not load outcome category data'
@@ -85,6 +89,10 @@ var TemplateManager = {
                         "progressive_render" : true
                     },
                     "plugins" : [ "themes", "json_data" ]
+                })
+                .bind("open_node.jstree close_node.jstree", function (event, data) {
+                    var state = event.type == "open_node" ? "open" : "closed";
+                    OutcomeCategoryControl.setState(data.rslt.obj.attr("id"), state)
                 });
             }
         });
@@ -246,7 +254,7 @@ var WealthyLaughingDuckControl = {
     getCurrency: function() {
         return this.currency;
     },
-    parseListIntoForest: function(categories) {
+    parseListIntoTree: function(categories) {
         if (categories == null)
             return null;
 
@@ -255,7 +263,9 @@ var WealthyLaughingDuckControl = {
         categories.forEach(function(item) {
             itemsByID[item.id] = {
                 data: {title: item.name},
-                parentID: item.parent_id
+                attr: {id: item.id},
+                parentID: item.parent_id,
+                state: item.state
             };
         });
 
@@ -323,7 +333,7 @@ var UsersControl = {
 };
 
 var IncomeCategoryControl = {
-    categories: null,
+    data: null,
     fetchData: function() {
         $.ajax({
             type: "GET",
@@ -335,19 +345,30 @@ var IncomeCategoryControl = {
                 type: "incomeCategories"
             }
         }).done(function(response) {
-            this.categories = response;
+            this.data = response;
         });
     },
     getData: function() {
-        if (this.categories == null) {
+        if (this.data == null) {
             this.fetchData();
         }
-        return this.categories;
+        return this.data;
+    },
+    setState: function(id, value) {
+        var found = $(this.getData()).map(function() {
+            return (this.id == id) ? this : null;
+        });
+        if (found.length) {
+            found[0].state = value;
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 
 var OutcomeCategoryControl = {
-    categories: null,
+    data: null,
     fetchData: function() {
         $.ajax({
             type: "GET",
@@ -359,34 +380,29 @@ var OutcomeCategoryControl = {
                 type: "outcomeCategories"
             }
         }).done(function(response) {
-            this.categories = response;
+            this.data = response;
         });
     },
     getData: function() {
-        if (this.categories == null) {
+        if (this.data == null) {
             this.fetchData();
         }
-        return this.categories;
+        return this.data;
+    },
+    setState: function(id, value) {
+        var found = $(this.getData()).map(function() {
+            return (this.id == id) ? this : null;
+        });
+        if (found.length) {
+            found[0].state = value;
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 
 $(document).ready( function() {
-
     TemplateEngine.fetchAllTemplates();
     TemplateManager.initAllTemplates();
-
-//        buttons: {
-//            Apply: function() {
-//                WealthyLaughingDuckControl.setUsers(
-//                    $("input[name=user]:checked").map(function() {
-//                        return this.value;
-//                    })
-//                );
-//                $( this ).dialog( "close" );
-//            },
-//            Cancel: function() {
-//                $( this ).dialog( "close" );
-//            }
-//        }
-
 });
