@@ -42,6 +42,13 @@ var TemplateManager = {
                 'users': UsersControl.getData()
             }));
         });
+        $('#chooseUsersDialog .btn-primary').bind('click', function() {
+            var chosen = $("input[name=user]:checked").map(function() {
+                return this.value;
+            });
+            UsersControl.setChosen(chosen);
+            $('#chooseUsersDialog').modal('hide');
+        });
     },
     initChooseCategoriesDialog: function() {
         $('#chooseCategoriesDialog').on('show', function () {
@@ -201,6 +208,10 @@ var TemplateManager = {
         });
     },
     bindMenuOptions: function () {
+        $('#menu_homepage').bind('click', $.proxy(function(){
+            this.renderMainContainerTemplate('homepageTemplate');
+        }, TemplateManager));
+
         $('#menu_outcome_list').bind('click', $.proxy(function(){
             this.renderMainContainerTemplate('outcomeListTemplate');
             $('#outcomes').dataTable({
@@ -214,8 +225,12 @@ var TemplateManager = {
             this.renderMainContainerTemplate('incomeListTemplate');
         }, TemplateManager));
 
-        $('#menu_homepage').bind('click', $.proxy(function(){
-            this.renderMainContainerTemplate('homepageTemplate');
+        $('#menu_monthly_balance').bind('click', $.proxy(function(){
+            this.renderMainContainerTemplate('monthlyBalanceTemplate');
+        }, TemplateManager));
+
+        $('#menu_category_total').bind('click', $.proxy(function(){
+            this.renderMainContainerTemplate('categoryTotalTemplate');
         }, TemplateManager));
     },
     renderMainContainerTemplate: function (template, options) {
@@ -266,7 +281,7 @@ var WealthyLaughingDuckControl = {
 };
 
 var UsersControl = {
-    users: null,
+    data: null,
     fetchData: function() {
         $.ajax({
             type: "GET",
@@ -278,14 +293,32 @@ var UsersControl = {
                 type: "users"
             }
         }).done(function(response) {
-            this.users = response;
+            this.data = response;
+            this.setAll(true);
         });
     },
     getData: function() {
-        if (this.users == null) {
+        if (this.data == null) {
             this.fetchData();
         }
-        return this.users;
+        return this.data;
+    },
+    setAll: function(chosen) {
+        var index;
+        for (index = 0; index < this.data.length; ++index) {
+            this.data[index].chosen = chosen;
+        }
+    },
+    setChosen: function(username_list) {
+        var index;
+        for (index = 0; index < this.data.length; ++index) {
+            this.data[index].chosen = ($.inArray(this.data[index].username, username_list) > -1);
+        }
+    },
+    getChosen: function() {
+        return $(this.getData()).map(function() {
+            return (this.chosen) ? this.username : null;
+        });
     }
 };
 

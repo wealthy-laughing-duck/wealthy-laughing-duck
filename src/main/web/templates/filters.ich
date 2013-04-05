@@ -22,7 +22,7 @@
     <ul>
     {{#users}}
         <label class="checkbox">
-            <input type="checkbox" name="user" value="{{ username }}" /> {{ fullname }}
+            <input type="checkbox"{{#chosen}} checked="checked"{{/chosen}} name="user" value="{{ username }}" /> {{ fullname }}
         </label>
     {{/users}}
     </ul>

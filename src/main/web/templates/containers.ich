@@ -31,3 +31,17 @@
         Coming soon...
     </p>
 </script>
+
+<script id="monthlyBalanceTemplate" type="text/html">
+    <h1>monthly balance</h1>
+    <p>
+        Coming soon...
+    </p>
+</script>
+
+<script id="categoryTotalTemplate" type="text/html">
+    <h1>category total</h1>
+    <p>
+        Coming soon...
+    </p>
+</script>

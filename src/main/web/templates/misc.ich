@@ -7,8 +7,6 @@
 <script id="modalsContainerTemplate" type="text/html">
     <div id="outcomeFormDialog" class="modal hide fade" role="dialog"></div>
     <div id="incomeFormDialog" class="modal hide fade" role="dialog"></div>
-    <div id="monthlyBalanceDialog" class="modal hide fade" role="dialog"></div>
-    <div id="categoryTotalDialog" class="modal hide fade" role="dialog"></div>
     <div id="chooseUsersDialog" class="modal hide fade" role="dialog"></div>
     <div id="chooseCategoriesDialog" class="modal hide fade" role="dialog"></div>
 </script>
