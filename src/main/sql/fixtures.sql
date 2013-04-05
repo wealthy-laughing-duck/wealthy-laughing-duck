@@ -33,7 +33,7 @@ INSERT INTO `category` (`id`, `parent_id`, `name`, `type`, `created_at`, `update
 (19, 16, 'repairs', 'OutcomeCategory', '2011-10-20 20:30:48', '2011-10-20 20:30:48', 2, 2),
 (21, 16, 'tools', 'OutcomeCategory', '2011-10-20 20:51:23', '2011-10-20 20:51:23', 2, 2),
 (22, 4, 'cinema', 'OutcomeCategory', '2011-10-20 21:17:05', '2011-10-20 21:17:05', 2, 2),
-(25, 2, '| Chmielewskiego', 'OutcomeCategory', '2011-10-23 17:42:56', '2011-10-23 17:42:56', 2, 2),
+(25, 2, 'water', 'OutcomeCategory', '2011-10-23 17:42:56', '2011-10-23 17:42:56', 2, 2),
 (26, 16, 'flowers', 'OutcomeCategory', '2011-10-23 17:45:39', '2011-10-23 17:45:39', 2, 2),
 (27, 2, 'gas', 'OutcomeCategory', '2011-10-23 17:56:16', '2011-10-23 17:56:16', 2, 2),
 (28, 2, 'electricity', 'OutcomeCategory', '2011-10-23 17:56:24', '2011-10-23 17:56:24', 2, 2),
