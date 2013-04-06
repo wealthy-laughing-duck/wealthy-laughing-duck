@@ -2,33 +2,6 @@ jQuery.validator.addMethod("money", function(value, element) {
     return this.optional(element) || /^(\d{1,3})(\.\d{1,2})?$/.test(value);
 }, "Must be proper currency format 0.99");
 
-var TemplateEngine = {
-    path: 'templates/',
-    templates: ['containers', 'forms', 'filters', 'modals', 'misc'],
-    fetchTemplate: function(path) {
-        $.ajax({
-            type: 'GET',
-            dataType: 'text',
-            async: false,
-            url: path
-        }).done(function(response) {
-            $('body').append(response);
-        });
-    },
-    fetchAllTemplates: function() {
-        var index;
-        for (index = 0; index < this.templates.length; ++index) {
-            this.fetchTemplate(this.path + this.templates[index] + '.ich');
-        }
-        ich.grabTemplates();
-    },
-    concatenated_templates: 'templates.ich',
-    fetchConcatenatedTemplates: function() {
-        this.fetchTemplate(this.concatenated_templates);
-        ich.grabTemplates();
-    }
-}
-
 var TemplateManager = {
     initAllTemplates: function() {
         this.initOtherTemplates();
