@@ -5,12 +5,12 @@ jQuery.validator.addMethod("money", function(value, element) {
 var TemplateEngine = {
     path: 'templates/',
     templates: ['containers', 'forms', 'filters', 'modals', 'misc'],
-    fetchTemplate: function(template) {
+    fetchTemplate: function(path) {
         $.ajax({
             type: 'GET',
             dataType: 'text',
             async: false,
-            url: this.path + template + '.ich'
+            url: path
         }).done(function(response) {
             $('body').append(response);
         });
@@ -18,8 +18,13 @@ var TemplateEngine = {
     fetchAllTemplates: function() {
         var index;
         for (index = 0; index < this.templates.length; ++index) {
-            this.fetchTemplate(this.templates[index]);
+            this.fetchTemplate(this.path + this.templates[index] + '.ich');
         }
+        ich.grabTemplates();
+    },
+    concatenated_templates: 'templates.ich',
+    fetchConcatenatedTemplates: function() {
+        this.fetchTemplate(this.concatenated_templates);
         ich.grabTemplates();
     }
 }
@@ -403,6 +408,6 @@ var OutcomeCategoryControl = {
 };
 
 $(document).ready( function() {
-    TemplateEngine.fetchAllTemplates();
+    TemplateEngine.fetchConcatenatedTemplates();
     TemplateManager.initAllTemplates();
 });
