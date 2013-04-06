@@ -1,0 +1,220 @@
+<script id="homepageTemplate" type="text/html">
+    <div class="centered">
+        <h1>The wealthy duck is laughing!</h1>
+        <p class="lead">
+            Trust the duck and let her know about what you earn and what you expend.
+            She'll love it!
+        </p>
+        <img src="img/logo.png" alt="wealthy laughing duck" />
+    </div>
+</script>
+
+<script id="outcomeListTemplate" type="text/html">
+    <h1>Outcomes</h1>
+    <table class="table table-striped" id="outcomes">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>User</th>
+                <th>Category</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</script>
+
+<script id="incomeListTemplate" type="text/html">
+    <h1>Incomes</h1>
+    <p>
+        Coming soon...
+    </p>
+</script>
+
+<script id="monthlyBalanceTemplate" type="text/html">
+    <h1>monthly balance</h1>
+    <p>
+        Coming soon...
+    </p>
+</script>
+
+<script id="categoryTotalTemplate" type="text/html">
+    <h1>category total</h1>
+    <p>
+        Coming soon...
+    </p>
+</script>
+<script id="CategorySelectTemplate" type="text/html">
+    <select id="category_id" name="category_id" class="required">
+        <option value="">choose category</option>
+        {{#categories}}
+        <option value="{{ id }}">{{ name }}</option>
+        {{/categories}}
+    </select>
+</script>
+
+<script id="UserSelectTemplate" type="text/html">
+    <select id="username" name="username" class="required">
+        <option value="">choose user</option>
+        {{#users}}
+        <option value="{{ username }}">{{ fullname }}</option>
+        {{/users}}
+    </select>
+</script>
+
+<script id="UserCheckboxTemplate" type="text/html">
+    <p>
+        Choose from the following users:
+    <ul>
+    {{#users}}
+        <label class="checkbox">
+            <input type="checkbox"{{#chosen}} checked="checked"{{/chosen}} name="user" value="{{ username }}" /> {{ fullname }}
+        </label>
+    {{/users}}
+    </ul>
+</p>
+</script>
+<script id="outcomeFormTemplate" type="text/html">
+    <form class="form-horizontal well" data-async data-target="#outcomeFormDialog" method="POST">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 id="myModalLabel">Add outcome</h3>
+        </div>
+        <div class="modal-body">
+            <fieldset>
+                <input name="type" type="hidden" value="add_outcome" />
+                <div class="control-group">
+                    <label class="control-label" for="amount">Amount</label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on">{{ currency }}</span>
+                            <input type="text" name="amount" class="required" placeholder="00.01" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="username">User</label>
+                    <div class="controls">
+                        {{>UserSelectTemplate}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="category_id">Category</label>
+                    <div class="controls">
+                        {{>CategorySelectTemplate}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="comment">Comment</label>
+                    <div class="controls">
+                        <input type="text" name="comment" class="input-xlarge" placeholder="Comment here..." />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save outcome</button>
+        </div>
+    </form>
+</script>
+
+<script id="incomeFormTemplate" type="text/html">
+    <form class="form-horizontal well" data-async data-target="#incomeFormDialog" method="POST">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 id="myModalLabel">Add income</h3>
+        </div>
+        <div class="modal-body">
+            <fieldset>
+                <input name="type" type="hidden" value="add_income" />
+                <div class="control-group">
+                    <label class="control-label" for="amount">Amount</label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on">{{ currency }}</span>
+                            <input type="text" name="amount" class="required" placeholder="00.01" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="username">User</label>
+                    <div class="controls">
+                        {{>UserSelectTemplate}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="category_id">Category</label>
+                    <div class="controls">
+                        {{>CategorySelectTemplate}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="comment">Comment</label>
+                    <div class="controls">
+                        <input type="text" name="comment" class="input-xlarge" placeholder="Comment here..." />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save income</button>
+        </div>
+    </form>
+</script>
+<script id="errorTemplate" type="text/html">
+    <p class="text-error">
+        <strong>Following {{ type }} error occured</strong>: {{ message }}
+    </p>
+</script>
+
+<script id="modalsContainerTemplate" type="text/html">
+    <div id="outcomeFormDialog" class="modal hide fade" role="dialog"></div>
+    <div id="incomeFormDialog" class="modal hide fade" role="dialog"></div>
+    <div id="chooseUsersDialog" class="modal hide fade" role="dialog"></div>
+    <div id="chooseCategoriesDialog" class="modal hide fade" role="dialog"></div>
+</script>
+<script id="chooseUsersTemplate" type="text/html">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3 id="myModalLabel">Choose users </h3>
+    </div>
+    <div class="modal-body">
+        <p>there will be checkboxes here</p>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-info" rel="popover" data-content="So far you can only list users." data-original-title="User management"><i class="icon-question-sign"></i></a>
+        <button class="btn" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+    </div>
+</script>
+
+<script id="chooseCategoriesTemplate" type="text/html">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3 id="myModalLabel">Manage categories</h3>
+    </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#incomeTab" data-toggle="tab">Income Category Tree</a></li>
+            <li><a href="#outcomeTab" data-toggle="tab">Outcome Category Tree</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="incomeTab">
+                <div id="incomeCategoryTree"></div>
+            </div>
+            <div class="tab-pane" id="outcomeTab">
+                <div id="outcomeCategoryTree"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-info" rel="popover" data-content="So far you can only display category trees." data-original-title="Category management"><i class="icon-question-sign"></i></a>
+        <button class="btn" data-dismiss="modal">Close</button>
+        <button class="btn action-rename">Rename</button>
+        <button class="btn action-create">Create</button>
+        <button class="btn btn-primary">Save changes</button>
+    </div>
+</script>
