@@ -1,7 +1,8 @@
 #!/bin/bash
 
-> src/main/web/templates.ich
-for file in src/main/web/templates/*
+path="src/main/web"
+> "$path"/templates.ich
+for file in "$path"/templates/*
 do
- cat "$file" >> src/main/web/templates.ich
+ cat "$file" >> "$path"/templates.ich
 done
