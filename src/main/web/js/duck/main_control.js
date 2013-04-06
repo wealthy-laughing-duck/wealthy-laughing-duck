@@ -1,4 +1,4 @@
-var WealthyLaughingDuckControl = {
+var MainControl = {
     currency: 'zł',
     getCurrency: function() {
         return this.currency;

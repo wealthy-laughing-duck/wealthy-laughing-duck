@@ -30,7 +30,7 @@ var TemplateManager = {
     },
     initChooseCategoriesDialog: function() {
         $('#chooseCategoriesDialog').on('show', function () {
-            income = WealthyLaughingDuckControl.parseListIntoTree(
+            income = MainControl.parseListIntoTree(
                 IncomeCategoryControl.getData());
 
             if (income == null) {
@@ -68,7 +68,7 @@ var TemplateManager = {
                 });
             }
 
-            outcome = WealthyLaughingDuckControl.parseListIntoTree(
+            outcome = MainControl.parseListIntoTree(
                 OutcomeCategoryControl.getData());
 
             if (outcome == null) {
@@ -208,14 +208,14 @@ var TemplateManager = {
 
         // add outcome form: render
         $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
-            'currency': WealthyLaughingDuckControl.getCurrency(),
+            'currency': MainControl.getCurrency(),
             'users': UsersControl.getData(),
             'categories': OutcomeCategoryControl.getData()
         }));
 
         // add income form: render
         $("#incomeFormDialog").html(ich.incomeFormTemplate({
-            'currency': WealthyLaughingDuckControl.getCurrency(),
+            'currency': MainControl.getCurrency(),
             'users': UsersControl.getData(),
             'categories': IncomeCategoryControl.getData()
         }));
