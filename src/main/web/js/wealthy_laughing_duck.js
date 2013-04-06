@@ -28,6 +28,10 @@ var TemplateManager = {
             $('#chooseUsersDialog').modal('hide');
         });
     },
+    getActiveCategoryTab: function() {
+        var tab = $("#chooseCategoriesDialog .tab-pane.active").attr("id");
+        return tab.substring(0, tab.length - 3);
+    },
     initChooseCategoriesDialog: function() {
         $('#chooseCategoriesDialog').on('show', function () {
             income = WealthyLaughingDuckControl.parseListIntoTree(
@@ -44,11 +48,27 @@ var TemplateManager = {
                         "data" : income,
                         "progressive_render" : true
                     },
-                    "plugins" : [ "themes", "json_data" ]
+                    "plugins" : [ "themes", "json_data", "dnd", "crrm", "ui" ]
                 })
                 .bind("open_node.jstree close_node.jstree", function (event, data) {
                     var state = event.type == "open_node" ? "open" : "closed";
-                    IncomeCategoryControl.setState(data.rslt.obj.attr("id"), state)
+                    IncomeCategoryControl.setState(data.rslt.obj.attr("id"), state);
+                })
+                .bind("move_node.jstree", function (event, data) {
+                    var id = data.rslt.o.attr("id");
+                    var parent_id = data.rslt.np.attr("id");
+                    console.log(id, parent_id, event, data);
+                })
+                .bind("rename_node.jstree", function (event, data) {
+                    var id = data.rslt.obj.attr("id");
+                    var new_name = data.rslt.name;
+                    console.log(id, new_name, event, data);
+                })
+                .bind("create_node.jstree", function (event, data) {
+                    var parent_id = data.rslt.parent;
+                    var new_id = 10;
+                    data.rslt.obj.attr("id", new_id);
+                    console.log(parent_id, event, data);
                 });
             }
 
@@ -66,13 +86,44 @@ var TemplateManager = {
                         "data" : outcome,
                         "progressive_render" : true
                     },
-                    "plugins" : [ "themes", "json_data" ]
+                    "plugins" : [ "themes", "json_data", "dnd", "crrm" ]
                 })
                 .bind("open_node.jstree close_node.jstree", function (event, data) {
                     var state = event.type == "open_node" ? "open" : "closed";
-                    OutcomeCategoryControl.setState(data.rslt.obj.attr("id"), state)
+                    OutcomeCategoryControl.setState(data.rslt.obj.attr("id"), state);
+                })
+                .bind("move_node.jstree", function (event, data) {
+                    var id = data.rslt.o.attr("id");
+                    var parent_id = data.rslt.np.attr("id");
+                    console.log(id, parent_id, event, data);
+                })
+                .bind("rename_node.jstree", function (event, data) {
+                    var id = data.rslt.obj.attr("id");
+                    var new_name = data.rslt.name;
+                    console.log(id, new_name, event, data);
+                })
+                .bind("create_node.jstree", function (event, data) {
+                    var parent_id = data.rslt.parent;
+                    var new_id = 10;
+                    data.rslt.obj.attr("id", new_id);
+                    console.log(parent_id, event, data);
                 });
             }
+        });
+
+        var _self = this;
+        $("#chooseCategoriesDialog .action-create").bind('click', function() {
+            $("#" + _self.getActiveCategoryTab() + "CategoryTree").jstree("create", null, "last", {
+                data: "name"
+            });
+        });
+
+        $("#chooseCategoriesDialog .action-rename").bind('click', function() {
+            $("#" + _self.getActiveCategoryTab() + "CategoryTree").jstree("rename");
+        });
+
+        $("#chooseCategoriesDialog a").live("dblclick", function(evt) {
+            $.jstree._reference(_self.getActiveCategoryTab() + 'CategoryTree').rename(evt.currentTarget);
         });
     },
     initIncomeFormDialog: function() {
