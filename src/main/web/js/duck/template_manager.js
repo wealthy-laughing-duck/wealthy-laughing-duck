@@ -3,7 +3,7 @@ var TemplateManager = {
         this.renderTemplates();
         this.initDialogs();
         this.initChooseUsersDialog();
-        this.initChooseCategoriesDialog();
+        CategoryDialog.initChooseCategoriesDialog();
         this.initIncomeFormDialog();
         this.initOutcomeFormDialog();
         this.bindMenuOptions();
@@ -80,115 +80,27 @@ var TemplateManager = {
         $("#chooseCategoriesDialog").html(ich.chooseCategoriesTemplate());
     },
     initChooseUsersDialog: function() {
+        var users = UsersControl.getData();
+
         $('#chooseUsersDialog').on('show', function () {
-            $('#chooseUsersDialog .modal-body').html(ich.UserCheckboxTemplate({
-                'users': UsersControl.getData()
-            }));
+            if (users == null) {
+                $('#chooseUsersDialog .modal-body').html(ich.errorTemplate({
+                    'type': 'AJAX',
+                    'message': 'could not load user data'
+                }));
+            } else {
+                $('#chooseUsersDialog .modal-body').html(ich.UserCheckboxTemplate({
+                    'users': users
+                }));
+            }
         });
+
         $('#chooseUsersDialog .btn-primary').bind('click', function() {
             var chosen = $("input[name=user]:checked").map(function() {
                 return this.value;
             });
             UsersControl.setChosen(chosen);
             $('#chooseUsersDialog').modal('hide');
-        });
-    },
-    getActiveCategoryTab: function() {
-        var tab = $("#chooseCategoriesDialog .tab-pane.active").attr("id");
-        return tab.substring(0, tab.length - 3);
-    },
-    initChooseCategoriesDialog: function() {
-        $('#chooseCategoriesDialog').on('show', function () {
-            income = MainControl.parseListIntoTree(
-                IncomeCategoryControl.getData());
-
-            if (income == null) {
-                $("#incomeCategoryTree").html(ich.errorTemplate({
-                    'type': 'AJAX',
-                    'message': 'could not load income category data'
-                }));
-            } else {
-                $("#incomeCategoryTree").jstree({
-                    "json_data" : {
-                        "data" : income,
-                        "progressive_render" : true
-                    },
-                    "plugins" : [ "themes", "json_data", "dnd", "crrm", "ui" ]
-                })
-                .bind("open_node.jstree close_node.jstree", function (event, data) {
-                    var state = event.type == "open_node" ? "open" : "closed";
-                    IncomeCategoryControl.setState(data.rslt.obj.attr("id"), state);
-                })
-                .bind("move_node.jstree", function (event, data) {
-                    var id = data.rslt.o.attr("id");
-                    var parent_id = data.rslt.np.attr("id");
-                    console.log(id, parent_id, event, data);
-                })
-                .bind("rename_node.jstree", function (event, data) {
-                    var id = data.rslt.obj.attr("id");
-                    var new_name = data.rslt.name;
-                    console.log(id, new_name, event, data);
-                })
-                .bind("create_node.jstree", function (event, data) {
-                    var parent_id = data.rslt.parent;
-                    var new_id = 10;
-                    data.rslt.obj.attr("id", new_id);
-                    console.log(parent_id, event, data);
-                });
-            }
-
-            outcome = MainControl.parseListIntoTree(
-                OutcomeCategoryControl.getData());
-
-            if (outcome == null) {
-                $("#outcomeCategoryTree").html(ich.errorTemplate({
-                    'type': 'AJAX',
-                    'message': 'could not load outcome category data'
-                }));
-            } else {
-                $("#outcomeCategoryTree").jstree({
-                    "json_data" : {
-                        "data" : outcome,
-                        "progressive_render" : true
-                    },
-                    "plugins" : [ "themes", "json_data", "dnd", "crrm" ]
-                })
-                .bind("open_node.jstree close_node.jstree", function (event, data) {
-                    var state = event.type == "open_node" ? "open" : "closed";
-                    OutcomeCategoryControl.setState(data.rslt.obj.attr("id"), state);
-                })
-                .bind("move_node.jstree", function (event, data) {
-                    var id = data.rslt.o.attr("id");
-                    var parent_id = data.rslt.np.attr("id");
-                    console.log(id, parent_id, event, data);
-                })
-                .bind("rename_node.jstree", function (event, data) {
-                    var id = data.rslt.obj.attr("id");
-                    var new_name = data.rslt.name;
-                    console.log(id, new_name, event, data);
-                })
-                .bind("create_node.jstree", function (event, data) {
-                    var parent_id = data.rslt.parent;
-                    var new_id = 10;
-                    data.rslt.obj.attr("id", new_id);
-                    console.log(parent_id, event, data);
-                });
-            }
-        });
-
-        var _self = this;
-        $("#chooseCategoriesDialog .action-create").bind('click', function() {
-            $("#" + _self.getActiveCategoryTab() + "CategoryTree").jstree("create", null, "last", {
-                data: "name"
-            });
-        });
-
-        $("#chooseCategoriesDialog .action-rename").bind('click', function() {
-            $("#" + _self.getActiveCategoryTab() + "CategoryTree").jstree("rename");
-        });
-
-        $("#chooseCategoriesDialog a").live("dblclick", function(evt) {
-            $.jstree._reference(_self.getActiveCategoryTab() + 'CategoryTree').rename(evt.currentTarget);
         });
     },
     initIncomeFormDialog: function() {
