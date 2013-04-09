@@ -17,6 +17,12 @@ var TemplateManager = {
         eval(code);
         $(this.getMainContainerSelector()).html(html);
     },
+    getRenderedError: function(type) {
+        return ich.errorTemplate({
+            'type': type,
+            'message': 'could not load data from server'
+        })
+    },
     renderTemplates: function() {
         // init main container body
         $(this.getMainContainerSelector()).html(ich.homepageTemplate());

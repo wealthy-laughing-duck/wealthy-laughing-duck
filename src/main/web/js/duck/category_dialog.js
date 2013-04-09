@@ -14,7 +14,7 @@ CategoryDialogTab.prototype.render = function() {
     var tree = this.getTree();
     var _self = this;
     if (tree == null) {
-        $(this.selector).html(MainControl.getAjaxError());
+        $(this.selector).html(TemplateManager.getRenderedError('AJAX'));
     } else {
         $(this.selector).jstree({
             "json_data" : {

@@ -6,7 +6,7 @@ var UserDialog = {
 
         $(this.selector).on('show', function () {
             if (users == null) {
-                $(_self.selector + ' .modal-body').html(MainControl.getAjaxError());
+                $(_self.selector + ' .modal-body').html(TemplateManager.getRenderedError('AJAX'));
             } else {
                 $(_self.selector + ' .modal-body').html(ich.UserCheckboxTemplate({
                     'users': users
