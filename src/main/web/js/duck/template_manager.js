@@ -84,10 +84,7 @@ var TemplateManager = {
 
         $('#chooseUsersDialog').on('show', function () {
             if (users == null) {
-                $('#chooseUsersDialog .modal-body').html(ich.errorTemplate({
-                    'type': 'AJAX',
-                    'message': 'could not load user data'
-                }));
+                $('#chooseUsersDialog .modal-body').html(MainControl.getAjaxError());
             } else {
                 $('#chooseUsersDialog .modal-body').html(ich.UserCheckboxTemplate({
                     'users': users

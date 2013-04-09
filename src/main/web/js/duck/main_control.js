@@ -36,5 +36,11 @@ var MainControl = {
         });
 
         return roots;
+    },
+    getAjaxError: function() {
+        return ich.errorTemplate({
+            'type': 'AJAX',
+            'message': 'could not load data from server'
+        })
     }
 };
