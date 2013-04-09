@@ -1,8 +1,8 @@
 var TemplateManager = {
     initAllTemplates: function() {
         this.renderTemplates();
-        UserDialog.initChooseUsersDialog();
-        CategoryDialog.initChooseCategoriesDialog();
+        UserDialog.init();
+        CategoryDialog.init();
         IncomeFormDialog.init();
         OutcomeFormDialog.init();
         this.bindMenuOptions();

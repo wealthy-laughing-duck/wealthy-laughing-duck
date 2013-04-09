@@ -1,20 +1,32 @@
-function FormDialog(categoryControl, userControl, selector, template) {
+function FormDialog(categoryControl, userControl, type) {
     this.categoryControl = categoryControl;
     this.userControl = userControl;
-    this.selector = selector;
-    this.template = template;
+    this.type = type;
+}
+
+FormDialog.prototype.getSelector = function() {
+    return '#' + this.type + 'FormDialog';
+}
+
+FormDialog.prototype.getTemplate = function() {
+    return this.type + 'FormTemplate';
+}
+
+FormDialog.prototype.getCapitalisedType = function()
+{
+    return this.type.charAt(0).toUpperCase() + this.type.slice(1);
 }
 
 FormDialog.prototype.init = function() {
     var _self = this;
 
-    $(this.selector).html(ich[this.template]({
+    $(this.getSelector()).html(ich[this.getTemplate()]({
         'currency': MainControl.getCurrency(),
         'users': this.userControl.getData(),
         'categories': this.categoryControl.getData()
     }));
 
-    $(this.selector + ' form').validate({
+    $(this.getSelector() + ' form').validate({
         rules: {
             amount: {
                 money: true
@@ -34,7 +46,7 @@ FormDialog.prototype.init = function() {
         }
     });
 
-    $(this.selector + ' form').on( "submit", function( event ) {
+    $(this.getSelector() + ' form').on( "submit", function( event ) {
         var form = $(this);
         // form validates
         if (form.validate().checkForm()) {
@@ -43,8 +55,8 @@ FormDialog.prototype.init = function() {
                 url: "../php/client/json.php",
                 data: form.serialize(),
                 success: function(data, status) {
-                    $(_self.selector).modal('hide');
-                    bootbox.alert("Income has been successfully added.");
+                    $(_self.getSelector()).modal('hide');
+                    bootbox.alert(_self.getCapitalisedType() + " has been successfully added.");
                 }
             });
         }
@@ -52,5 +64,5 @@ FormDialog.prototype.init = function() {
     });
 };
 
-var IncomeFormDialog = new FormDialog(IncomeCategoryControl, UsersControl, "#incomeFormDialog", "incomeFormTemplate");
-var OutcomeFormDialog = new FormDialog(OutcomeCategoryControl, UsersControl, "#outcomeFormDialog", "outcomeFormTemplate");
+var IncomeFormDialog = new FormDialog(IncomeCategoryControl, UsersControl, "income");
+var OutcomeFormDialog = new FormDialog(OutcomeCategoryControl, UsersControl, "outcome");

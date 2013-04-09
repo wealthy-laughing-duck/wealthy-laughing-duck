@@ -1,6 +1,6 @@
 var UserDialog = {
     selector: '#chooseUsersDialog',
-    initChooseUsersDialog: function() {
+    init: function() {
         $(this.selector).html(ich.chooseUsersTemplate());
         
         var _self = this;
