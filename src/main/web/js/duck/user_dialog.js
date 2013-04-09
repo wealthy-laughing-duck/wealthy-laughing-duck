@@ -1,6 +1,8 @@
 var UserDialog = {
     selector: '#chooseUsersDialog',
     initChooseUsersDialog: function() {
+        $(this.selector).html(ich.chooseUsersTemplate());
+        
         var _self = this;
         var users = UsersControl.getData();
 

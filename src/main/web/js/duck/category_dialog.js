@@ -59,6 +59,8 @@ var CategoryDialog = {
         return tab.substring(0, tab.length - 3);
     },
     initChooseCategoriesDialog: function() {
+        $(this.selector).html(ich.chooseCategoriesTemplate());
+
         var _self = this;
 
         $(this.selector).on('show', function () {

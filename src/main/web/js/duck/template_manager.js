@@ -1,7 +1,6 @@
 var TemplateManager = {
     initAllTemplates: function() {
         this.renderTemplates();
-        this.initDialogs();
         UserDialog.initChooseUsersDialog();
         CategoryDialog.initChooseCategoriesDialog();
         this.initIncomeFormDialog();
@@ -64,28 +63,13 @@ var TemplateManager = {
             this.renderMainContainerTemplate('categoryTotalTemplate');
         }, TemplateManager));
     },
-    initDialogs: function() {
-        // add outcome form: render
-        $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
-            'currency': MainControl.getCurrency(),
-            'users': UsersControl.getData(),
-            'categories': OutcomeCategoryControl.getData()
-        }));
-
-        // add income form: render
+    initIncomeFormDialog: function() {
         $("#incomeFormDialog").html(ich.incomeFormTemplate({
             'currency': MainControl.getCurrency(),
             'users': UsersControl.getData(),
             'categories': IncomeCategoryControl.getData()
         }));
 
-        // choose users: render
-        $("#chooseUsersDialog").html(ich.chooseUsersTemplate());
-
-        // choose categories: render
-        $("#chooseCategoriesDialog").html(ich.chooseCategoriesTemplate());
-    },
-    initIncomeFormDialog: function() {
         $('#incomeFormDialog form').validate(
         {
             rules: {
@@ -125,6 +109,12 @@ var TemplateManager = {
         });
     },
     initOutcomeFormDialog: function() {
+        $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
+            'currency': MainControl.getCurrency(),
+            'users': UsersControl.getData(),
+            'categories': OutcomeCategoryControl.getData()
+        }));
+
         $('#outcomeFormDialog form').validate({
             rules: {
                 amount: {
