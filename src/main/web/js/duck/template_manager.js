@@ -3,8 +3,8 @@ var TemplateManager = {
         this.renderTemplates();
         UserDialog.initChooseUsersDialog();
         CategoryDialog.initChooseCategoriesDialog();
-        this.initIncomeFormDialog();
-        this.initOutcomeFormDialog();
+        IncomeFormDialog.init();
+        OutcomeFormDialog.init();
         this.bindMenuOptions();
     },
     getMainContainerSelector: function () {
@@ -62,94 +62,5 @@ var TemplateManager = {
         $('#menu_category_total').bind('click', $.proxy(function(){
             this.renderMainContainerTemplate('categoryTotalTemplate');
         }, TemplateManager));
-    },
-    initIncomeFormDialog: function() {
-        $("#incomeFormDialog").html(ich.incomeFormTemplate({
-            'currency': MainControl.getCurrency(),
-            'users': UsersControl.getData(),
-            'categories': IncomeCategoryControl.getData()
-        }));
-
-        $('#incomeFormDialog form').validate(
-        {
-            rules: {
-                amount: {
-                    money: true
-                },
-                comment: {
-                    required: false
-                }
-            },
-            highlight: function(element) {
-                $(element).closest('.control-group')
-                .removeClass('success').addClass('error');
-            },
-            success: function(element) {
-                element
-                .addClass('valid').closest('.control-group')
-                .removeClass('error').addClass('success');
-            }
-        });
-
-        $('#incomeFormDialog form').on( "submit", function( event ) {
-            var form = $(this);
-            // form validates
-            if (form.validate().checkForm()) {
-                $.ajax({
-                    type: form.attr('method'),
-                    url: "../php/client/json.php",
-                    data: form.serialize(),
-                    success: function(data, status) {
-                        $('#incomeFormDialog').modal('hide');
-                        bootbox.alert("Income has been successfully added.");
-                    }
-                });
-            }
-            event.preventDefault();
-        });
-    },
-    initOutcomeFormDialog: function() {
-        $("#outcomeFormDialog").html(ich.outcomeFormTemplate({
-            'currency': MainControl.getCurrency(),
-            'users': UsersControl.getData(),
-            'categories': OutcomeCategoryControl.getData()
-        }));
-
-        $('#outcomeFormDialog form').validate({
-            rules: {
-                amount: {
-                    money: true
-                },
-                comment: {
-                    required: false
-                }
-            },
-            highlight: function(element) {
-                $(element).closest('.control-group')
-                .removeClass('success').addClass('error');
-            },
-            success: function(element) {
-                element
-                .addClass('valid').closest('.control-group')
-                .removeClass('error').addClass('success');
-            }
-        });
-
-        $('#outcomeFormDialog form').on( "submit", function( event ) {
-            var form = $(this);
-            // form validates
-            if (form.validate().checkForm()) {
-                $.ajax({
-                    type: form.attr('method'),
-                    url: "../php/client/json.php",
-                    data: form.serialize(),
-                    success: function(data, status) {
-                        $('#outcomeFormDialog').modal('hide');
-                        bootbox.alert("Outcome has been successfully added.");
-                    }
-                });
-            }
-            event.preventDefault();
-        });
     }
 };
