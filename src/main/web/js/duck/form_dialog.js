@@ -8,24 +8,43 @@ FormDialog.prototype.getSelector = function() {
     return '#' + this.type + 'FormDialog';
 }
 
-FormDialog.prototype.getTemplate = function() {
-    return this.type + 'FormTemplate';
+FormDialog.prototype.getFormInput = function(input) {
+    return this.getSelector() + " #" + input;
 }
 
-FormDialog.prototype.getCapitalisedType = function()
-{
+FormDialog.prototype.getTemplate = function() {
+    return 'formTemplate';
+}
+
+FormDialog.prototype.clearFormInputs = function() {
+    $(this.getFormInput("amount")).val("");
+    $(this.getFormInput("username")).val("");
+    $(this.getFormInput("category_id")).val("");
+    $(this.getFormInput("comment")).val("");    
+}
+
+FormDialog.prototype.clearFormLayout = function() {
+    $(this.getSelector() + " label.error").hide();
+    $(this.getSelector() + " .error").removeClass("error");
+    $(this.getSelector() + " .success").removeClass("success");
+}
+
+FormDialog.prototype.getCapitalisedType = function() {
     return this.type.charAt(0).toUpperCase() + this.type.slice(1);
 }
 
 FormDialog.prototype.init = function() {
     var _self = this;
 
+    // render templates
     $(this.getSelector()).html(ich[this.getTemplate()]({
         'currency': MainControl.getCurrency(),
         'users': this.userControl.getData(),
-        'categories': this.categoryControl.getData()
+        'categories': this.categoryControl.getData(),
+        'type': this.type
     }));
 
+    // validate form
     $(this.getSelector() + ' form').validate({
         rules: {
             amount: {
@@ -46,6 +65,13 @@ FormDialog.prototype.init = function() {
         }
     });
 
+    // clear input data each time the dialog is shown
+    $(this.getSelector()).on('show', function () {
+        _self.clearFormInputs();
+        _self.clearFormLayout();
+    });
+
+    // make ajax call after form is validated
     $(this.getSelector() + ' form').on( "submit", function( event ) {
         var form = $(this);
         // form validates
