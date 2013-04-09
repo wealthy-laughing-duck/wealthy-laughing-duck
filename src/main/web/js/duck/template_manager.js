@@ -2,7 +2,7 @@ var TemplateManager = {
     initAllTemplates: function() {
         this.renderTemplates();
         this.initDialogs();
-        this.initChooseUsersDialog();
+        UserDialog.initChooseUsersDialog();
         CategoryDialog.initChooseCategoriesDialog();
         this.initIncomeFormDialog();
         this.initOutcomeFormDialog();
@@ -78,27 +78,6 @@ var TemplateManager = {
 
         // choose categories: render
         $("#chooseCategoriesDialog").html(ich.chooseCategoriesTemplate());
-    },
-    initChooseUsersDialog: function() {
-        var users = UsersControl.getData();
-
-        $('#chooseUsersDialog').on('show', function () {
-            if (users == null) {
-                $('#chooseUsersDialog .modal-body').html(MainControl.getAjaxError());
-            } else {
-                $('#chooseUsersDialog .modal-body').html(ich.UserCheckboxTemplate({
-                    'users': users
-                }));
-            }
-        });
-
-        $('#chooseUsersDialog .btn-primary').bind('click', function() {
-            var chosen = $("input[name=user]:checked").map(function() {
-                return this.value;
-            });
-            UsersControl.setChosen(chosen);
-            $('#chooseUsersDialog').modal('hide');
-        });
     },
     initIncomeFormDialog: function() {
         $('#incomeFormDialog form').validate(
