@@ -12,15 +12,16 @@ import org.slf4j.MarkerFactory;
 import org.apache.thrift.TException;
 
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.CategoryType;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TCategory;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TIncome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TOutcome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TUser;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.Category;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.User;
 import com.blogspot.symfonyworld.wealthylaughingduck.bo.DataProvider;
-import com.blogspot.symfonyworld.wealthylaughingduck.model.Category;
-import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TCategory;
 
 public class FinanceServiceHandler implements FinanceService.Iface {
 
@@ -90,9 +91,18 @@ public class FinanceServiceHandler implements FinanceService.Iface {
     }
 
     @Override
-    public List<TCategory> getIncomeCategoryTree() throws TException {
-        logger.info("BEGIN getIncomeCategoryTree");
-        List<Category> categories = this.dataProvider.getIncomeCategoryTree();
+    public List<TCategory> getCategoryTree(CategoryType type) throws TException {
+        logger.info("BEGIN getCategoryTree");
+        logger.info("> ARG type: " + type.toString());
+        List<Category> categories = null;
+        switch (type.getValue()) {
+            case 1:
+                categories = this.dataProvider.getIncomeCategoryTree();
+                break;
+            case 2:
+                categories = this.dataProvider.getOutcomeCategoryTree();
+                break;
+        }
         logger.info("found {} records", categories.size());
         List<TCategory> result = new ArrayList<>();
         for (Iterator iterator = categories.iterator(); iterator.hasNext();) {
@@ -104,26 +114,27 @@ public class FinanceServiceHandler implements FinanceService.Iface {
             result.add(t_category);
         }
         logger.info("returned {} results", result.size());
-        logger.info("END getIncomeCategoryTree");
+        logger.info("END getCategoryTree");
         return result;
     }
 
     @Override
-    public List<TCategory> getOutcomeCategoryTree() throws TException {
-        logger.info("BEGIN getOutcomeCategoryTree");
-        List<Category> categories = this.dataProvider.getOutcomeCategoryTree();
-        logger.info("found {} records", categories.size());
-        List<TCategory> result = new ArrayList<>();
-        for (Iterator iterator = categories.iterator(); iterator.hasNext();) {
-            Category category = (Category) iterator.next();
-            TCategory t_category = new TCategory((int) category.getId(), category.getName());
-            if (category.getParent() != null) {
-                t_category.setParent_id((int) category.getParent().getId());
-            }
-            result.add(t_category);
-        }
-        logger.info("returned {} results", result.size());
-        logger.info("END getOutcomeCategoryTree");
-        return result;
+    public void createCategoryTreeNode(int parent_id, String name, CategoryType type) throws TException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void moveCategoryTreeNode(int id, int new_parent_id) throws TException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void renameCategoryTreeNode(int id, String new_name) throws TException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removeCategoryTreeNode(int id) throws TException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

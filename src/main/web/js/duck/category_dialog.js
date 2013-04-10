@@ -13,6 +13,7 @@ CategoryDialogTab.prototype.getTree = function() {
 CategoryDialogTab.prototype.render = function() {
     var tree = this.getTree();
     var _self = this;
+
     if (tree == null) {
         $(this.selector).html(TemplateManager.getRenderedError('AJAX'));
     } else {
@@ -30,6 +31,9 @@ CategoryDialogTab.prototype.render = function() {
         .bind("move_node.jstree", function (event, data) {
             var id = data.rslt.o.attr("id");
             var parent_id = data.rslt.np.attr("id");
+            // data.rslt.op.attr("id") - old parent
+            // data.rslt.np.attr("id") - new parent
+            // data.rslt.cp - current posision
             console.log(id, parent_id, event, data);
         })
         .bind("rename_node.jstree", function (event, data) {
@@ -40,7 +44,7 @@ CategoryDialogTab.prototype.render = function() {
         })
         .bind("create_node.jstree", function (event, data) {
             var parent_id = data.rslt.parent;
-            var new_id = 10;
+            var new_id = 100;
             // update tree component
             data.rslt.obj.attr("id", new_id);
             // update data holder

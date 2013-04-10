@@ -19,8 +19,11 @@ interface FinanceServiceIf {
   public function getUserOutcomes($user_id);
   public function getUserIncomes($user_id);
   public function getAllUsers();
-  public function getIncomeCategoryTree();
-  public function getOutcomeCategoryTree();
+  public function createCategoryTreeNode($parent_id, $name, $type);
+  public function moveCategoryTreeNode($id, $new_parent_id);
+  public function renameCategoryTreeNode($id, $new_name);
+  public function removeCategoryTreeNode($id);
+  public function getCategoryTree($type);
 }
 
 class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceServiceIf {
@@ -186,33 +189,36 @@ class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceS
     throw new \Exception("getAllUsers failed: unknown result");
   }
 
-  public function getIncomeCategoryTree()
+  public function createCategoryTreeNode($parent_id, $name, $type)
   {
-    $this->send_getIncomeCategoryTree();
-    return $this->recv_getIncomeCategoryTree();
+    $this->send_createCategoryTreeNode($parent_id, $name, $type);
+    $this->recv_createCategoryTreeNode();
   }
 
-  public function send_getIncomeCategoryTree()
+  public function send_createCategoryTreeNode($parent_id, $name, $type)
   {
-    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getIncomeCategoryTree_args();
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_createCategoryTreeNode_args();
+    $args->parent_id = $parent_id;
+    $args->name = $name;
+    $args->type = $type;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
-      thrift_protocol_write_binary($this->output_, 'getIncomeCategoryTree', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+      thrift_protocol_write_binary($this->output_, 'createCategoryTreeNode', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
     }
     else
     {
-      $this->output_->writeMessageBegin('getIncomeCategoryTree', TMessageType::CALL, $this->seqid_);
+      $this->output_->writeMessageBegin('createCategoryTreeNode', TMessageType::CALL, $this->seqid_);
       $args->write($this->output_);
       $this->output_->writeMessageEnd();
       $this->output_->getTransport()->flush();
     }
   }
 
-  public function recv_getIncomeCategoryTree()
+  public function recv_createCategoryTreeNode()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_getIncomeCategoryTree_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_createCategoryTreeNode_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -226,43 +232,42 @@ class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceS
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getIncomeCategoryTree_result();
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_createCategoryTreeNode_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
-    if ($result->success !== null) {
-      return $result->success;
-    }
-    throw new \Exception("getIncomeCategoryTree failed: unknown result");
+    return;
   }
 
-  public function getOutcomeCategoryTree()
+  public function moveCategoryTreeNode($id, $new_parent_id)
   {
-    $this->send_getOutcomeCategoryTree();
-    return $this->recv_getOutcomeCategoryTree();
+    $this->send_moveCategoryTreeNode($id, $new_parent_id);
+    $this->recv_moveCategoryTreeNode();
   }
 
-  public function send_getOutcomeCategoryTree()
+  public function send_moveCategoryTreeNode($id, $new_parent_id)
   {
-    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getOutcomeCategoryTree_args();
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_moveCategoryTreeNode_args();
+    $args->id = $id;
+    $args->new_parent_id = $new_parent_id;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
-      thrift_protocol_write_binary($this->output_, 'getOutcomeCategoryTree', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+      thrift_protocol_write_binary($this->output_, 'moveCategoryTreeNode', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
     }
     else
     {
-      $this->output_->writeMessageBegin('getOutcomeCategoryTree', TMessageType::CALL, $this->seqid_);
+      $this->output_->writeMessageBegin('moveCategoryTreeNode', TMessageType::CALL, $this->seqid_);
       $args->write($this->output_);
       $this->output_->writeMessageEnd();
       $this->output_->getTransport()->flush();
     }
   }
 
-  public function recv_getOutcomeCategoryTree()
+  public function recv_moveCategoryTreeNode()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_getOutcomeCategoryTree_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_moveCategoryTreeNode_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -276,14 +281,159 @@ class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceS
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getOutcomeCategoryTree_result();
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_moveCategoryTreeNode_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    return;
+  }
+
+  public function renameCategoryTreeNode($id, $new_name)
+  {
+    $this->send_renameCategoryTreeNode($id, $new_name);
+    $this->recv_renameCategoryTreeNode();
+  }
+
+  public function send_renameCategoryTreeNode($id, $new_name)
+  {
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_renameCategoryTreeNode_args();
+    $args->id = $id;
+    $args->new_name = $new_name;
+    $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'renameCategoryTreeNode', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('renameCategoryTreeNode', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_renameCategoryTreeNode()
+  {
+    $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_renameCategoryTreeNode_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_renameCategoryTreeNode_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    return;
+  }
+
+  public function removeCategoryTreeNode($id)
+  {
+    $this->send_removeCategoryTreeNode($id);
+    $this->recv_removeCategoryTreeNode();
+  }
+
+  public function send_removeCategoryTreeNode($id)
+  {
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_removeCategoryTreeNode_args();
+    $args->id = $id;
+    $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'removeCategoryTreeNode', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('removeCategoryTreeNode', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_removeCategoryTreeNode()
+  {
+    $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_removeCategoryTreeNode_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_removeCategoryTreeNode_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    return;
+  }
+
+  public function getCategoryTree($type)
+  {
+    $this->send_getCategoryTree($type);
+    return $this->recv_getCategoryTree();
+  }
+
+  public function send_getCategoryTree($type)
+  {
+    $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getCategoryTree_args();
+    $args->type = $type;
+    $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'getCategoryTree', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('getCategoryTree', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_getCategoryTree()
+  {
+    $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\SymfonyWorld\WealthyLaughingDuck\FinanceService_getCategoryTree_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_getCategoryTree_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
     if ($result->success !== null) {
       return $result->success;
     }
-    throw new \Exception("getOutcomeCategoryTree failed: unknown result");
+    throw new \Exception("getCategoryTree failed: unknown result");
   }
 
 }
@@ -489,7 +639,49 @@ class FinanceService_getAllUsers_result extends TBase {
   }
 }
 
-class FinanceService_getIncomeCategoryTree_args extends TBase {
+class FinanceService_createCategoryTreeNode_args extends TBase {
+  static $_TSPEC;
+
+  public $parent_id = null;
+  public $name = null;
+  public $type = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'parent_id',
+          'type' => TType::I32,
+          ),
+        2 => array(
+          'var' => 'name',
+          'type' => TType::STRING,
+          ),
+        3 => array(
+          'var' => 'type',
+          'type' => TType::I32,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_createCategoryTreeNode_args';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_createCategoryTreeNode_args', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_createCategoryTreeNode_args', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_createCategoryTreeNode_result extends TBase {
   static $_TSPEC;
 
 
@@ -501,19 +693,229 @@ class FinanceService_getIncomeCategoryTree_args extends TBase {
   }
 
   public function getName() {
-    return 'FinanceService_getIncomeCategoryTree_args';
+    return 'FinanceService_createCategoryTreeNode_result';
   }
 
   public function read($input)
   {
-    return $this->_read('FinanceService_getIncomeCategoryTree_args', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_createCategoryTreeNode_result', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('FinanceService_getIncomeCategoryTree_args', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_createCategoryTreeNode_result', self::$_TSPEC, $output);
   }
 }
 
-class FinanceService_getIncomeCategoryTree_result extends TBase {
+class FinanceService_moveCategoryTreeNode_args extends TBase {
+  static $_TSPEC;
+
+  public $id = null;
+  public $new_parent_id = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'id',
+          'type' => TType::I32,
+          ),
+        2 => array(
+          'var' => 'new_parent_id',
+          'type' => TType::I32,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_moveCategoryTreeNode_args';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_moveCategoryTreeNode_args', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_moveCategoryTreeNode_args', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_moveCategoryTreeNode_result extends TBase {
+  static $_TSPEC;
+
+
+  public function __construct() {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        );
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_moveCategoryTreeNode_result';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_moveCategoryTreeNode_result', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_moveCategoryTreeNode_result', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_renameCategoryTreeNode_args extends TBase {
+  static $_TSPEC;
+
+  public $id = null;
+  public $new_name = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'id',
+          'type' => TType::I32,
+          ),
+        2 => array(
+          'var' => 'new_name',
+          'type' => TType::STRING,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_renameCategoryTreeNode_args';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_renameCategoryTreeNode_args', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_renameCategoryTreeNode_args', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_renameCategoryTreeNode_result extends TBase {
+  static $_TSPEC;
+
+
+  public function __construct() {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        );
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_renameCategoryTreeNode_result';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_renameCategoryTreeNode_result', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_renameCategoryTreeNode_result', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_removeCategoryTreeNode_args extends TBase {
+  static $_TSPEC;
+
+  public $id = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'id',
+          'type' => TType::I32,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_removeCategoryTreeNode_args';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_removeCategoryTreeNode_args', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_removeCategoryTreeNode_args', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_removeCategoryTreeNode_result extends TBase {
+  static $_TSPEC;
+
+
+  public function __construct() {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        );
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_removeCategoryTreeNode_result';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_removeCategoryTreeNode_result', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_removeCategoryTreeNode_result', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_getCategoryTree_args extends TBase {
+  static $_TSPEC;
+
+  public $type = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'type',
+          'type' => TType::I32,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
+    }
+  }
+
+  public function getName() {
+    return 'FinanceService_getCategoryTree_args';
+  }
+
+  public function read($input)
+  {
+    return $this->_read('FinanceService_getCategoryTree_args', self::$_TSPEC, $input);
+  }
+  public function write($output) {
+    return $this->_write('FinanceService_getCategoryTree_args', self::$_TSPEC, $output);
+  }
+}
+
+class FinanceService_getCategoryTree_result extends TBase {
   static $_TSPEC;
 
   public $success = null;
@@ -538,76 +940,15 @@ class FinanceService_getIncomeCategoryTree_result extends TBase {
   }
 
   public function getName() {
-    return 'FinanceService_getIncomeCategoryTree_result';
+    return 'FinanceService_getCategoryTree_result';
   }
 
   public function read($input)
   {
-    return $this->_read('FinanceService_getIncomeCategoryTree_result', self::$_TSPEC, $input);
+    return $this->_read('FinanceService_getCategoryTree_result', self::$_TSPEC, $input);
   }
   public function write($output) {
-    return $this->_write('FinanceService_getIncomeCategoryTree_result', self::$_TSPEC, $output);
-  }
-}
-
-class FinanceService_getOutcomeCategoryTree_args extends TBase {
-  static $_TSPEC;
-
-
-  public function __construct() {
-    if (!isset(self::$_TSPEC)) {
-      self::$_TSPEC = array(
-        );
-    }
-  }
-
-  public function getName() {
-    return 'FinanceService_getOutcomeCategoryTree_args';
-  }
-
-  public function read($input)
-  {
-    return $this->_read('FinanceService_getOutcomeCategoryTree_args', self::$_TSPEC, $input);
-  }
-  public function write($output) {
-    return $this->_write('FinanceService_getOutcomeCategoryTree_args', self::$_TSPEC, $output);
-  }
-}
-
-class FinanceService_getOutcomeCategoryTree_result extends TBase {
-  static $_TSPEC;
-
-  public $success = null;
-
-  public function __construct($vals=null) {
-    if (!isset(self::$_TSPEC)) {
-      self::$_TSPEC = array(
-        0 => array(
-          'var' => 'success',
-          'type' => TType::LST,
-          'etype' => TType::STRUCT,
-          'elem' => array(
-            'type' => TType::STRUCT,
-            'class' => '\SymfonyWorld\WealthyLaughingDuck\TCategory',
-            ),
-          ),
-        );
-    }
-    if (is_array($vals)) {
-      parent::__construct(self::$_TSPEC, $vals);
-    }
-  }
-
-  public function getName() {
-    return 'FinanceService_getOutcomeCategoryTree_result';
-  }
-
-  public function read($input)
-  {
-    return $this->_read('FinanceService_getOutcomeCategoryTree_result', self::$_TSPEC, $input);
-  }
-  public function write($output) {
-    return $this->_write('FinanceService_getOutcomeCategoryTree_result', self::$_TSPEC, $output);
+    return $this->_write('FinanceService_getCategoryTree_result', self::$_TSPEC, $output);
   }
 }
 

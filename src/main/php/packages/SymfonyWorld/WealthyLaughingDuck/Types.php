@@ -16,6 +16,15 @@ use Thrift\Protocol\TProtocol;
 use Thrift\Exception\TApplicationException;
 
 
+final class CategoryType {
+  const INCOME = 1;
+  const OUTCOME = 2;
+  static public $__names = array(
+    1 => 'INCOME',
+    2 => 'OUTCOME',
+  );
+}
+
 class TOutcome extends TBase {
   static $_TSPEC;
 

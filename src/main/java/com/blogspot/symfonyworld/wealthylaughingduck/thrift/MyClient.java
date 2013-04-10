@@ -1,5 +1,6 @@
 package com.blogspot.symfonyworld.wealthylaughingduck.thrift;
 
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.CategoryType;
 import java.util.Iterator;
 import java.util.List;
 
@@ -66,12 +67,12 @@ public class MyClient {
     }
 
     protected void processGetIncomeCategoryTree() throws TException {
-        List<TCategory> list = client.getIncomeCategoryTree();
+        List<TCategory> list = client.getCategoryTree(CategoryType.INCOME);
         processGetCategoryTree(list);
     }
 
     protected void processGetOutcomeCategoryTree() throws TException {
-        List<TCategory> list = client.getOutcomeCategoryTree();
+        List<TCategory> list = client.getCategoryTree(CategoryType.OUTCOME);
         processGetCategoryTree(list);
     }
 

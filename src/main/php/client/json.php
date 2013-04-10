@@ -3,6 +3,7 @@
 require_once dirname(__FILE__) . '/../requires.php';
 
 use \SymfonyWorld\Thrift;
+use \SymfonyWorld\WealthyLaughingDuck\CategoryType;
 
 $request = count($_POST) ? $_POST : $_GET;
 $client = new Thrift("localhost", 9090);
@@ -28,11 +29,11 @@ elseif ($request['type'] == 'users')
 }
 elseif ($request['type'] == 'incomeCategories')
 {
-  $result = $client->getClient()->getIncomeCategoryTree();
+  $result = $client->getClient()->getCategoryTree(CategoryType::INCOME);
 }
 elseif ($request['type'] == 'outcomeCategories')
 {
-  $result = $client->getClient()->getOutcomeCategoryTree();
+  $result = $client->getClient()->getCategoryTree(CategoryType::OUTCOME);
 }
 
 echo json_encode($result);

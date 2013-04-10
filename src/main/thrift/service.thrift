@@ -46,30 +46,55 @@ struct TCriteria {
     2: required list<TUser> users
 }
 
+enum CategoryType {
+    INCOME = 1,
+    OUTCOME = 2
+}
+
 service FinanceService {
 
   /**
    * Returns all outcomes for a given user
    */
-  list<TOutcome> getUserOutcomes(1:required int user_id),
+  list<TOutcome> getUserOutcomes(
+    1:required int user_id
+  ),
 
   /**
    * Returns all incomes for a given user
    */
-  list<TIncome> getUserIncomes(1:required int user_id),
+  list<TIncome> getUserIncomes(
+    1:required int user_id
+  ),
 
   /**
    * Returns list of all users
    */
-  list<TUser> getAllUsers()
+  list<TUser> getAllUsers(),
+
+  void createCategoryTreeNode(
+    1:required int parent_id,
+    2:required string name,
+    3:required CategoryType type
+  ),
+
+  void moveCategoryTreeNode(
+    1:required int id,
+    2:required int new_parent_id
+  ),
+
+  void renameCategoryTreeNode(
+    1:required int id, 2:required string new_name
+  ),
+
+  void removeCategoryTreeNode(
+    1:required int id
+  ),
 
   /**
-   * Returns income category tree
+   * Returns category tree
    */
-  TCategoryPlainTree getIncomeCategoryTree()
-
-  /**
-   * Returns outcome category tree
-   */
-  TCategoryPlainTree getOutcomeCategoryTree()
+  TCategoryPlainTree getCategoryTree(
+    1:required CategoryType type
+  )
 }
