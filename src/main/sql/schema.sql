@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `parent_id` bigint(20) DEFAULT NULL,
   `name` varchar(32) NOT NULL,
-  `type` varchar(255) DEFAULT NULL,
+  `type` enum("income", "outcome") NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,

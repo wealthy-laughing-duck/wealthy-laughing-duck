@@ -39,17 +39,46 @@ CategoryDialogTab.prototype.render = function() {
         .bind("rename_node.jstree", function (event, data) {
             var id = data.rslt.obj.attr("id");
             var new_name = data.rslt.name;
-            _self.categoryControl.renameNode(id, new_name);
-            console.log(id, new_name, event, data);
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "../php/client/json.php",
+                data: {
+                    action: "renameNode",
+                    id: id,
+                    new_name: new_name
+                }
+            }).done(function(response) {
+                _self.categoryControl.renameNode(id, new_name);
+            }).fail(function(response) {
+                bootbox.alert("rename node failed.");
+            });
         })
         .bind("create_node.jstree", function (event, data) {
             var parent_id = data.rslt.parent;
-            var new_id = 100;
-            // update tree component
-            data.rslt.obj.attr("id", new_id);
-            // update data holder
-            _self.categoryControl.addNode(new_id, "some name", parent_id);
-            console.log(parent_id, event, data);
+            if (parent_id == -1) { parent_id = null }
+            var name = "some-name";
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "../php/client/json.php",
+                data: {
+                    action: "createNode",
+                    parent_id: parent_id,
+                    name: name,
+                    type: _self.categoryControl.getType()
+                }
+            }).done(function(response) {
+                new_id = response;
+                // update tree component
+                data.rslt.obj.attr("id", new_id);
+                _self.categoryControl.addNode(new_id, "some name", parent_id);
+            }).fail(function(response) {
+                bootbox.alert("create node failed.");
+            });
+        })
+        .bind("delete_node.jstree", function (event, data) {
+            console.log(event, data)
         });
     }
 };
@@ -80,6 +109,10 @@ var CategoryDialog = {
 
         $(this.selector + " .action-rename").bind('click', function() {
             $("#" + _self.getActiveTab() + "CategoryTree").jstree("rename");
+        });
+
+        $(this.selector + " .action-delete").bind('click', function() {
+            $("#" + _self.getActiveTab() + "CategoryTree").jstree("remove");
         });
 
         $(this.selector + " a").live("dblclick", function(evt) {

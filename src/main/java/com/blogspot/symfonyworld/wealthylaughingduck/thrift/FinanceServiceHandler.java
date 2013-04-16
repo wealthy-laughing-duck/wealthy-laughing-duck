@@ -12,11 +12,12 @@ import org.slf4j.MarkerFactory;
 import org.apache.thrift.TException;
 
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
-import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.CategoryType;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TCategoryType;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TCategory;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TIncome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TOutcome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TUser;
+import com.blogspot.symfonyworld.wealthylaughingduck.model.CategoryType;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Category;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Income;
 import com.blogspot.symfonyworld.wealthylaughingduck.model.Outcome;
@@ -43,9 +44,9 @@ public class FinanceServiceHandler implements FinanceService.Iface {
         for (Iterator iterator = outcomes.iterator(); iterator.hasNext();) {
             Outcome outcome = (Outcome) iterator.next();
             TOutcome t_outcome = new TOutcome(
-                    (double) (Math.round(outcome.getAmount() * 100)) / 100,
-                    outcome.getUser().getName(),
-                    String.valueOf(outcome.getCategory().getName()));
+                (double) (Math.round(outcome.getAmount() * 100)) / 100,
+                outcome.getUser().getName(),
+                String.valueOf(outcome.getCategory().getName()));
             t_outcome.setComment(outcome.getComment());
             result.add(t_outcome);
         }
@@ -63,9 +64,9 @@ public class FinanceServiceHandler implements FinanceService.Iface {
         for (Iterator iterator = incomes.iterator(); iterator.hasNext();) {
             Income income = (Income) iterator.next();
             TIncome t_income = new TIncome(
-                    (double) (Math.round(income.getAmount() * 100)) / 100,
-                    income.getUser().getName(),
-                    String.valueOf(income.getCategory().getName()));
+                (double) (Math.round(income.getAmount() * 100)) / 100,
+                income.getUser().getName(),
+                String.valueOf(income.getCategory().getName()));
             t_income.setComment(income.getComment());
             result.add(t_income);
         }
@@ -91,7 +92,7 @@ public class FinanceServiceHandler implements FinanceService.Iface {
     }
 
     @Override
-    public List<TCategory> getCategoryTree(CategoryType type) throws TException {
+    public List<TCategory> getCategoryTree(TCategoryType type) throws TException {
         logger.info("BEGIN getCategoryTree");
         logger.info("> ARG type: " + type.toString());
         List<Category> categories = null;
@@ -119,22 +120,46 @@ public class FinanceServiceHandler implements FinanceService.Iface {
     }
 
     @Override
-    public void createCategoryTreeNode(int parent_id, String name, CategoryType type) throws TException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int createCategoryTreeNode(TCategoryType type, String name, int parent_id) throws TException {
+        logger.info("BEGIN createCategoryTreeNode");
+        logger.info("> ARG parent_id: " + parent_id);
+        logger.info("> ARG name: " + name);
+        logger.info("> ARG type: " + type.toString());
+        CategoryType ct = null;
+        switch (type) {
+            case INCOME: ct = CategoryType.income;
+                break;
+            case OUTCOME: ct = CategoryType.outcome;
+                break;
+        }
+        long new_id = this.dataProvider.createCategory(parent_id, name, ct);
+        logger.info("END createCategoryTreeNode");
+        return (int) new_id;
     }
 
     @Override
     public void moveCategoryTreeNode(int id, int new_parent_id) throws TException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        logger.info("BEGIN moveCategoryTreeNode");
+        logger.info("> ARG id: " + id);
+        logger.info("> ARG new_parent_id: " + new_parent_id);
+        this.dataProvider.moveCategory(id, new_parent_id);
+        logger.info("END moveCategoryTreeNode");
     }
 
     @Override
     public void renameCategoryTreeNode(int id, String new_name) throws TException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        logger.info("BEGIN renameCategoryTreeNode");
+        logger.info("> ARG id: " + id);
+        logger.info("> ARG new_name: " + new_name);
+        this.dataProvider.renameCategory(id, new_name);
+        logger.info("END renameCategoryTreeNode");
     }
 
     @Override
     public void removeCategoryTreeNode(int id) throws TException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        logger.info("BEGIN removeCategoryTreeNode");
+        logger.info("> ARG id: " + id);
+        this.dataProvider.removeCategory(id);
+        logger.info("END removeCategoryTreeNode");
     }
 }

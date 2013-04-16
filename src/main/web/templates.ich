@@ -169,6 +169,7 @@
         <a class="btn btn-info" rel="popover" data-content="So far you can only display category trees." data-original-title="Category management"><i class="icon-question-sign"></i></a>
         <button class="btn" data-dismiss="modal">Close</button>
         <button class="btn action-rename">Rename</button>
+        <button class="btn action-delete">Delete</button>
         <button class="btn action-create">Create</button>
         <button class="btn btn-primary">Save changes</button>
     </div>

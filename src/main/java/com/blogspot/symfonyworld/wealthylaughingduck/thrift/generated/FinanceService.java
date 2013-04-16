@@ -53,7 +53,7 @@ public class FinanceService {
      */
     public List<TUser> getAllUsers() throws org.apache.thrift.TException;
 
-    public void createCategoryTreeNode(int parent_id, String name, CategoryType type) throws org.apache.thrift.TException;
+    public int createCategoryTreeNode(TCategoryType type, String name, int parent_id) throws org.apache.thrift.TException;
 
     public void moveCategoryTreeNode(int id, int new_parent_id) throws org.apache.thrift.TException;
 
@@ -66,7 +66,7 @@ public class FinanceService {
      * 
      * @param type
      */
-    public List<TCategory> getCategoryTree(CategoryType type) throws org.apache.thrift.TException;
+    public List<TCategory> getCategoryTree(TCategoryType type) throws org.apache.thrift.TException;
 
   }
 
@@ -78,7 +78,7 @@ public class FinanceService {
 
     public void getAllUsers(org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getAllUsers_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void createCategoryTreeNode(int parent_id, String name, CategoryType type, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createCategoryTreeNode_call> resultHandler) throws org.apache.thrift.TException;
+    public void createCategoryTreeNode(TCategoryType type, String name, int parent_id, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createCategoryTreeNode_call> resultHandler) throws org.apache.thrift.TException;
 
     public void moveCategoryTreeNode(int id, int new_parent_id, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.moveCategoryTreeNode_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -86,7 +86,7 @@ public class FinanceService {
 
     public void removeCategoryTreeNode(int id, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.removeCategoryTreeNode_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void getCategoryTree(CategoryType type, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getCategoryTree_call> resultHandler) throws org.apache.thrift.TException;
+    public void getCategoryTree(TCategoryType type, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getCategoryTree_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -178,26 +178,29 @@ public class FinanceService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getAllUsers failed: unknown result");
     }
 
-    public void createCategoryTreeNode(int parent_id, String name, CategoryType type) throws org.apache.thrift.TException
+    public int createCategoryTreeNode(TCategoryType type, String name, int parent_id) throws org.apache.thrift.TException
     {
-      send_createCategoryTreeNode(parent_id, name, type);
-      recv_createCategoryTreeNode();
+      send_createCategoryTreeNode(type, name, parent_id);
+      return recv_createCategoryTreeNode();
     }
 
-    public void send_createCategoryTreeNode(int parent_id, String name, CategoryType type) throws org.apache.thrift.TException
+    public void send_createCategoryTreeNode(TCategoryType type, String name, int parent_id) throws org.apache.thrift.TException
     {
       createCategoryTreeNode_args args = new createCategoryTreeNode_args();
-      args.setParent_id(parent_id);
-      args.setName(name);
       args.setType(type);
+      args.setName(name);
+      args.setParent_id(parent_id);
       sendBase("createCategoryTreeNode", args);
     }
 
-    public void recv_createCategoryTreeNode() throws org.apache.thrift.TException
+    public int recv_createCategoryTreeNode() throws org.apache.thrift.TException
     {
       createCategoryTreeNode_result result = new createCategoryTreeNode_result();
       receiveBase(result, "createCategoryTreeNode");
-      return;
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "createCategoryTreeNode failed: unknown result");
     }
 
     public void moveCategoryTreeNode(int id, int new_parent_id) throws org.apache.thrift.TException
@@ -262,13 +265,13 @@ public class FinanceService {
       return;
     }
 
-    public List<TCategory> getCategoryTree(CategoryType type) throws org.apache.thrift.TException
+    public List<TCategory> getCategoryTree(TCategoryType type) throws org.apache.thrift.TException
     {
       send_getCategoryTree(type);
       return recv_getCategoryTree();
     }
 
-    public void send_getCategoryTree(CategoryType type) throws org.apache.thrift.TException
+    public void send_getCategoryTree(TCategoryType type) throws org.apache.thrift.TException
     {
       getCategoryTree_args args = new getCategoryTree_args();
       args.setType(type);
@@ -396,41 +399,41 @@ public class FinanceService {
       }
     }
 
-    public void createCategoryTreeNode(int parent_id, String name, CategoryType type, org.apache.thrift.async.AsyncMethodCallback<createCategoryTreeNode_call> resultHandler) throws org.apache.thrift.TException {
+    public void createCategoryTreeNode(TCategoryType type, String name, int parent_id, org.apache.thrift.async.AsyncMethodCallback<createCategoryTreeNode_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      createCategoryTreeNode_call method_call = new createCategoryTreeNode_call(parent_id, name, type, resultHandler, this, ___protocolFactory, ___transport);
+      createCategoryTreeNode_call method_call = new createCategoryTreeNode_call(type, name, parent_id, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class createCategoryTreeNode_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int parent_id;
+      private TCategoryType type;
       private String name;
-      private CategoryType type;
-      public createCategoryTreeNode_call(int parent_id, String name, CategoryType type, org.apache.thrift.async.AsyncMethodCallback<createCategoryTreeNode_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private int parent_id;
+      public createCategoryTreeNode_call(TCategoryType type, String name, int parent_id, org.apache.thrift.async.AsyncMethodCallback<createCategoryTreeNode_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.parent_id = parent_id;
-        this.name = name;
         this.type = type;
+        this.name = name;
+        this.parent_id = parent_id;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createCategoryTreeNode", org.apache.thrift.protocol.TMessageType.CALL, 0));
         createCategoryTreeNode_args args = new createCategoryTreeNode_args();
-        args.setParent_id(parent_id);
-        args.setName(name);
         args.setType(type);
+        args.setName(name);
+        args.setParent_id(parent_id);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public void getResult() throws org.apache.thrift.TException {
+      public int getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        (new Client(prot)).recv_createCategoryTreeNode();
+        return (new Client(prot)).recv_createCategoryTreeNode();
       }
     }
 
@@ -536,7 +539,7 @@ public class FinanceService {
       }
     }
 
-    public void getCategoryTree(CategoryType type, org.apache.thrift.async.AsyncMethodCallback<getCategoryTree_call> resultHandler) throws org.apache.thrift.TException {
+    public void getCategoryTree(TCategoryType type, org.apache.thrift.async.AsyncMethodCallback<getCategoryTree_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       getCategoryTree_call method_call = new getCategoryTree_call(type, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -544,8 +547,8 @@ public class FinanceService {
     }
 
     public static class getCategoryTree_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private CategoryType type;
-      public getCategoryTree_call(CategoryType type, org.apache.thrift.async.AsyncMethodCallback<getCategoryTree_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private TCategoryType type;
+      public getCategoryTree_call(TCategoryType type, org.apache.thrift.async.AsyncMethodCallback<getCategoryTree_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.type = type;
       }
@@ -667,7 +670,8 @@ public class FinanceService {
 
       public createCategoryTreeNode_result getResult(I iface, createCategoryTreeNode_args args) throws org.apache.thrift.TException {
         createCategoryTreeNode_result result = new createCategoryTreeNode_result();
-        iface.createCategoryTreeNode(args.parent_id, args.name, args.type);
+        result.success = iface.createCategoryTreeNode(args.type, args.name, args.parent_id);
+        result.setSuccessIsSet(true);
         return result;
       }
     }
@@ -2919,9 +2923,9 @@ public class FinanceService {
   public static class createCategoryTreeNode_args implements org.apache.thrift.TBase<createCategoryTreeNode_args, createCategoryTreeNode_args._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createCategoryTreeNode_args");
 
-    private static final org.apache.thrift.protocol.TField PARENT_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("parent_id", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)1);
     private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
-    private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)3);
+    private static final org.apache.thrift.protocol.TField PARENT_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("parent_id", org.apache.thrift.protocol.TType.I32, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -2929,23 +2933,23 @@ public class FinanceService {
       schemes.put(TupleScheme.class, new createCategoryTreeNode_argsTupleSchemeFactory());
     }
 
-    public int parent_id; // required
-    public String name; // required
     /**
      * 
-     * @see CategoryType
+     * @see TCategoryType
      */
-    public CategoryType type; // required
+    public TCategoryType type; // required
+    public String name; // required
+    public int parent_id; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      PARENT_ID((short)1, "parent_id"),
-      NAME((short)2, "name"),
       /**
        * 
-       * @see CategoryType
+       * @see TCategoryType
        */
-      TYPE((short)3, "type");
+      TYPE((short)1, "type"),
+      NAME((short)2, "name"),
+      PARENT_ID((short)3, "parent_id");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -2960,12 +2964,12 @@ public class FinanceService {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // PARENT_ID
-            return PARENT_ID;
+          case 1: // TYPE
+            return TYPE;
           case 2: // NAME
             return NAME;
-          case 3: // TYPE
-            return TYPE;
+          case 3: // PARENT_ID
+            return PARENT_ID;
           default:
             return null;
         }
@@ -3011,12 +3015,12 @@ public class FinanceService {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.PARENT_ID, new org.apache.thrift.meta_data.FieldMetaData("parent_id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "int")));
+      tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+          new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, TCategoryType.class)));
       tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.REQUIRED, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-          new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, CategoryType.class)));
+      tmpMap.put(_Fields.PARENT_ID, new org.apache.thrift.meta_data.FieldMetaData("parent_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "int")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createCategoryTreeNode_args.class, metaDataMap);
     }
@@ -3025,15 +3029,15 @@ public class FinanceService {
     }
 
     public createCategoryTreeNode_args(
-      int parent_id,
+      TCategoryType type,
       String name,
-      CategoryType type)
+      int parent_id)
     {
       this();
+      this.type = type;
+      this.name = name;
       this.parent_id = parent_id;
       setParent_idIsSet(true);
-      this.name = name;
-      this.type = type;
     }
 
     /**
@@ -3041,13 +3045,13 @@ public class FinanceService {
      */
     public createCategoryTreeNode_args(createCategoryTreeNode_args other) {
       __isset_bitfield = other.__isset_bitfield;
-      this.parent_id = other.parent_id;
-      if (other.isSetName()) {
-        this.name = other.name;
-      }
       if (other.isSetType()) {
         this.type = other.type;
       }
+      if (other.isSetName()) {
+        this.name = other.name;
+      }
+      this.parent_id = other.parent_id;
     }
 
     public createCategoryTreeNode_args deepCopy() {
@@ -3056,33 +3060,42 @@ public class FinanceService {
 
     @Override
     public void clear() {
+      this.type = null;
+      this.name = null;
       setParent_idIsSet(false);
       this.parent_id = 0;
-      this.name = null;
-      this.type = null;
     }
 
-    public int getParent_id() {
-      return this.parent_id;
+    /**
+     * 
+     * @see TCategoryType
+     */
+    public TCategoryType getType() {
+      return this.type;
     }
 
-    public createCategoryTreeNode_args setParent_id(int parent_id) {
-      this.parent_id = parent_id;
-      setParent_idIsSet(true);
+    /**
+     * 
+     * @see TCategoryType
+     */
+    public createCategoryTreeNode_args setType(TCategoryType type) {
+      this.type = type;
       return this;
     }
 
-    public void unsetParent_id() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PARENT_ID_ISSET_ID);
+    public void unsetType() {
+      this.type = null;
     }
 
-    /** Returns true if field parent_id is set (has been assigned a value) and false otherwise */
-    public boolean isSetParent_id() {
-      return EncodingUtils.testBit(__isset_bitfield, __PARENT_ID_ISSET_ID);
+    /** Returns true if field type is set (has been assigned a value) and false otherwise */
+    public boolean isSetType() {
+      return this.type != null;
     }
 
-    public void setParent_idIsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PARENT_ID_ISSET_ID, value);
+    public void setTypeIsSet(boolean value) {
+      if (!value) {
+        this.type = null;
+      }
     }
 
     public String getName() {
@@ -3109,45 +3122,36 @@ public class FinanceService {
       }
     }
 
-    /**
-     * 
-     * @see CategoryType
-     */
-    public CategoryType getType() {
-      return this.type;
+    public int getParent_id() {
+      return this.parent_id;
     }
 
-    /**
-     * 
-     * @see CategoryType
-     */
-    public createCategoryTreeNode_args setType(CategoryType type) {
-      this.type = type;
+    public createCategoryTreeNode_args setParent_id(int parent_id) {
+      this.parent_id = parent_id;
+      setParent_idIsSet(true);
       return this;
     }
 
-    public void unsetType() {
-      this.type = null;
+    public void unsetParent_id() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PARENT_ID_ISSET_ID);
     }
 
-    /** Returns true if field type is set (has been assigned a value) and false otherwise */
-    public boolean isSetType() {
-      return this.type != null;
+    /** Returns true if field parent_id is set (has been assigned a value) and false otherwise */
+    public boolean isSetParent_id() {
+      return EncodingUtils.testBit(__isset_bitfield, __PARENT_ID_ISSET_ID);
     }
 
-    public void setTypeIsSet(boolean value) {
-      if (!value) {
-        this.type = null;
-      }
+    public void setParent_idIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PARENT_ID_ISSET_ID, value);
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case PARENT_ID:
+      case TYPE:
         if (value == null) {
-          unsetParent_id();
+          unsetType();
         } else {
-          setParent_id((Integer)value);
+          setType((TCategoryType)value);
         }
         break;
 
@@ -3159,11 +3163,11 @@ public class FinanceService {
         }
         break;
 
-      case TYPE:
+      case PARENT_ID:
         if (value == null) {
-          unsetType();
+          unsetParent_id();
         } else {
-          setType((CategoryType)value);
+          setParent_id((Integer)value);
         }
         break;
 
@@ -3172,14 +3176,14 @@ public class FinanceService {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case PARENT_ID:
-        return Integer.valueOf(getParent_id());
+      case TYPE:
+        return getType();
 
       case NAME:
         return getName();
 
-      case TYPE:
-        return getType();
+      case PARENT_ID:
+        return Integer.valueOf(getParent_id());
 
       }
       throw new IllegalStateException();
@@ -3192,12 +3196,12 @@ public class FinanceService {
       }
 
       switch (field) {
-      case PARENT_ID:
-        return isSetParent_id();
-      case NAME:
-        return isSetName();
       case TYPE:
         return isSetType();
+      case NAME:
+        return isSetName();
+      case PARENT_ID:
+        return isSetParent_id();
       }
       throw new IllegalStateException();
     }
@@ -3215,12 +3219,12 @@ public class FinanceService {
       if (that == null)
         return false;
 
-      boolean this_present_parent_id = true;
-      boolean that_present_parent_id = true;
-      if (this_present_parent_id || that_present_parent_id) {
-        if (!(this_present_parent_id && that_present_parent_id))
+      boolean this_present_type = true && this.isSetType();
+      boolean that_present_type = true && that.isSetType();
+      if (this_present_type || that_present_type) {
+        if (!(this_present_type && that_present_type))
           return false;
-        if (this.parent_id != that.parent_id)
+        if (!this.type.equals(that.type))
           return false;
       }
 
@@ -3233,12 +3237,12 @@ public class FinanceService {
           return false;
       }
 
-      boolean this_present_type = true && this.isSetType();
-      boolean that_present_type = true && that.isSetType();
-      if (this_present_type || that_present_type) {
-        if (!(this_present_type && that_present_type))
+      boolean this_present_parent_id = true;
+      boolean that_present_parent_id = true;
+      if (this_present_parent_id || that_present_parent_id) {
+        if (!(this_present_parent_id && that_present_parent_id))
           return false;
-        if (!this.type.equals(that.type))
+        if (this.parent_id != that.parent_id)
           return false;
       }
 
@@ -3258,12 +3262,12 @@ public class FinanceService {
       int lastComparison = 0;
       createCategoryTreeNode_args typedOther = (createCategoryTreeNode_args)other;
 
-      lastComparison = Boolean.valueOf(isSetParent_id()).compareTo(typedOther.isSetParent_id());
+      lastComparison = Boolean.valueOf(isSetType()).compareTo(typedOther.isSetType());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetParent_id()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.parent_id, typedOther.parent_id);
+      if (isSetType()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.type, typedOther.type);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -3278,12 +3282,12 @@ public class FinanceService {
           return lastComparison;
         }
       }
-      lastComparison = Boolean.valueOf(isSetType()).compareTo(typedOther.isSetType());
+      lastComparison = Boolean.valueOf(isSetParent_id()).compareTo(typedOther.isSetParent_id());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetType()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.type, typedOther.type);
+      if (isSetParent_id()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.parent_id, typedOther.parent_id);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -3308,8 +3312,12 @@ public class FinanceService {
       StringBuilder sb = new StringBuilder("createCategoryTreeNode_args(");
       boolean first = true;
 
-      sb.append("parent_id:");
-      sb.append(this.parent_id);
+      sb.append("type:");
+      if (this.type == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.type);
+      }
       first = false;
       if (!first) sb.append(", ");
       sb.append("name:");
@@ -3320,12 +3328,8 @@ public class FinanceService {
       }
       first = false;
       if (!first) sb.append(", ");
-      sb.append("type:");
-      if (this.type == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.type);
-      }
+      sb.append("parent_id:");
+      sb.append(this.parent_id);
       first = false;
       sb.append(")");
       return sb.toString();
@@ -3333,12 +3337,11 @@ public class FinanceService {
 
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
-      // alas, we cannot check 'parent_id' because it's a primitive and you chose the non-beans generator.
-      if (name == null) {
-        throw new org.apache.thrift.protocol.TProtocolException("Required field 'name' was not present! Struct: " + toString());
-      }
       if (type == null) {
         throw new org.apache.thrift.protocol.TProtocolException("Required field 'type' was not present! Struct: " + toString());
+      }
+      if (name == null) {
+        throw new org.apache.thrift.protocol.TProtocolException("Required field 'name' was not present! Struct: " + toString());
       }
       // check for sub-struct validity
     }
@@ -3379,10 +3382,10 @@ public class FinanceService {
             break;
           }
           switch (schemeField.id) {
-            case 1: // PARENT_ID
+            case 1: // TYPE
               if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.parent_id = iprot.readI32();
-                struct.setParent_idIsSet(true);
+                struct.type = TCategoryType.findByValue(iprot.readI32());
+                struct.setTypeIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -3395,10 +3398,10 @@ public class FinanceService {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 3: // TYPE
+            case 3: // PARENT_ID
               if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.type = CategoryType.findByValue(iprot.readI32());
-                struct.setTypeIsSet(true);
+                struct.parent_id = iprot.readI32();
+                struct.setParent_idIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -3411,9 +3414,6 @@ public class FinanceService {
         iprot.readStructEnd();
 
         // check for required fields of primitive type, which can't be checked in the validate method
-        if (!struct.isSetParent_id()) {
-          throw new org.apache.thrift.protocol.TProtocolException("Required field 'parent_id' was not found in serialized data! Struct: " + toString());
-        }
         struct.validate();
       }
 
@@ -3421,19 +3421,19 @@ public class FinanceService {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        oprot.writeFieldBegin(PARENT_ID_FIELD_DESC);
-        oprot.writeI32(struct.parent_id);
-        oprot.writeFieldEnd();
-        if (struct.name != null) {
-          oprot.writeFieldBegin(NAME_FIELD_DESC);
-          oprot.writeString(struct.name);
-          oprot.writeFieldEnd();
-        }
         if (struct.type != null) {
           oprot.writeFieldBegin(TYPE_FIELD_DESC);
           oprot.writeI32(struct.type.getValue());
           oprot.writeFieldEnd();
         }
+        if (struct.name != null) {
+          oprot.writeFieldBegin(NAME_FIELD_DESC);
+          oprot.writeString(struct.name);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(PARENT_ID_FIELD_DESC);
+        oprot.writeI32(struct.parent_id);
+        oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -3451,20 +3451,30 @@ public class FinanceService {
       @Override
       public void write(org.apache.thrift.protocol.TProtocol prot, createCategoryTreeNode_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
-        oprot.writeI32(struct.parent_id);
-        oprot.writeString(struct.name);
         oprot.writeI32(struct.type.getValue());
+        oprot.writeString(struct.name);
+        BitSet optionals = new BitSet();
+        if (struct.isSetParent_id()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetParent_id()) {
+          oprot.writeI32(struct.parent_id);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, createCategoryTreeNode_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        struct.parent_id = iprot.readI32();
-        struct.setParent_idIsSet(true);
+        struct.type = TCategoryType.findByValue(iprot.readI32());
+        struct.setTypeIsSet(true);
         struct.name = iprot.readString();
         struct.setNameIsSet(true);
-        struct.type = CategoryType.findByValue(iprot.readI32());
-        struct.setTypeIsSet(true);
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.parent_id = iprot.readI32();
+          struct.setParent_idIsSet(true);
+        }
       }
     }
 
@@ -3473,6 +3483,7 @@ public class FinanceService {
   public static class createCategoryTreeNode_result implements org.apache.thrift.TBase<createCategoryTreeNode_result, createCategoryTreeNode_result._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createCategoryTreeNode_result");
 
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.I32, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -3480,10 +3491,11 @@ public class FinanceService {
       schemes.put(TupleScheme.class, new createCategoryTreeNode_resultTupleSchemeFactory());
     }
 
+    public int success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-;
+      SUCCESS((short)0, "success");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -3498,6 +3510,8 @@ public class FinanceService {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
           default:
             return null;
         }
@@ -3536,9 +3550,15 @@ public class FinanceService {
         return _fieldName;
       }
     }
+
+    // isset id assignments
+    private static final int __SUCCESS_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "int")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createCategoryTreeNode_result.class, metaDataMap);
     }
@@ -3546,10 +3566,20 @@ public class FinanceService {
     public createCategoryTreeNode_result() {
     }
 
+    public createCategoryTreeNode_result(
+      int success)
+    {
+      this();
+      this.success = success;
+      setSuccessIsSet(true);
+    }
+
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public createCategoryTreeNode_result(createCategoryTreeNode_result other) {
+      __isset_bitfield = other.__isset_bitfield;
+      this.success = other.success;
     }
 
     public createCategoryTreeNode_result deepCopy() {
@@ -3558,15 +3588,51 @@ public class FinanceService {
 
     @Override
     public void clear() {
+      setSuccessIsSet(false);
+      this.success = 0;
+    }
+
+    public int getSuccess() {
+      return this.success;
+    }
+
+    public createCategoryTreeNode_result setSuccess(int success) {
+      this.success = success;
+      setSuccessIsSet(true);
+      return this;
+    }
+
+    public void unsetSuccess() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return EncodingUtils.testBit(__isset_bitfield, __SUCCESS_ISSET_ID);
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Integer)value);
+        }
+        break;
+
       }
     }
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
+      case SUCCESS:
+        return Integer.valueOf(getSuccess());
+
       }
       throw new IllegalStateException();
     }
@@ -3578,6 +3644,8 @@ public class FinanceService {
       }
 
       switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
       }
       throw new IllegalStateException();
     }
@@ -3595,6 +3663,15 @@ public class FinanceService {
       if (that == null)
         return false;
 
+      boolean this_present_success = true;
+      boolean that_present_success = true;
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (this.success != that.success)
+          return false;
+      }
+
       return true;
     }
 
@@ -3611,6 +3688,16 @@ public class FinanceService {
       int lastComparison = 0;
       createCategoryTreeNode_result typedOther = (createCategoryTreeNode_result)other;
 
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
       return 0;
     }
 
@@ -3631,6 +3718,9 @@ public class FinanceService {
       StringBuilder sb = new StringBuilder("createCategoryTreeNode_result(");
       boolean first = true;
 
+      sb.append("success:");
+      sb.append(this.success);
+      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -3650,6 +3740,8 @@ public class FinanceService {
 
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
       } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
@@ -3674,6 +3766,14 @@ public class FinanceService {
             break;
           }
           switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                struct.success = iprot.readI32();
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -3689,6 +3789,11 @@ public class FinanceService {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.isSetSuccess()) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          oprot.writeI32(struct.success);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -3706,11 +3811,24 @@ public class FinanceService {
       @Override
       public void write(org.apache.thrift.protocol.TProtocol prot, createCategoryTreeNode_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          oprot.writeI32(struct.success);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, createCategoryTreeNode_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.success = iprot.readI32();
+          struct.setSuccessIsSet(true);
+        }
       }
     }
 
@@ -5692,15 +5810,15 @@ public class FinanceService {
 
     /**
      * 
-     * @see CategoryType
+     * @see TCategoryType
      */
-    public CategoryType type; // required
+    public TCategoryType type; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       /**
        * 
-       * @see CategoryType
+       * @see TCategoryType
        */
       TYPE((short)1, "type");
 
@@ -5763,7 +5881,7 @@ public class FinanceService {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-          new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, CategoryType.class)));
+          new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, TCategoryType.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getCategoryTree_args.class, metaDataMap);
     }
@@ -5772,7 +5890,7 @@ public class FinanceService {
     }
 
     public getCategoryTree_args(
-      CategoryType type)
+      TCategoryType type)
     {
       this();
       this.type = type;
@@ -5798,17 +5916,17 @@ public class FinanceService {
 
     /**
      * 
-     * @see CategoryType
+     * @see TCategoryType
      */
-    public CategoryType getType() {
+    public TCategoryType getType() {
       return this.type;
     }
 
     /**
      * 
-     * @see CategoryType
+     * @see TCategoryType
      */
-    public getCategoryTree_args setType(CategoryType type) {
+    public getCategoryTree_args setType(TCategoryType type) {
       this.type = type;
       return this;
     }
@@ -5834,7 +5952,7 @@ public class FinanceService {
         if (value == null) {
           unsetType();
         } else {
-          setType((CategoryType)value);
+          setType((TCategoryType)value);
         }
         break;
 
@@ -5986,7 +6104,7 @@ public class FinanceService {
           switch (schemeField.id) {
             case 1: // TYPE
               if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.type = CategoryType.findByValue(iprot.readI32());
+                struct.type = TCategoryType.findByValue(iprot.readI32());
                 struct.setTypeIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -6035,7 +6153,7 @@ public class FinanceService {
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, getCategoryTree_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        struct.type = CategoryType.findByValue(iprot.readI32());
+        struct.type = TCategoryType.findByValue(iprot.readI32());
         struct.setTypeIsSet(true);
       }
     }

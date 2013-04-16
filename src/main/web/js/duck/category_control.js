@@ -1,5 +1,5 @@
 function CategoryControl(type) {
-    this.ajax_data_type = type;
+    this.type = type;
     this.data = null;
 }
 
@@ -11,12 +11,16 @@ CategoryControl.prototype.fetchData = function() {
         async: false,
         url: "../php/client/json.php",
         data: {
-            type: this.ajax_data_type
+            action: this.type + "Categories"
         }
     }).done(function(response) {
         this.data = response;
     });
 };
+
+CategoryControl.prototype.getType = function() {
+    return this.type;
+}
 
 CategoryControl.prototype.getData = function() {
     if (this.data == null) {
@@ -57,5 +61,5 @@ CategoryControl.prototype.setState = function(id, value) {
     }
 };
 
-var IncomeCategoryControl = new CategoryControl("incomeCategories");
-var OutcomeCategoryControl = new CategoryControl("outcomeCategories");
+var IncomeCategoryControl = new CategoryControl("income");
+var OutcomeCategoryControl = new CategoryControl("outcome");

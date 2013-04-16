@@ -19,7 +19,7 @@ interface FinanceServiceIf {
   public function getUserOutcomes($user_id);
   public function getUserIncomes($user_id);
   public function getAllUsers();
-  public function createCategoryTreeNode($parent_id, $name, $type);
+  public function createCategoryTreeNode($type, $name, $parent_id);
   public function moveCategoryTreeNode($id, $new_parent_id);
   public function renameCategoryTreeNode($id, $new_name);
   public function removeCategoryTreeNode($id);
@@ -189,18 +189,18 @@ class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceS
     throw new \Exception("getAllUsers failed: unknown result");
   }
 
-  public function createCategoryTreeNode($parent_id, $name, $type)
+  public function createCategoryTreeNode($type, $name, $parent_id)
   {
-    $this->send_createCategoryTreeNode($parent_id, $name, $type);
-    $this->recv_createCategoryTreeNode();
+    $this->send_createCategoryTreeNode($type, $name, $parent_id);
+    return $this->recv_createCategoryTreeNode();
   }
 
-  public function send_createCategoryTreeNode($parent_id, $name, $type)
+  public function send_createCategoryTreeNode($type, $name, $parent_id)
   {
     $args = new \SymfonyWorld\WealthyLaughingDuck\FinanceService_createCategoryTreeNode_args();
-    $args->parent_id = $parent_id;
-    $args->name = $name;
     $args->type = $type;
+    $args->name = $name;
+    $args->parent_id = $parent_id;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
@@ -236,7 +236,10 @@ class FinanceServiceClient implements \SymfonyWorld\WealthyLaughingDuck\FinanceS
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
-    return;
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    throw new \Exception("createCategoryTreeNode failed: unknown result");
   }
 
   public function moveCategoryTreeNode($id, $new_parent_id)
@@ -642,15 +645,15 @@ class FinanceService_getAllUsers_result extends TBase {
 class FinanceService_createCategoryTreeNode_args extends TBase {
   static $_TSPEC;
 
-  public $parent_id = null;
-  public $name = null;
   public $type = null;
+  public $name = null;
+  public $parent_id = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'parent_id',
+          'var' => 'type',
           'type' => TType::I32,
           ),
         2 => array(
@@ -658,7 +661,7 @@ class FinanceService_createCategoryTreeNode_args extends TBase {
           'type' => TType::STRING,
           ),
         3 => array(
-          'var' => 'type',
+          'var' => 'parent_id',
           'type' => TType::I32,
           ),
         );
@@ -684,11 +687,19 @@ class FinanceService_createCategoryTreeNode_args extends TBase {
 class FinanceService_createCategoryTreeNode_result extends TBase {
   static $_TSPEC;
 
+  public $success = null;
 
-  public function __construct() {
+  public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
+        0 => array(
+          'var' => 'success',
+          'type' => TType::I32,
+          ),
         );
+    }
+    if (is_array($vals)) {
+      parent::__construct(self::$_TSPEC, $vals);
     }
   }
 

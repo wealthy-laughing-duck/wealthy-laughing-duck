@@ -8,7 +8,7 @@ var UsersControl = {
             async: false,
             url: "../php/client/json.php",
             data: {
-                type: "users"
+                action: "users"
             }
         }).done(function(response) {
             this.data = response;

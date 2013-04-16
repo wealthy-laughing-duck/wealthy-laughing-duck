@@ -3,11 +3,15 @@ package com.blogspot.symfonyworld.wealthylaughingduck.model;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,8 +32,9 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private String type;
+    private CategoryType type;
 
     @ManyToOne
     @JoinColumn(name="created_by")
@@ -38,6 +43,10 @@ public class Category {
     @Column(name = "created_at", columnDefinition="datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    @Column(name = "updated_at", columnDefinition="datetime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
 
     /**
      * @return the id
@@ -75,20 +84,6 @@ public class Category {
     }
 
     /**
-     * @return the createdAt
-     */
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * @param createdAt the createdAt to set
-     */
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    /**
      * @return the parent
      */
     public Category getParent() {
@@ -119,14 +114,55 @@ public class Category {
     /**
      * @return the type
      */
-    public String getType() {
+    public CategoryType getType() {
         return type;
     }
 
     /**
      * @param type the type to set
      */
-    public void setType(String type) {
+    public void setType(CategoryType type) {
         this.type = type;
     }
+
+    // this JPA feature doesn't work when using session interface
+    @PrePersist
+    public void initCreatedAt() {
+        this.createdAt = new Date();
+    }
+
+    /**
+     * @return the createdAt
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @param createdAt the createdAt to set
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    // this JPA feature doesn't work when using session interface
+    @PreUpdate
+    public void initUpdatedAt() {
+        this.setUpdatedAt(new Date());
+    }
+
+    /**
+     * @return the updatedAt
+     */
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
+     * @param updatedAt the updatedAt to set
+     */
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 }

@@ -46,7 +46,7 @@ struct TCriteria {
     2: required list<TUser> users
 }
 
-enum CategoryType {
+enum TCategoryType {
     INCOME = 1,
     OUTCOME = 2
 }
@@ -72,10 +72,10 @@ service FinanceService {
    */
   list<TUser> getAllUsers(),
 
-  void createCategoryTreeNode(
-    1:required int parent_id,
+  int createCategoryTreeNode(
+    1:required TCategoryType type
     2:required string name,
-    3:required CategoryType type
+    3:int parent_id,
   ),
 
   void moveCategoryTreeNode(
@@ -84,7 +84,8 @@ service FinanceService {
   ),
 
   void renameCategoryTreeNode(
-    1:required int id, 2:required string new_name
+    1:required int id,
+    2:required string new_name
   ),
 
   void removeCategoryTreeNode(
@@ -95,6 +96,6 @@ service FinanceService {
    * Returns category tree
    */
   TCategoryPlainTree getCategoryTree(
-    1:required CategoryType type
+    1:required TCategoryType type
   )
 }

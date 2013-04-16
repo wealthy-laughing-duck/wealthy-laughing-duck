@@ -16,7 +16,7 @@ use Thrift\Protocol\TProtocol;
 use Thrift\Exception\TApplicationException;
 
 
-final class CategoryType {
+final class TCategoryType {
   const INCOME = 1;
   const OUTCOME = 2;
   static public $__names = array(

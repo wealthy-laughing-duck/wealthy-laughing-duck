@@ -1,6 +1,5 @@
 package com.blogspot.symfonyworld.wealthylaughingduck.thrift;
 
-import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.CategoryType;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.FinanceService;
+import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TCategoryType;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TCategory;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TIncome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TOutcome;
@@ -67,12 +67,12 @@ public class MyClient {
     }
 
     protected void processGetIncomeCategoryTree() throws TException {
-        List<TCategory> list = client.getCategoryTree(CategoryType.INCOME);
+        List<TCategory> list = client.getCategoryTree(TCategoryType.INCOME);
         processGetCategoryTree(list);
     }
 
     protected void processGetOutcomeCategoryTree() throws TException {
-        List<TCategory> list = client.getCategoryTree(CategoryType.OUTCOME);
+        List<TCategory> list = client.getCategoryTree(TCategoryType.OUTCOME);
         processGetCategoryTree(list);
     }
 
