@@ -17,13 +17,13 @@ import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TIncome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TOutcome;
 import com.blogspot.symfonyworld.wealthylaughingduck.thrift.generated.TUser;
 
-public class MyClient {
+public class Client {
 
     private TTransport transport;
     private TProtocol protocol;
     private FinanceService.Client client;
 
-    public MyClient() throws TTransportException {
+    public Client() throws TTransportException {
         transport = new TSocket("localhost", 9090);
         transport.open();
         protocol = new TBinaryProtocol(transport);
@@ -87,7 +87,7 @@ public class MyClient {
 
     public static void main(String[] args) {
         try {
-            MyClient myClient = new MyClient();
+            Client myClient = new Client();
             myClient.processGetUserOutcomes();
             myClient.processGetUserIncomes();
             myClient.processGetAllUsers();
