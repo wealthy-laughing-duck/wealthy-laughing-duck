@@ -3,3 +3,10 @@ jdk:
   - openjdk7
   - oraclejdk7
 script: mvn test
+notifications:
+  recipients:
+    - tkoomzaaskz@o2.pl
+  email:
+    on_success: change
+    on_failure: always
+
