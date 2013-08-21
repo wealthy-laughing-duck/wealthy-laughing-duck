@@ -47,7 +47,7 @@ var TemplateManager = {
             $('#outcomes').dataTable({
                 "bServerSide": true,
                 'sPaginationType': 'bootstrap',
-                "sAjaxSource": '../php/client/json.php?type=outcomes'
+                "sAjaxSource": '../php/client/json.php?action=outcomes'
             });
         }, TemplateManager));
 
