@@ -1,9 +1,14 @@
-The wealthy laughing duck
+The Wealthy Laughing Duck Project
+---------------------------------
+
+This repository is a [duck component](https://github.com/wealthy-laughing-duck).
+Visit [Wealthy Laughing Duck Project](http://wealthy-laughing-duck.github.io/) for more information.
+
+Apache Thrift Application
 =========================
 
-Example apache thrift system. Check [documentation](doc/index.md).
-
-![wealthy laughing duck logo](doc/wealthy-laughing-duck-logo.png "wealthy laughing duck logo")
+This duck component is an example apache thrift application. Check
+[documentation](doc/README.md) for technical details.
 
 Dependencies
 ============
