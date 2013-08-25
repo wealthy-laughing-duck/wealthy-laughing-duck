@@ -1,7 +1,7 @@
 The wealthy laughing duck documentation
 =======================================
 
-![wealthy laughing duck logo](wealthy-laughing-duck-logo.png "wealthy laughing duck logo")
+![wealthy laughing duck logo](http://wealthy-laughing-duck.github.io/img/logo.png "wealthy laughing duck logo")
 
 Main project structure
 ----------------------
@@ -27,6 +27,20 @@ thrift supports all of them) and it is responsible only for receiving AJAX
 requests, translating them into thrift service calls and passing them to the
 backend. Client-side is a rich interface application that provides
 user-friendly widgets to access the real data.
+
+Commons
+=======
+
+This project uses the [duck-commons](https://github.com/wealthy-laughing-duck/duck-commons)
+repository where sql and thrift resources are stored (they're shared between all
+duck components). Run the install script:
+
+    $ ./install.sh
+
+to fetch this repository as local git submodule and then you can run the thrift
+generator script:
+
+    $ ./generate.sh
 
 Configuration
 =============

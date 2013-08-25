@@ -1,0 +1,3 @@
+[submodule "src/submodules/commons"]
+	path = src/submodules/commons
+	url = https://github.com/wealthy-laughing-duck/duck-commons
