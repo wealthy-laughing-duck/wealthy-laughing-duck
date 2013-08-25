@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "sf_guard_user")
+@Table(name = "users")
 public class User {
 
     @Id

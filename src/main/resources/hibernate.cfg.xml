@@ -14,13 +14,13 @@
 
    <!-- Assume test is the database name -->
    <property name="hibernate.connection.url">
-      jdbc:mysql://localhost:3306/duck_finance
+      jdbc:mysql://localhost:3306/duck_database
    </property>
    <property name="hibernate.connection.username">
-      duck
+      duck_user
    </property>
    <property name="hibernate.connection.password">
-      pILqd9a5ImNr9RG4
+      wXyqhWzlF0uO20j8
    </property>
 
    <mapping class="com.blogspot.symfonyworld.wealthylaughingduck.model.Category" />
